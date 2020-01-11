@@ -1,6 +1,10 @@
 package frc.robot.commands;
 
+import frc.robot.Constants;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -29,6 +33,11 @@ public class TankDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    final double leftStickY = RobotContainer.GetDriverRawAxis(Constants.LEFT_STICK_Y);
+    final double rightStickY = RobotContainer.GetDriverRawAxis(Constants.RIGHT_STICK_Y);
+
+    System.out.println(leftStickY + " " + rightStickY);
+
     DriveBase.setLeftMotors(leftStickY);
     DriveBase.setRightMotors(rightStickY);
   }

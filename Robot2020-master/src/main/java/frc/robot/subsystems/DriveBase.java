@@ -14,10 +14,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveBase extends SubsystemBase {
-  private final TalonSRX motorLeft1 = new TalonSRX(Constants.MOTOR_LEFT_1_ID);
-  private final TalonSRX motorLeft2 = new TalonSRX(Constants.MOTOR_LEFT_2_ID);
-  private final TalonSRX motorRight1 = new TalonSRX(Constants.MOTOR_RIGHT_1_ID);
-  private final TalonSRX motorRight2 = new TalonSRX(Constants.MOTOR_RIGHT_2_ID);  
+  private static TalonSRX motorLeft1 = new TalonSRX(Constants.MOTOR_LEFT_1_ID);
+  private static TalonSRX motorLeft2 = new TalonSRX(Constants.MOTOR_LEFT_2_ID);
+  private static TalonSRX motorRight1 = new TalonSRX(Constants.MOTOR_RIGHT_1_ID);
+  private static TalonSRX motorRight2 = new TalonSRX(Constants.MOTOR_RIGHT_2_ID);  
   
   public DriveBase() {
 
@@ -27,11 +27,11 @@ public class DriveBase extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-  public void setLeftMotors(final double speed) {
+  public static void setLeftMotors(final double speed) {
     motorLeft1.set(ControlMode.PercentOutput, -speed);
     motorLeft2.set(ControlMode.PercentOutput, -speed);
 }
-  public void setRightMotors(final double speed) {
+  public static void setRightMotors(final double speed) {
     motorRight1.set(ControlMode.PercentOutput, speed);
     motorRight2.set(ControlMode.PercentOutput, speed);
 }
