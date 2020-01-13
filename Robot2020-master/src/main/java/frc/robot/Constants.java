@@ -17,10 +17,10 @@ package frc.robot;
  */
 public final class Constants {
     public final static class Motors {
-        public static final int MOTOR_LEFT_1_ID = 12;
-        public static final int MOTOR_LEFT_2_ID = 11;
-        public static final int MOTOR_RIGHT_1_ID = 15;
-        public static final int MOTOR_RIGHT_2_ID = 16;
+        public static final int MOTOR_LEFT_1 = 12;
+        public static final int MOTOR_LEFT_2 = 11;
+        public static final int MOTOR_RIGHT_1 = 15;
+        public static final int MOTOR_RIGHT_2 = 16;
     }
 
     public final static class Controller {

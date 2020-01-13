@@ -2,15 +2,15 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveBase extends SubsystemBase {
-  private WPI_TalonSRX m_motorLeft1, m_motorLeft2, m_motorRight1, m_motorRight2; 
-  private DifferentialDrive m_drive;
-  
-  public DriveBase(WPI_TalonSRX motorLeft1, WPI_TalonSRX motorLeft2, WPI_TalonSRX motorRight1, WPI_TalonSRX motorRight2) {
+  private final WPI_TalonSRX m_motorLeft1, m_motorLeft2, m_motorRight1, m_motorRight2;
+  private final DifferentialDrive m_drive;
+
+  public DriveBase(final WPI_TalonSRX motorLeft1, final WPI_TalonSRX motorLeft2, final WPI_TalonSRX motorRight1,
+      final WPI_TalonSRX motorRight2) {
     m_motorLeft1 = motorLeft1;
     m_motorLeft2 = motorLeft2;
     m_motorRight1 = motorRight1;
@@ -27,10 +27,12 @@ public class DriveBase extends SubsystemBase {
   @Override
   public void periodic() {
   }
+
   public void stop() {
     m_drive.stopMotor();
   }
-  public void drive(double speedLeft, double speedRight) {
+
+  public void drive(final double speedLeft, final double speedRight) {
     m_drive.tankDrive(speedLeft, speedRight);
   }
 }

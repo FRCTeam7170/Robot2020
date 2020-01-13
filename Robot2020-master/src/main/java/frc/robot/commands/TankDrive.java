@@ -6,10 +6,11 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveBase;
 
 public class TankDrive extends CommandBase{
-  private DriveBase m_driveBase;
-  private int m_LeftStickY, m_RightStickY;
+  private final XboxController xboxController = RobotContainer.getController();
+  private final DriveBase m_driveBase;
+  private final int m_LeftStickY, m_RightStickY;
 
-  public TankDrive(DriveBase driveBase, int LeftStickY, int RightStickY){
+  public TankDrive(final DriveBase driveBase, final int LeftStickY, final int RightStickY) {
     m_driveBase = driveBase;
     m_LeftStickY = LeftStickY;
     m_RightStickY = RightStickY;
@@ -17,13 +18,12 @@ public class TankDrive extends CommandBase{
   }
 
   @Override
-  public void initialize(){
+  public void initialize() {
     m_driveBase.stop();
   }
 
   @Override
-  public void execute(){
-    XboxController xboxController = RobotContainer.getController();
+  public void execute() {
     m_driveBase.drive(xboxController.getRawAxis(m_LeftStickY), xboxController.getRawAxis(m_RightStickY));
   }
   @Override
