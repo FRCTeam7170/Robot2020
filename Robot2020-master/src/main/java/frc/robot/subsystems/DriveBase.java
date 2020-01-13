@@ -1,38 +1,34 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.subsystems;
 
-import frc.robot.Constants;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveBase extends SubsystemBase {
-  private static TalonSRX motorLeft1 = new TalonSRX(Constants.MOTOR_LEFT_1_ID);
-  private static TalonSRX motorLeft2 = new TalonSRX(Constants.MOTOR_LEFT_2_ID);
-  private static TalonSRX motorRight1 = new TalonSRX(Constants.MOTOR_RIGHT_1_ID);
-  private static TalonSRX motorRight2 = new TalonSRX(Constants.MOTOR_RIGHT_2_ID);  
+  private SpeedController m_motorLeft1, m_motorLeft2, m_motorRight1, m_motorRight2; 
+  private SpeedControllerGroup m_left, m_right;
+  private DifferentialDrive m_drive;
   
-  public DriveBase() {
+  public DriveBase(SpeedController motorLeft1, SpeedController motorLeft2, SpeedController motorRight1, SpeedController motorRight2) {
+    m_motorLeft1 = motorLeft1;
+    m_motorLeft2 = motorLeft2;
+    m_motorRight1 = motorRight1;
+    m_motorRight2 = motorRight2;
 
+    m_left = new SpeedControllerGroup(m_motorLeft1, m_motorLeft2);
+    m_right = new SpeedControllerGroup(m_motorRight1, m_motorRight2);
+
+    m_drive = new DifferentialDrive(m_left, m_right);
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
   }
-  public static void setLeftMotors(final double speed) {
-    motorLeft1.set(ControlMode.PercentOutput, -speed);
-    motorLeft2.set(ControlMode.PercentOutput, -speed);
-}
-  public static void setRightMotors(final double speed) {
-    motorRight1.set(ControlMode.PercentOutput, speed);
-    motorRight2.set(ControlMode.PercentOutput, speed);
-}
+  public void stop() {
+    
+  }
+  public void drive(double speedLeft, double speedRight) {
+    m_drive.tankDrive(speedLeft, speedRight);
+  }
 }

@@ -7,52 +7,33 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.DriveBase;
 import edu.wpi.first.wpilibj2.command.Command;
 
-/**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
- */
+
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  //private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final DriveBase m_drivebase = new DriveBase();
+  private static XboxController m_controller = new XboxController(Constants.Controller.CONTROLLER_PORT);
+  private final DriveBase m_drivebase;
+  private final TankDrive m_tankDrive;
 
-  //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final TankDrive m_tankDrive = new TankDrive(m_drivebase);
-
-  private static XboxController driverController = new XboxController(Constants.DRIVER_CONTROLLER);
-
-
-  /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
-   */
   public RobotContainer() {
-    //configureButtonBindings();
-    // Configure the button bindings
-  }
-  /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {
-  }
-  public static double GetDriverRawAxis(final int axis) {
-    return driverController.getRawAxis(axis);
-  }
+    configureButtonBindings();
+    m_drivebase = new DriveBase(new TalonSRX(Constants.Motors.MOTOR_LEFT_1_ID),
+                                new TalonSRX(Constants.Motors.MOTOR_LEFT_2_ID),
+                                new TalonSRX(Constants.Motors.MOTOR_RIGHT_1_ID),
+                                new TalonSRX(Constants.Motors.MOTOR_RIGHT_2_ID));
 
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
+    m_tankDrive = new TankDrive(m_drivebase);
+  }
+  
+  private void configureButtonBindings() {}
+  
+  public static XboxController Controller(){
+    return m_controller;
+  }
 }
