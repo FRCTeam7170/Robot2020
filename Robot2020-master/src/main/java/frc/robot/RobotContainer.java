@@ -7,7 +7,8 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.PWMTalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
 import frc.robot.subsystems.DriveBase;
@@ -19,10 +20,10 @@ public class RobotContainer {
 
   public RobotContainer() {
     configureButtonBindings();
-    m_drivebase = new DriveBase(new PWMTalonSRX(Constants.Motors.MOTOR_LEFT_1_ID),
-                                new PWMTalonSRX(Constants.Motors.MOTOR_LEFT_2_ID),
-                                new PWMTalonSRX(Constants.Motors.MOTOR_RIGHT_1_ID),
-                                new PWMTalonSRX(Constants.Motors.MOTOR_RIGHT_2_ID));
+    m_drivebase = new DriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1_ID),
+                                new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2_ID),
+                                new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1_ID),
+                                new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2_ID));
 
     m_tankDrive = new TankDrive(m_drivebase, 
                                 Constants.Controller.LEFT_STICK_Y, 
