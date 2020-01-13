@@ -20,10 +20,10 @@ public class RobotContainer {
 
   public RobotContainer() {
     configureButtonBindings();
-    m_drivebase = new DriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1_ID),
-                                new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2_ID),
-                                new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1_ID),
-                                new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2_ID));
+    m_drivebase = new DriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1),
+                                new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2),
+                                new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
+                                new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2));
 
     m_tankDrive = new TankDrive(m_drivebase, 
                                 Constants.Controller.LEFT_STICK_Y, 
