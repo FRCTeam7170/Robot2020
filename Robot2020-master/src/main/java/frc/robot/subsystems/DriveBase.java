@@ -33,7 +33,10 @@ public class DriveBase extends SubsystemBase {
     m_drive.stopMotor();
   }
 
-  public void drive(final double speedLeft, final double speedRight) {
+  public void tankDrive(final double speedLeft, final double speedRight) {
     m_drive.tankDrive(-speedLeft, -speedRight);
+  }
+  public void arcadeDrive(final double speed, final double angle) {
+    m_drive.arcadeDrive(speed, angle, false);
   }
 }

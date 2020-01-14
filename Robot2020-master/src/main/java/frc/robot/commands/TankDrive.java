@@ -26,7 +26,7 @@ public class TankDrive extends CommandBase{
 
   @Override
   public void execute() {
-    m_driveBase.drive(m_xboxController.getRawAxis(m_LeftStickY)*speed, m_xboxController.getRawAxis(m_RightStickY)*speed);
+    m_driveBase.tankDrive(m_xboxController.getRawAxis(m_LeftStickY)*speed, m_xboxController.getRawAxis(m_RightStickY)*speed);
   }
   @Override
 	public boolean isFinished() {
