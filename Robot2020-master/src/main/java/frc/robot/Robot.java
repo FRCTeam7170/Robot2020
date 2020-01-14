@@ -7,8 +7,8 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.DriveBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.DriveBase;
 import frc.robot.commands.groups.Teleop;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
@@ -40,9 +40,9 @@ public class Robot extends TimedRobot {
     xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
 
     m_driveBase = new DriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1),
-                                  new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2),
-                                  new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
-                                  new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2));
+                                new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2),
+                                new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
+                                new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2));
 
     CommandScheduler.getInstance().registerSubsystem(m_driveBase);
   }

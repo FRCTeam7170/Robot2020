@@ -11,6 +11,7 @@ public class DriveBase extends SubsystemBase {
 
   public DriveBase(final WPI_TalonSRX motorLeft1, final WPI_TalonSRX motorLeft2, final WPI_TalonSRX motorRight1,
                    final WPI_TalonSRX motorRight2) {
+                     
     m_motorLeft1 = motorLeft1;
     m_motorLeft2 = motorLeft2;
     m_motorRight1 = motorRight1;
@@ -33,6 +34,6 @@ public class DriveBase extends SubsystemBase {
   }
 
   public void drive(final double speedLeft, final double speedRight) {
-    m_drive.tankDrive(speedLeft, speedRight);
+    m_drive.tankDrive(-speedLeft, -speedRight);
   }
 }
