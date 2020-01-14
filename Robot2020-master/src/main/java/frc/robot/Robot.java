@@ -7,9 +7,15 @@
 
 package frc.robot;
 
+import frc.robot.subsystems.DriveBase;
+import frc.robot.Constants;
+import frc.robot.commands.groups.Teleop;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,8 +25,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
-  private RobotContainer m_robotContainer;
+  private DriveBase m_driveBase;
+  private XboxController xboxController;
+  private Teleop teleOP;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -30,7 +37,14 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+    xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
+
+    m_driveBase = new DriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1),
+                                  new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2),
+                                  new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
+                                  new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2));
+
+    CommandScheduler.getInstance().registerSubsystem(m_driveBase);
   }
 
   /**
@@ -65,7 +79,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -88,6 +101,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    teleOP = new Teleop(xboxController, m_driveBase);
+    teleOP.schedule();
   }
 
   /**

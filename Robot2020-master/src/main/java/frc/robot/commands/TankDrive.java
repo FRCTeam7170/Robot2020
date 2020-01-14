@@ -1,19 +1,20 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveBase;
 
-public class TankDrive extends CommandBase{
-  private final XboxController xboxController = RobotContainer.getController();
-  private final DriveBase m_driveBase;
-  private final int m_LeftStickY, m_RightStickY;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
-  public TankDrive(final DriveBase driveBase, final int LeftStickY, final int RightStickY) {
+public class TankDrive extends CommandBase{
+  private final XboxController m_xboxController;
+  private final DriveBase m_driveBase;
+  private final int m_LeftStickY = Constants.Controller.LEFT_STICK_Y;
+  private final int m_RightStickY = Constants.Controller.RIGHT_STICK_Y;
+
+  public TankDrive(final DriveBase driveBase, XboxController xboxController) {
+    m_xboxController = xboxController;
     m_driveBase = driveBase;
-    m_LeftStickY = LeftStickY;
-    m_RightStickY = RightStickY;
     addRequirements(m_driveBase);
   }
 
@@ -24,7 +25,7 @@ public class TankDrive extends CommandBase{
 
   @Override
   public void execute() {
-    m_driveBase.drive(xboxController.getRawAxis(m_LeftStickY), xboxController.getRawAxis(m_RightStickY));
+    m_driveBase.drive(m_xboxController.getRawAxis(m_LeftStickY), m_xboxController.getRawAxis(m_RightStickY));
   }
   @Override
 	public boolean isFinished() {
