@@ -1,19 +1,20 @@
 package frc.robot.commands;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.FlyWheel;
 
-public class FlyWheelSpin {
-    public final FlyWheel Fly;
+public class FlyWheelSpin extends CommandBase{
+    public final FlyWheel m_fly;
 
     public FlyWheelSpin(FlyWheel fly) {
-        Fly = fly;
+        m_fly = fly;
     }
 
     public void initialize() {
-        Fly.setRPM(1000);
+        m_fly.setRPM(1000);
     }
 
     public void execute() {
-        Fly.PID_FlyWheel();
+        m_fly.PID_FlyWheel();
     }
 
     public boolean isFinished() {

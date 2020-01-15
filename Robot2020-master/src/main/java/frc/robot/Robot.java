@@ -12,7 +12,6 @@ import frc.robot.subsystems.DriveBase;
 import frc.robot.commands.groups.Teleop;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -26,11 +25,11 @@ import frc.robot.subsystems.FlyWheel;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
-  private DriveBase m_driveBase;
   private XboxController xboxController;
+  private Command m_autonomousCommand;
   private Teleop teleOP;
-  private FlyWheel Fly;
+  private DriveBase m_driveBase;
+  private FlyWheel m_flyWheel;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -47,11 +46,12 @@ public class Robot extends TimedRobot {
                                 new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
                                 new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2));
 
-    Fly = new FlyWheel(new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
-                       new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2));
+    m_flyWheel = new FlyWheel(new WPI_TalonSRX(Constants.Motors.FLYWHEEL_1),
+                              new WPI_TalonSRX(Constants.Motors.FLYWHEEL_2));
 
 
-    CommandScheduler.getInstance().registerSubsystem(m_driveBase);
+    CommandScheduler.getInstance().registerSubsystem(m_driveBase, 
+                                                     m_flyWheel);
   }
 
   /**
@@ -108,7 +108,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    teleOP = new Teleop(xboxController, m_driveBase);
+    teleOP = new Teleop(xboxController, m_driveBase, m_flyWheel);
     teleOP.schedule();
   }
 

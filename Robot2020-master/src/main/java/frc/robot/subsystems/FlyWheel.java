@@ -4,13 +4,15 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class FlyWheel {
+//import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+
+public class FlyWheel extends SubsystemBase{
 
     private TalonSRX flywheel_Motor1;
     private TalonSRX flywheel_Motor2;
-    public final PIDController FlyWheelPid;
+    public final PIDController flyWheelPid;
 
     private final double kP = 0;
     private final double kI = 0;
@@ -24,17 +26,17 @@ public class FlyWheel {
 
         error = flywheel_Motor1.getSelectedSensorVelocity();
 
-        FlyWheelPid = new PIDController(kP, kI, kD);
+        flyWheelPid = new PIDController(kP, kI, kD);
     }
 
 
 
     public void setRPM(double targetRPM){
-        FlyWheelPid.setSetpoint(targetRPM);
+        flyWheelPid.setSetpoint(targetRPM);
     }
 
     public void PID_FlyWheel(){
-        set_FlyWheel(FlyWheelPid.calculate(error));
+        set_FlyWheel(flyWheelPid.calculate(error));
     }
 
     public void set_FlyWheel(double value)
