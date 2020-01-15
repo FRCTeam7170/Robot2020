@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import frc.robot.subsystems.FlyWheel;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -29,6 +30,7 @@ public class Robot extends TimedRobot {
   private DriveBase m_driveBase;
   private XboxController xboxController;
   private Teleop teleOP;
+  private FlyWheel Fly;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -44,6 +46,10 @@ public class Robot extends TimedRobot {
                                 new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2),
                                 new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
                                 new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2));
+
+    Fly = new FlyWheel(new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
+                       new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2));
+
 
     CommandScheduler.getInstance().registerSubsystem(m_driveBase);
   }
