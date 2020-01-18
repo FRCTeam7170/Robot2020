@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 //import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -13,6 +15,10 @@ public class FlyWheel extends SubsystemBase{
     private WPI_TalonSRX flywheelMotor2;
     private double m_targetRPM;
     private double fwdTerm = 0;
+    private double kP = 0.0025;
+    private double kI = 0.001;
+    private double kD = 2;
+    private double kF = 1023/7200;
     
     public FlyWheel(WPI_TalonSRX motor1, WPI_TalonSRX motor2){
         
@@ -46,7 +52,7 @@ public class FlyWheel extends SubsystemBase{
         m_targetRPM = rpm;
     }
     public void set_FlyWheel(){
-        System.out.println(flywheelMotor2.getSelectedSensorVelocity()*0.15);
+        SmartDashboard.putNumber("RPM", flywheelMotor2.getSelectedSensorVelocity()*0.15);
         double rpmout = m_targetRPM * 4096 / 600;
         flywheelMotor1.set(ControlMode.Velocity, rpmout);
     }
