@@ -52,10 +52,10 @@ public class Robot extends TimedRobot {
 
 
 
-    CommandScheduler.getInstance().registerSubsystem(m_driveBase);
 
     CommandScheduler.getInstance().registerSubsystem(m_driveBase, 
                                                      m_flyWheel);
+
 
   }
 
