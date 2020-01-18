@@ -20,5 +20,4 @@ public class FlyWheelSpin extends CommandBase{
     public boolean isFinished() {
         return false;
     }
-
 }

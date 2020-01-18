@@ -19,11 +19,10 @@ public class FlyWheel extends SubsystemBase{
     private double m_targetRPM;
     private double fwdTerm = 0;
 
-    public FlyWheel(WPI_TalonSRX motor1, WPI_TalonSRX motor2, double targetRPM){
+    public FlyWheel(WPI_TalonSRX motor1, WPI_TalonSRX motor2){
 
         flywheelMotor1 = motor1;
         flywheelMotor2 = motor2;
-        m_targetRPM = targetRPM;
 
         flywheelMotor2.follow(flywheelMotor1);
 
