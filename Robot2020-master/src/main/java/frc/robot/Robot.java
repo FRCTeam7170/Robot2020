@@ -8,15 +8,20 @@
 package frc.robot;
 
 import frc.robot.Constants;
+import frc.robot.subsystems.FlyWheel;
 import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.IntakeLift;
+import frc.robot.commands.LiftIntake;
 import frc.robot.commands.groups.Teleop;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import frc.robot.subsystems.FlyWheel;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -25,11 +30,12 @@ import frc.robot.subsystems.FlyWheel;
  * project.
  */
 public class Robot extends TimedRobot {
-  private XboxController xboxController;
+  private XboxController m_xboxController;
   private Command m_autonomousCommand;
   private Teleop teleOP;
   private DriveBase m_driveBase;
   private FlyWheel m_flyWheel;
+  private IntakeLift m_intakeLift;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -39,7 +45,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
+    m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
 
     m_driveBase = new DriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1),
                                 new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2),
@@ -49,9 +55,14 @@ public class Robot extends TimedRobot {
     m_flyWheel = new FlyWheel(new WPI_TalonSRX(Constants.Motors.FLYWHEEL_1),
                               new WPI_TalonSRX(Constants.Motors.FLYWHEEL_2));
 
+    m_intakeLift = new IntakeLift(new DoubleSolenoid(1, 2));
+
 
     CommandScheduler.getInstance().registerSubsystem(m_driveBase, 
-                                                     m_flyWheel);
+                                                     m_flyWheel,
+                                                     m_intakeLift);
+
+    getButton("A").whenPressed(new LiftIntake(m_intakeLift));
   }
 
   /**
@@ -108,7 +119,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    teleOP = new Teleop(xboxController, m_driveBase, m_flyWheel);
+    teleOP = new Teleop(m_xboxController, m_driveBase, m_flyWheel);
     teleOP.schedule();
   }
 
@@ -130,5 +141,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  }
+
+  private JoystickButton getButton(String name){
+    return new JoystickButton(m_xboxController, XboxController.Button.valueOf("k"+name).value);
   }
 }
