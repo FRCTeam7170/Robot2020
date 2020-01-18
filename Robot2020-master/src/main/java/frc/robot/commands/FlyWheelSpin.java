@@ -10,11 +10,11 @@ public class FlyWheelSpin extends CommandBase{
     }
 
     public void initialize() {
-        m_fly.setRPM(1000);
+        m_fly.setRPM(1500);
     }
 
     public void execute() {
-        m_fly.PID_FlyWheel();
+        m_fly.set_FlyWheel();
     }
 
     public boolean isFinished() {
