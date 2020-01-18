@@ -43,10 +43,10 @@ public class FlyWheel extends SubsystemBase{
 		flywheelMotor1.configPeakOutputReverse(-1, 30);
 
 		/* Config the Velocity closed loop gains in slot0 */
-		flywheelMotor1.config_kF(0, 1023/7200, 30);
-		flywheelMotor1.config_kP(0, 0.0025, 30);
-		flywheelMotor1.config_kI(0, 0.001, 30);
-		flywheelMotor1.config_kD(0, 2, 30);
+		flywheelMotor1.config_kF(0, kF, 30);
+		flywheelMotor1.config_kP(0, kP, 30);
+		flywheelMotor1.config_kI(0, kI, 30);
+		flywheelMotor1.config_kD(0, kD, 30);
     }
     public void setRPM(double rpm){
         m_targetRPM = rpm;
