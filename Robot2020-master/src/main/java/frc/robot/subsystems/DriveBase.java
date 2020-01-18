@@ -11,6 +11,7 @@ public class DriveBase extends SubsystemBase {
 
   public DriveBase(final WPI_TalonSRX motorLeft1, final WPI_TalonSRX motorLeft2, final WPI_TalonSRX motorRight1,
                    final WPI_TalonSRX motorRight2) {
+                     
     m_motorLeft1 = motorLeft1;
     m_motorLeft2 = motorLeft2;
     m_motorRight1 = motorRight1;
@@ -32,7 +33,10 @@ public class DriveBase extends SubsystemBase {
     m_drive.stopMotor();
   }
 
-  public void drive(final double speedLeft, final double speedRight) {
-    m_drive.tankDrive(speedLeft, speedRight);
+  public void tankDrive(final double speedLeft, final double speedRight) {
+    m_drive.tankDrive(-speedLeft, -speedRight);
+  }
+  public void arcadeDrive(final double speed, final double angle) {
+    m_drive.arcadeDrive(speed, angle, false);
   }
 }
