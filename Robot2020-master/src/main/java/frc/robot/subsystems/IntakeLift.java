@@ -5,10 +5,10 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeLift extends SubsystemBase{
-    private DoubleSolenoid m_solenoid;
+    private final DoubleSolenoid m_solenoid;
     private boolean mode = true;
 
-    public IntakeLift(DoubleSolenoid solenoid){
+    public IntakeLift(final DoubleSolenoid solenoid) {
         m_solenoid = solenoid;
     }
     public void off(){

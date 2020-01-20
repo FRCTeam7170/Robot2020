@@ -143,7 +143,7 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
   }
 
-  private JoystickButton getButton(String name){
+  private JoystickButton getButton(final String name) {
     return new JoystickButton(m_xboxController, XboxController.Button.valueOf("k"+name).value);
   }
 }

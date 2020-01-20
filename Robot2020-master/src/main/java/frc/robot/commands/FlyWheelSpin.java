@@ -5,7 +5,7 @@ import frc.robot.subsystems.FlyWheel;
 public class FlyWheelSpin extends CommandBase{
     private final FlyWheel m_fly;
 
-    public FlyWheelSpin(FlyWheel fly) {
+    public FlyWheelSpin(final FlyWheel fly) {
         m_fly = fly;
         addRequirements(m_fly);
     }
