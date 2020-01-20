@@ -12,7 +12,7 @@ import frc.robot.subsystems.FlyWheel;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.IntakeLift;
 import frc.robot.subsystems.IntakeWheel;
-import frc.robot.commands.LiftIntake;
+import frc.robot.commands.Intake;
 import frc.robot.commands.groups.Teleop;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -67,7 +67,7 @@ public class Robot extends TimedRobot {
                                                      m_intakeLift,
                                                      m_intakeWheel);
 
-    getButton("A").whenPressed(new LiftIntake(m_intakeLift, m_intakeWheel));
+    getButton("A").whenPressed(new Intake(m_intakeLift, m_intakeWheel));
   }
 
   /**
