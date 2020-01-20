@@ -11,6 +11,7 @@ import frc.robot.Constants;
 import frc.robot.subsystems.FlyWheel;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.IntakeLift;
+import frc.robot.subsystems.IntakeWheel;
 import frc.robot.commands.LiftIntake;
 import frc.robot.commands.groups.Teleop;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -36,6 +37,7 @@ public class Robot extends TimedRobot {
   private DriveBase m_driveBase;
   private FlyWheel m_flyWheel;
   private IntakeLift m_intakeLift;
+  private IntakeWheel m_intakeWheel;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -57,12 +59,15 @@ public class Robot extends TimedRobot {
 
     m_intakeLift = new IntakeLift(new DoubleSolenoid(1, 2));
 
+    m_intakeWheel = new IntakeWheel(new WPI_TalonSRX(Constants.Motors.INTAKEWHEEL));
+
 
     CommandScheduler.getInstance().registerSubsystem(m_driveBase, 
                                                      m_flyWheel,
-                                                     m_intakeLift);
+                                                     m_intakeLift,
+                                                     m_intakeWheel);
 
-    getButton("A").whenPressed(new LiftIntake(m_intakeLift));
+    getButton("A").whenPressed(new LiftIntake(m_intakeLift, m_intakeWheel));
   }
 
   /**

@@ -24,6 +24,7 @@ public final class Constants {
         public static final int MOTOR_RIGHT_2 = 15;
         public static final int FLYWHEEL_1 = 12;
         public static final int FLYWHEEL_2 = 13;
+        public static final int INTAKEWHEEL = 16;
         public static final int SOLNAOID_1 = 16;
     }
 

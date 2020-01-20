@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeLift extends SubsystemBase{
     private final DoubleSolenoid m_solenoid;
-    private boolean mode = true;
 
     public IntakeLift(final DoubleSolenoid solenoid) {
         m_solenoid = solenoid;
@@ -14,16 +13,11 @@ public class IntakeLift extends SubsystemBase{
     public void off(){
         m_solenoid.set(Value.kOff);
     }
-    public void move(){
-        if (mode){
-            m_solenoid.set(Value.kForward);
-        } else {
-            m_solenoid.set(Value.kReverse);
-        }
+    public void up(){
+        m_solenoid.set(Value.kForward);
     }
-    public void toggle(){
-        mode = !mode;
-        move();
+    public void down(){
+        m_solenoid.set(Value.kReverse);
     }
     @Override
     public void periodic(){
