@@ -9,10 +9,12 @@ package frc.robot;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.FlyWheel;
+import frc.robot.subsystems.AutoDriveBase;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.IntakeLift;
 import frc.robot.subsystems.IntakeWheel;
 import frc.robot.commands.Intake;
+import frc.robot.commands.groups.Autonomous;
 import frc.robot.commands.groups.Teleop;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -32,12 +34,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
  */
 public class Robot extends TimedRobot {
   private XboxController m_xboxController;
-  private Command m_autonomousCommand;
+  private Autonomous autonomous;
   private Teleop teleOP;
   private DriveBase m_driveBase;
   private FlyWheel m_flyWheel;
   private IntakeLift m_intakeLift;
   private IntakeWheel m_intakeWheel;
+  private AutoDriveBase m_autoDriveBase;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -52,6 +55,11 @@ public class Robot extends TimedRobot {
                                 new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
                                 new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2));
 
+    m_autoDriveBase = new AutoDriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1),
+                                        new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2),
+                                        new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
+                                        new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2));
+
     m_flyWheel = new FlyWheel(new WPI_TalonSRX(Constants.Motors.FLYWHEEL_1),
                               new WPI_TalonSRX(Constants.Motors.FLYWHEEL_2));
 
@@ -63,7 +71,8 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().registerSubsystem(m_driveBase, 
                                                      m_flyWheel,
                                                      m_intakeLift,
-                                                     m_intakeWheel);
+                                                     m_intakeWheel,
+                                                     m_autoDriveBase);
 
     getButton("A").whenPressed(new Intake(m_intakeLift, m_intakeWheel));
   }
@@ -89,9 +98,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
+    autonomous = new Autonomous(m_autoDriveBase);
+    autonomous.schedule();
   }
 
   /**
@@ -107,8 +115,8 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
+    if (autonomous != null) {
+      autonomous.cancel();
     }
     teleOP = new Teleop(m_xboxController, m_driveBase, m_flyWheel);
     teleOP.schedule();
