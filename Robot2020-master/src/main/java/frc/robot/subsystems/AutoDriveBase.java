@@ -12,16 +12,18 @@ import frc.robot.Constants;
 
 public class AutoDriveBase extends SubsystemBase{
     private final WPI_TalonSRX m_motorLeft1, m_motorLeft2, m_motorRight1, m_motorRight2;
-    private final double kP1 = 0.1;
+    private final ADIS16448_IMU m_imu;
+    private final double kP1 = 0.2;
     private final double kI1 = 0;
-    private final double kD1 = 0;
+    private final double kD1 = 0.2;
     private final double kF1 = 0;
     private final double kP2 = 2.0;
     private final double kI2 = 0;
     private final double kD2 = 4.0;
     private final double kF2 = 0;
     private final int smoothing = 4;
-    private final ADIS16448_IMU m_imu;
+    private double targetPos;
+    private double turningValue;
 
     public AutoDriveBase(final WPI_TalonSRX motorLeft1, final WPI_TalonSRX motorLeft2, final WPI_TalonSRX motorRight1,
                         final WPI_TalonSRX motorRight2, ADIS16448_IMU imu) {
@@ -61,9 +63,13 @@ public class AutoDriveBase extends SubsystemBase{
         m_motorLeft1.setSelectedSensorPosition(0, 0, 30);
         m_motorLeft1.configMotionSCurveStrength(smoothing);
     }
+    public void setDistance(double distance){
+        targetPos =  Constants.Measurements.WHEEL_MOVE_TICK * 217.391 * distance; //inches
+    }
     public void motionMagicDrive(){
-        double targetPos = Constants.Measurements.WHEEL_MOVE_TICK * 4096 * 3;
-        double turningValue = 0 - m_imu.getAngle();
         m_motorLeft1.set(ControlMode.MotionMagic, targetPos);
+        m_motorLeft2.follow(m_motorLeft1);
+        m_motorRight1.follow(m_motorLeft1);
+        m_motorRight2.follow(m_motorLeft1);
     }
 }
