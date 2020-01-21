@@ -14,13 +14,15 @@ import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.IntakeLift;
 import frc.robot.subsystems.IntakeWheel;
 import frc.robot.commands.Intake;
-import frc.robot.commands.groups.Autonomous;
 import frc.robot.commands.groups.Teleop;
+import frc.robot.commands.groups.Autonomous;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
+import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
@@ -55,7 +57,8 @@ public class Robot extends TimedRobot {
     m_autoDriveBase = new AutoDriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1),
                                         new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2),
                                         new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
-                                        new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2));
+                                        new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2),
+                                        new ADIS16448_IMU());
 
     m_flyWheel = new FlyWheel(new WPI_TalonSRX(Constants.Motors.FLYWHEEL_1),
                               new WPI_TalonSRX(Constants.Motors.FLYWHEEL_2));
