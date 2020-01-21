@@ -10,16 +10,25 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Talon;
 import frc.robot.Constants;
+import frc.robot.subsystems.FlyWheel;
 import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.IntakeLift;
+import frc.robot.subsystems.IntakeWheel;
+import frc.robot.commands.Intake;
 import frc.robot.commands.groups.Teleop;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.robot.subsystems.*;
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -34,6 +43,8 @@ public class Robot extends TimedRobot {
   private DriveBase m_driveBase;
   private FlyWheel m_flyWheel;
   private Hang m_Climbing;
+  private IntakeLift m_intakeLift;
+  private IntakeWheel m_intakeWheel;
 
 
   /**
@@ -42,8 +53,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+
     m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
 
     m_driveBase = new DriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1),
@@ -54,27 +67,27 @@ public class Robot extends TimedRobot {
     m_flyWheel = new FlyWheel(new WPI_TalonSRX(Constants.Motors.FLYWHEEL_1),
                               new WPI_TalonSRX(Constants.Motors.FLYWHEEL_2));
 
+
     m_Climbing = new Hang(new WPI_TalonSRX(0),
                       new WPI_TalonSRX(0));
 
 
 
 
+    m_intakeLift = new IntakeLift(new DoubleSolenoid(1, 2));
+
+    m_intakeWheel = new IntakeWheel(new WPI_TalonSRX(Constants.Motors.INTAKEWHEEL));
+
+
 
     CommandScheduler.getInstance().registerSubsystem(m_driveBase, 
                                                      m_flyWheel,
-                                                     m_Climbing);
+                                                     m_Climbing,
+                                                     m_intakeLift,
+                                                     m_intakeWheel);
 
-
+    getButton("A").whenPressed(new Intake(m_intakeLift, m_intakeWheel));
   }
-
-  /**
-   * This function is called every robot packet, no matter the mode. Use this for items like
-   * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
-   *
-   * <p>This runs after the mode specific periodic functions, but before
-   * LiveWindow and SmartDashboard integrated updating.
-   */
   @Override
   public void robotPeriodic() {
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
@@ -95,10 +108,11 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
   }
 
+
   /**
    * This autonomous runs the autonomous command selected by your {@link } class.
    */
-  @Override
+
   public void autonomousInit() {
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -144,5 +158,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+  }
+
+  private JoystickButton getButton(final String name) {
+    return new JoystickButton(m_xboxController, XboxController.Button.valueOf("k"+name).value);
   }
 }

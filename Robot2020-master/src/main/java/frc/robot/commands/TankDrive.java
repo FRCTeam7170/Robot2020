@@ -14,7 +14,7 @@ public class TankDrive extends CommandBase{
   //private final int m_RightStickX = Constants.Controller.RIGHT_STICK_X; 
   private final double speed = Constants.Motors.SPEED;
 
-  public TankDrive(final DriveBase driveBase, XboxController xboxController) {
+  public TankDrive(final DriveBase driveBase, final XboxController xboxController) {
     m_xboxController = xboxController;
     m_driveBase = driveBase;
     addRequirements(m_driveBase);
