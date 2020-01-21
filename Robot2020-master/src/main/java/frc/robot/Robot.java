@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.Talon;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.commands.groups.Teleop;
@@ -14,9 +16,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.*;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import frc.robot.subsystems.FlyWheel;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -30,6 +32,7 @@ public class Robot extends TimedRobot {
   private Teleop teleOP;
   private DriveBase m_driveBase;
   private FlyWheel m_flyWheel;
+  private Hang m_Climbing;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -49,13 +52,17 @@ public class Robot extends TimedRobot {
     m_flyWheel = new FlyWheel(new WPI_TalonSRX(Constants.Motors.FLYWHEEL_1),
                               new WPI_TalonSRX(Constants.Motors.FLYWHEEL_2));
 
+    m_Climbing = new Hang(new WPI_TalonSRX(0),
+                      new WPI_TalonSRX(0));
+
 
 
 
 
     CommandScheduler.getInstance().registerSubsystem(m_driveBase, 
-                                                     m_flyWheel);
-
+                                                     m_flyWheel,
+                                                     m_Climbing);
+    
 
   }
 
