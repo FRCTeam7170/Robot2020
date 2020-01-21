@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.robot.subsystems.*;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -27,12 +28,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
  * project.
  */
 public class Robot extends TimedRobot {
-  private XboxController xboxController;
+  private XboxController m_xboxController;
   private Command m_autonomousCommand;
   private Teleop teleOP;
   private DriveBase m_driveBase;
   private FlyWheel m_flyWheel;
   private Hang m_Climbing;
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -42,7 +44,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
+    m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
 
     m_driveBase = new DriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1),
                                 new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2),
@@ -62,7 +64,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().registerSubsystem(m_driveBase, 
                                                      m_flyWheel,
                                                      m_Climbing);
-    
+
 
   }
 
@@ -120,7 +122,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    teleOP = new Teleop(xboxController, m_driveBase, m_flyWheel);
+    teleOP = new Teleop(m_xboxController, m_driveBase, m_flyWheel);
     teleOP.schedule();
   }
 
