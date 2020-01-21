@@ -72,4 +72,12 @@ public class AutoDriveBase extends SubsystemBase{
         m_motorRight1.follow(m_motorLeft1);
         m_motorRight2.follow(m_motorLeft1);
     }
+
+    public void moveInches (double inches){
+        m_motorLeft1.set(ControlMode.Position, inches / 0.0046);
+    }
+
+    public void turnDegrees (double degrees){
+        // m_motorLeft1.set(ControlMode.Position, ) //Unsure of how to use Talon PID with non Talon sensor
+    }
 }
