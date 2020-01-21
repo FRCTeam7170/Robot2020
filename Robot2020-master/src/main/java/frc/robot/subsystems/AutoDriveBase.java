@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.SensorTerm;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -42,6 +43,9 @@ public class AutoDriveBase extends SubsystemBase{
         m_motorRight1.setSafetyEnabled(false);
         m_motorRight2.setSafetyEnabled(false);
 
+        m_motorLeft2.follow(m_motorRight1);
+        m_motorRight2.follow(m_motorRight1);
+
 		/* Disable all motor controllers */
 		m_motorRight1.set(ControlMode.PercentOutput, 0);
         m_motorLeft1.set(ControlMode.PercentOutput, 0);
@@ -57,15 +61,15 @@ public class AutoDriveBase extends SubsystemBase{
 		/** Feedback Sensor Configuration */
 		
 		/* Configure the left Talon's selected sensor as local QuadEncoder */
-		m_motorLeft1.configSelectedFeedbackSensor(	FeedbackDevice.QuadEncoder,				// Local Feedback Source
-													0,					// PID Slot for Source [0, 1]
-													30);					// Configuration Timeout
+		m_motorLeft1.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder,		// Local Feedback Source
+												    0,					            // PID Slot for Source [0, 1]
+													30);					        // Configuration Timeout
 
 		/* Configure the Remote Talon's selected sensor as a remote sensor for the right Talon */
 		m_motorRight1.configRemoteFeedbackFilter(m_motorLeft1.getDeviceID(),					// Device ID of Source
-												RemoteSensorSource.TalonSRX_SelectedSensor,	// Remote Feedback Source
-												0,							// Source number [0, 1]
-												30);						// Configuration Timeout
+												RemoteSensorSource.TalonSRX_SelectedSensor,	    // Remote Feedback Source
+												0,							                    // Source number [0, 1]
+												30);						                    // Configuration Timeout
 		
 		/* Setup Sum signal to be used for Distance */
 		m_motorRight1.configSensorTerm(SensorTerm.Sum0, FeedbackDevice.RemoteSensor0, 30);				// Feedback Device of Remote Talon
@@ -81,9 +85,9 @@ public class AutoDriveBase extends SubsystemBase{
 													30);
 		
 		/* Scale Feedback by 0.5 to half the sum of Distance */
-		m_motorRight1.configSelectedFeedbackCoefficient(	0.5, 						// Coefficient
-														0,		// PID Slot of Source 
-														30);		// Configuration Timeout
+		m_motorRight1.configSelectedFeedbackCoefficient(0.5, 						    // Coefficient
+														0,		                        // PID Slot of Source 
+														30);		                    // Configuration Timeout
 		
 		/* Configure Difference [Difference between both QuadEncoders] to be used for Auxiliary PID Index */
 		m_motorRight1.configSelectedFeedbackSensor(	FeedbackDevice.SensorDifference, 
@@ -168,17 +172,21 @@ public class AutoDriveBase extends SubsystemBase{
         m_motorRight1.configMotionSCurveStrength(smoothing);
     }
     public void setDistance(double distance){
-        targetPos =  Constants.Measurements.WHEEL_MOVE_TICK * 217.391 * distance; //inches
+        targetPos =  distance * 4096 / 18.85 / 2; //inches
+        SmartDashboard.putNumber("target", targetPos);
     }
-    public void motionMagicDrive(){
+    public void drive(){
+        SmartDashboard.putNumber("targetPos", targetPos);
         turningValue = m_motorRight1.getSelectedSensorPosition(1);
         lockedDistance = m_motorRight1.getSelectedSensorPosition(0);
         m_motorRight1.selectProfileSlot(0, 0);
         m_motorRight1.selectProfileSlot(1, 1);
 
-        m_motorRight1.set(ControlMode.MotionMagic, targetPos + lockedDistance, DemandType.AuxPID, turningValue);
+        m_motorRight1.set(ControlMode.MotionMagic, targetPos, DemandType.AuxPID, turningValue);
         m_motorLeft1.follow(m_motorRight1, FollowerType.AuxOutput1);
-        m_motorLeft2.follow(m_motorRight1);
-        m_motorRight2.follow(m_motorRight1);
+    }
+    public void readSensors(){
+        SmartDashboard.putNumber("Sensor left", m_motorLeft1.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("Sensor right", m_motorRight1.getSelectedSensorVelocity());
     }
 } 

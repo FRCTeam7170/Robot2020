@@ -12,12 +12,12 @@ public class AutoDrive extends CommandBase{
         addRequirements(m_autoDriveBase);
     }
     public void initialize(){
-        m_autoDriveBase.setDistance(Constants.Measurements.AUTO_DRIVE_DISTANZ);
+        m_autoDriveBase.setDistance(144);
     }
     public void execute(){
-        m_autoDriveBase.motionMagicDrive();
+        m_autoDriveBase.drive();
     }
     public boolean isFinished(){
-        return true;
+        return false;
     }
 }
