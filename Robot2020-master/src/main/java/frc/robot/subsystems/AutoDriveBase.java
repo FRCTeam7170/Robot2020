@@ -66,4 +66,12 @@ public class AutoDriveBase extends SubsystemBase{
         double turningValue = 0 - m_imu.getAngle();
         m_motorLeft1.set(ControlMode.MotionMagic, targetPos);
     }
+
+    public void moveInches (double inches){
+        m_motorLeft1.set(ControlMode.Position, inches / 0.0046);
+    }
+
+    public void turnDegrees (double degrees){
+        // m_motorLeft1.set(ControlMode.Position, ) //Unsure of how to use Talon PID with non Talon sensor
+    }
 }
