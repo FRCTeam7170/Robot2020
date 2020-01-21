@@ -58,10 +58,10 @@ public class Robot extends TimedRobot {
 
     m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
 
-    m_driveBase = new DriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1),
-                                new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2),
-                                new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
-                                new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2));
+    //m_driveBase = new DriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1),
+    //                            new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2),
+    //                            new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
+    //                            new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2));
 
     m_autoDriveBase = new AutoDriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1),
                                         new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2),
@@ -85,7 +85,7 @@ public class Robot extends TimedRobot {
 
 
 
-    CommandScheduler.getInstance().registerSubsystem(m_driveBase, 
+    CommandScheduler.getInstance().registerSubsystem(//m_driveBase, 
                                                      m_flyWheel,
                                                      m_Climbing,
                                                      m_intakeLift,

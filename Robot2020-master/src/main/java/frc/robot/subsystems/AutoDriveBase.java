@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
@@ -21,6 +20,7 @@ public class AutoDriveBase extends SubsystemBase{
     private final double kD2 = 4.0;
     private final double kF2 = 0;
     private final int smoothing = 4;
+    private double targetPos;
     private final ADIS16448_IMU m_imu;
 
     public AutoDriveBase(final WPI_TalonSRX motorLeft1, final WPI_TalonSRX motorLeft2, final WPI_TalonSRX motorRight1,
@@ -61,14 +61,12 @@ public class AutoDriveBase extends SubsystemBase{
         m_motorLeft1.setSelectedSensorPosition(0, 0, 30);
         m_motorLeft1.configMotionSCurveStrength(smoothing);
     }
-    public void motionMagicDrive(){
-        double targetPos = Constants.Measurements.WHEEL_MOVE_TICK * 4096 * 3;
-        double turningValue = 0 - m_imu.getAngle();
-        m_motorLeft1.set(ControlMode.MotionMagic, targetPos);
+    public void setDistance(double distance){
+        targetPos = Constants.Measurements.WHEEL_MOVE_TICK * 217.391 * distance;
     }
 
-    public void moveInches (double inches){
-        m_motorLeft1.set(ControlMode.Position, inches / 0.0046);
+    public void move(){
+        m_motorLeft1.set(ControlMode.MotionMagic, targetPos);
     }
 
     public void turnDegrees (double degrees){
