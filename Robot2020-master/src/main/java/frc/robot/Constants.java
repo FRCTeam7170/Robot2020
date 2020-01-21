@@ -45,4 +45,8 @@ public final class Constants {
         public static final int BUTTON_MENU = 8; 
         public static final int BUTTON_START = 7; 
     }
+    public final static class Measurements {
+        public static final double WHEEL_CIRCUMFERENCE = 18.85; //inch
+        public static final double WHEEL_MOVE_TICK = 0.0046; //inch
+    }
 }
