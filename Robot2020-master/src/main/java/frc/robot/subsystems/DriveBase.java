@@ -22,6 +22,11 @@ public class DriveBase extends SubsystemBase {
     m_motorRight2.follow(m_motorRight1);
     m_motorRight2.setSafetyEnabled(false);
 
+    m_motorLeft1.configPeakOutputForward(+1.0, 30);
+		m_motorLeft1.configPeakOutputReverse(-1.0, 30);
+		m_motorRight1.configPeakOutputForward(+1.0, 30);
+		m_motorRight1.configPeakOutputReverse(-1.0, 30);
+
     m_drive = new DifferentialDrive(m_motorLeft1, m_motorRight1);
   }
 

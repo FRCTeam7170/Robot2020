@@ -59,23 +59,12 @@ public class Robot extends TimedRobot {
 
     m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
 
-    m_driveBase = new DriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1),
-                                new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2),
-                                new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
-                                new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2));
-
-    m_autoDriveBase = new AutoDriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1),
-                                        new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2),
-                                        new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
-                                        new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2),
-                                        new ADIS16448_IMU());
-
     m_flyWheel = new FlyWheel(new WPI_TalonSRX(Constants.Motors.FLYWHEEL_1),
                               new WPI_TalonSRX(Constants.Motors.FLYWHEEL_2));
 
 
     m_Climbing = new Hang(new WPI_TalonSRX(0),
-                      new WPI_TalonSRX(0));
+                          new WPI_TalonSRX(0));
 
 
 
@@ -86,12 +75,12 @@ public class Robot extends TimedRobot {
 
 
 
-    CommandScheduler.getInstance().registerSubsystem(m_driveBase, 
+    CommandScheduler.getInstance().registerSubsystem(//m_driveBase, 
                                                      m_flyWheel,
                                                      m_Climbing,
                                                      m_intakeLift,
-                                                     m_intakeWheel,
-                                                     m_autoDriveBase);
+                                                     m_intakeWheel);
+                                                     //m_autoDriveBase);
 
     getButton("A").whenPressed(new Intake(m_intakeLift, m_intakeWheel));
   }
@@ -121,6 +110,17 @@ public class Robot extends TimedRobot {
    */
 
   public void autonomousInit() {
+
+    if (teleOP != null){
+      teleOP.cancel();
+    }
+
+    m_autoDriveBase = new AutoDriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1),
+                                        new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2),
+                                        new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
+                                        new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2));
+
+    CommandScheduler.getInstance().registerSubsystem(m_autoDriveBase);
     // schedule the autonomous command (example)
     autonomous = new Autonomous(m_autoDriveBase);
     autonomous.schedule();
@@ -142,6 +142,12 @@ public class Robot extends TimedRobot {
     if (autonomous != null) {
       autonomous.cancel();
     }
+    m_driveBase = new DriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1),
+                                new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2),
+                                new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
+                                new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2));
+
+    CommandScheduler.getInstance().registerSubsystem(m_driveBase);
     teleOP = new Teleop(m_xboxController, m_driveBase, m_flyWheel);
     teleOP.schedule();
   }
