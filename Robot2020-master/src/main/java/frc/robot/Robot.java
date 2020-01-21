@@ -7,8 +7,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.Talon;
 import frc.robot.Constants;
 import frc.robot.subsystems.FlyWheel;
 import frc.robot.subsystems.AutoDriveBase;
@@ -22,11 +20,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.robot.subsystems.*;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
 

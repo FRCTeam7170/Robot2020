@@ -7,6 +7,7 @@ public class PIDDrive extends CommandBase{
     private final AutoDriveBase m_autoDriveBase;
     public PIDDrive(AutoDriveBase autoDriveBase){
         m_autoDriveBase = autoDriveBase;
+        addRequirements(m_autoDriveBase);
     }
     
 }
