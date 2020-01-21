@@ -67,15 +67,14 @@ public class Robot extends TimedRobot {
     m_autoDriveBase = new AutoDriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1),
                                         new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2),
                                         new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1),
-                                        new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2),
-                                        new ADIS16448_IMU());
+                                        new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2));
 
     m_flyWheel = new FlyWheel(new WPI_TalonSRX(Constants.Motors.FLYWHEEL_1),
                               new WPI_TalonSRX(Constants.Motors.FLYWHEEL_2));
 
 
     m_Climbing = new Hang(new WPI_TalonSRX(0),
-                      new WPI_TalonSRX(0));
+                          new WPI_TalonSRX(0));
 
 
 

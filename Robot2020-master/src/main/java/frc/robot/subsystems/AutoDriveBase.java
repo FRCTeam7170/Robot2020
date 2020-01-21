@@ -37,9 +37,14 @@ public class AutoDriveBase extends SubsystemBase{
         m_motorRight1 = motorRight1;
         m_motorRight2 = motorRight2;
 
+        m_motorLeft1.setSafetyEnabled(false);
+        m_motorLeft2.setSafetyEnabled(false);
+        m_motorRight1.setSafetyEnabled(false);
+        m_motorRight2.setSafetyEnabled(false);
+
 		/* Disable all motor controllers */
 		m_motorRight1.set(ControlMode.PercentOutput, 0);
-		m_motorLeft1.set(ControlMode.PercentOutput, 0);
+        m_motorLeft1.set(ControlMode.PercentOutput, 0);
 
 		/* Factory Default all hardware to prevent unexpected behaviour */
 		m_motorRight1.configFactoryDefault();
