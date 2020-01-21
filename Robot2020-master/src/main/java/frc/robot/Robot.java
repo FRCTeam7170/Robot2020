@@ -24,6 +24,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
+
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -37,9 +41,11 @@ public class Robot extends TimedRobot {
   private Teleop teleOP;
   private DriveBase m_driveBase;
   private FlyWheel m_flyWheel;
+  private Hang m_Climbing;
   private IntakeLift m_intakeLift;
   private IntakeWheel m_intakeWheel;
   private AutoDriveBase m_autoDriveBase;
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -47,6 +53,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+
+    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // autonomous chooser on the dashboard.
+
     m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
 
     m_driveBase = new DriveBase(new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1),
@@ -63,13 +73,22 @@ public class Robot extends TimedRobot {
     m_flyWheel = new FlyWheel(new WPI_TalonSRX(Constants.Motors.FLYWHEEL_1),
                               new WPI_TalonSRX(Constants.Motors.FLYWHEEL_2));
 
+
+    m_Climbing = new Hang(new WPI_TalonSRX(0),
+                      new WPI_TalonSRX(0));
+
+
+
+
     m_intakeLift = new IntakeLift(new DoubleSolenoid(1, 2));
 
     m_intakeWheel = new IntakeWheel(new WPI_TalonSRX(Constants.Motors.INTAKEWHEEL));
 
 
+
     CommandScheduler.getInstance().registerSubsystem(m_driveBase, 
                                                      m_flyWheel,
+                                                     m_Climbing,
                                                      m_intakeLift,
                                                      m_intakeWheel,
                                                      m_autoDriveBase);
@@ -95,7 +114,12 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
   }
-  @Override
+
+
+  /**
+   * This autonomous runs the autonomous command selected by your {@link } class.
+   */
+
   public void autonomousInit() {
     // schedule the autonomous command (example)
     autonomous = new Autonomous(m_autoDriveBase);
