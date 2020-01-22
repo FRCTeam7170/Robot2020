@@ -46,7 +46,7 @@ public final class Constants {
         public static final int BUTTON_START = 7; 
     }
     public final static class Measurements {
-        public static final double WHEEL_CIRCUMFERENCE = 18.85; //inch
+        public static final double WHEEL_CIRCUMFERENCE = 6 / Math.PI; //inch
         public static final double WHEEL_MOVE_TICK = WHEEL_CIRCUMFERENCE / 4096; //inch, ~0.0046
         public static final double AUTO_DRIVE_DISTANCE = 24; //inch
     }

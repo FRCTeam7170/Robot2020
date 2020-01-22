@@ -70,6 +70,7 @@ public class AutoDriveBase extends SubsystemBase{
     }
 
     public void turnDegrees (double degrees){
-        // m_motorLeft1.set(ControlMode.Position, ) //Unsure of how to use Talon PID with non Talon sensor
+        m_motorLeft1.set(ControlMode.Position, degrees - m_imu.getAngle());
+        m_motorRight1.set(ControlMode.Position, -(degrees - m_imu.getAngle()));
     }
 }
