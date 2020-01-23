@@ -78,7 +78,7 @@ public class FlyWheel extends SubsystemBase{
 
     public void set_FlyWheel() {
         ShuffleboardTab FlyWheelTab = Shuffleboard.getTab("FlyWheelTab");
-        FlyWheelTab.addNumber("RPM", new DoubleSupplier(){
+        FlyWheelTab.addNumber("RPM Flywheel", new DoubleSupplier(){
             public double getAsDouble() {return flywheelMotor2.getSelectedSensorVelocity() * 0.15;}
         });
         rpmout = m_targetRPM * 4096 / 600;
