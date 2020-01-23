@@ -9,6 +9,11 @@ import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+
+import edu.wpi.first.networktables.EntryListenerFlags;
+
 public class AutoDriveBase extends SubsystemBase{
     private final WPI_TalonSRX m_motorLeft1, m_motorLeft2, m_motorRight1, m_motorRight2;
     private final double kP1 = 0.1;
@@ -32,6 +37,42 @@ public class AutoDriveBase extends SubsystemBase{
         m_motorRight2 = motorRight2;
         m_imu = imu;
 
+        ShuffleboardTab AutoDriveBaseTab = Shuffleboard.getTab("AutoDriveBase_PID_Values");
+
+        AutoDriveBaseTab.add("kP1", kP1).getEntry().addListener(
+                notification -> {m_motorLeft1.config_kP(0, notification.value.getDouble());},
+                EntryListenerFlags.kUpdate
+        );
+        AutoDriveBaseTab.add("kI1", kI1).getEntry().addListener(
+                notification -> {m_motorLeft1.config_kI(0, notification.value.getDouble());},
+                EntryListenerFlags.kUpdate
+        );
+        AutoDriveBaseTab.add("kD1", kD1).getEntry().addListener(
+                notification -> {m_motorLeft1.config_kD(0, notification.value.getDouble());},
+                EntryListenerFlags.kUpdate
+        );
+        AutoDriveBaseTab.add("kF1", kF1).getEntry().addListener(
+                notification -> {m_motorLeft1.config_kF(0, notification.value.getDouble());},
+                EntryListenerFlags.kUpdate
+        );
+
+        // AutoDriveBaseTab.add("kP2", kP2).getEntry().addListener(
+        //     notification -> {m_motorLeft1.config_kP(0, notification.value.getDouble());},
+        //     EntryListenerFlags.kUpdate
+        // );
+        // AutoDriveBaseTab.add("kI2", kI2).getEntry().addListener(
+        //         notification -> {m_motorLeft1.config_kI(0, notification.value.getDouble());},
+        //         EntryListenerFlags.kUpdate
+        // );
+        // AutoDriveBaseTab.add("kD2", kD2).getEntry().addListener(
+        //         notification -> {m_motorLeft1.config_kD(0, notification.value.getDouble());},
+        //         EntryListenerFlags.kUpdate
+        // );
+        // AutoDriveBaseTab.add("kF2", kF2).getEntry().addListener(
+        //         notification -> {m_motorLeft1.config_kF(0, notification.value.getDouble());},
+        //         EntryListenerFlags.kUpdate
+        // );
+
         m_motorLeft1.configFactoryDefault();
 
         m_motorLeft1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
@@ -50,10 +91,6 @@ public class AutoDriveBase extends SubsystemBase{
         m_motorLeft1.configPeakOutputReverse(-1, 30);
         
 		m_motorLeft1.selectProfileSlot(0, 0);
-		m_motorLeft1.config_kF(0, kF1, 30);
-		m_motorLeft1.config_kP(0, kP1, 30);
-		m_motorLeft1.config_kI(0, kI1, 30);
-        m_motorLeft1.config_kD(0, kD1, 30);
         
 		m_motorLeft1.configMotionCruiseVelocity(15000, 30);
         m_motorLeft1.configMotionAcceleration(6000, 30);
