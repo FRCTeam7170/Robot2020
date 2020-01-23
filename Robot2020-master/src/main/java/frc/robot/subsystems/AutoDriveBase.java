@@ -15,6 +15,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+
+import edu.wpi.first.networktables.EntryListenerFlags;
+
 public class AutoDriveBase extends SubsystemBase{
     private final WPI_TalonSRX m_motorLeft1, m_motorLeft2, m_motorRight1, m_motorRight2;
     private final double kP1 = 0.2;
@@ -29,6 +34,7 @@ public class AutoDriveBase extends SubsystemBase{
     private double targetPos;
     private double turningValue;
     private double lockedDistance;
+
 
     public AutoDriveBase(final WPI_TalonSRX motorLeft1, final WPI_TalonSRX motorLeft2, final WPI_TalonSRX motorRight1,
                         final WPI_TalonSRX motorRight2) {
@@ -174,6 +180,67 @@ public class AutoDriveBase extends SubsystemBase{
     public void setDistance(double distance){
         targetPos =  distance * 4096 / 18.85 / 2; //inches
         SmartDashboard.putNumber("target", targetPos);
+
+        ShuffleboardTab AutoDriveBaseTab = Shuffleboard.getTab("AutoDriveBase_PID_Values");
+
+        AutoDriveBaseTab.add("kP1", kP1).getEntry().addListener(
+                notification -> {m_motorLeft1.config_kP(0, notification.value.getDouble());},
+                EntryListenerFlags.kUpdate
+        );
+        AutoDriveBaseTab.add("kI1", kI1).getEntry().addListener(
+                notification -> {m_motorLeft1.config_kI(0, notification.value.getDouble());},
+                EntryListenerFlags.kUpdate
+        );
+        AutoDriveBaseTab.add("kD1", kD1).getEntry().addListener(
+                notification -> {m_motorLeft1.config_kD(0, notification.value.getDouble());},
+                EntryListenerFlags.kUpdate
+        );
+        AutoDriveBaseTab.add("kF1", kF1).getEntry().addListener(
+                notification -> {m_motorLeft1.config_kF(0, notification.value.getDouble());},
+                EntryListenerFlags.kUpdate
+        );
+
+        // AutoDriveBaseTab.add("kP2", kP2).getEntry().addListener(
+        //     notification -> {m_motorLeft1.config_kP(0, notification.value.getDouble());},
+        //     EntryListenerFlags.kUpdate
+        // );
+        // AutoDriveBaseTab.add("kI2", kI2).getEntry().addListener(
+        //         notification -> {m_motorLeft1.config_kI(0, notification.value.getDouble());},
+        //         EntryListenerFlags.kUpdate
+        // );
+        // AutoDriveBaseTab.add("kD2", kD2).getEntry().addListener(
+        //         notification -> {m_motorLeft1.config_kD(0, notification.value.getDouble());},
+        //         EntryListenerFlags.kUpdate
+        // );
+        // AutoDriveBaseTab.add("kF2", kF2).getEntry().addListener(
+        //         notification -> {m_motorLeft1.config_kF(0, notification.value.getDouble());},
+        //         EntryListenerFlags.kUpdate
+        // );
+
+        m_motorLeft1.configFactoryDefault();
+
+        m_motorLeft1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
+        
+        m_motorLeft1.configNeutralDeadband(0.001, 30);
+        
+		m_motorLeft1.setSensorPhase(false);
+        m_motorLeft1.setInverted(false);
+        
+		m_motorLeft1.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 30);
+        m_motorLeft1.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 30);
+        
+		m_motorLeft1.configNominalOutputForward(0, 30);
+		m_motorLeft1.configNominalOutputReverse(0, 30);
+		m_motorLeft1.configPeakOutputForward(1, 30);
+        m_motorLeft1.configPeakOutputReverse(-1, 30);
+        
+		m_motorLeft1.selectProfileSlot(0, 0);
+        
+		m_motorLeft1.configMotionCruiseVelocity(15000, 30);
+        m_motorLeft1.configMotionAcceleration(6000, 30);
+        
+        m_motorLeft1.setSelectedSensorPosition(0, 0, 30);
+        m_motorLeft1.configMotionSCurveStrength(smoothing);
     }
     public void drive(){
         SmartDashboard.putNumber("targetPos", targetPos);
@@ -181,12 +248,15 @@ public class AutoDriveBase extends SubsystemBase{
         lockedDistance = m_motorRight1.getSelectedSensorPosition(0);
         m_motorRight1.selectProfileSlot(0, 0);
         m_motorRight1.selectProfileSlot(1, 1);
-
         m_motorRight1.set(ControlMode.MotionMagic, targetPos, DemandType.AuxPID, turningValue);
         m_motorLeft1.follow(m_motorRight1, FollowerType.AuxOutput1);
     }
     public void readSensors(){
         SmartDashboard.putNumber("Sensor left", m_motorLeft1.getSelectedSensorVelocity());
         SmartDashboard.putNumber("Sensor right", m_motorRight1.getSelectedSensorVelocity());
+    }
+
+    public void move(){
+        m_motorLeft1.set(ControlMode.MotionMagic, targetPos);
     }
 } 

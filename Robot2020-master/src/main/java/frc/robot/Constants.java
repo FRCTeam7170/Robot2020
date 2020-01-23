@@ -18,8 +18,8 @@ package frc.robot;
 public final class Constants {
     public final static class Motors {
         public static final double SPEED = 1;
-        public static final int MOTOR_LEFT_1 = 14;
-        public static final int MOTOR_LEFT_2 = 15;
+        public static final int MOTOR_LEFT_1 = 15;
+        public static final int MOTOR_LEFT_2 = 14;
         public static final int MOTOR_RIGHT_1 = 11;
         public static final int MOTOR_RIGHT_2 = 12;
         public static final int FLYWHEEL_1 = 12;
@@ -46,8 +46,9 @@ public final class Constants {
         public static final int BUTTON_START = 7; 
     }
     public final static class Measurements {
-        public static final double WHEEL_CIRCUMFERENCE = 18.85; //inch
-        public static final double WHEEL_MOVE_TICK = 0.0046; //inch
-        public static final double AUTO_DRIVE_DISTANZ = 24; //inch
+
+        public static final double WHEEL_CIRCUMFERENCE = 6 * Math.PI; //inch
+        public static final double WHEEL_MOVE_TICK = WHEEL_CIRCUMFERENCE / 4096; //inch, ~0.0046
+        public static final double AUTO_DRIVE_DISTANCE = 24; //inch
     }
 }
