@@ -70,6 +70,9 @@ public class FlyWheel extends SubsystemBase{
                 notification -> {flywheelMotor1.config_kF(0, notification.value.getDouble());},
                 EntryListenerFlags.kUpdate
         );
+        FlyWheelTab.addNumber("RPM", new DoubleSupplier(){
+            public double getAsDouble() {return flywheelMotor2.getSelectedSensorVelocity() * 0.15;}
+        });
     }
 
     public void setRPM(final double rpm) {
@@ -77,10 +80,6 @@ public class FlyWheel extends SubsystemBase{
     }
 
     public void set_FlyWheel() {
-        ShuffleboardTab FlyWheelTab = Shuffleboard.getTab("FlyWheelTab");
-        FlyWheelTab.addNumber("RPM Flywheel", new DoubleSupplier(){
-            public double getAsDouble() {return flywheelMotor2.getSelectedSensorVelocity() * 0.15;}
-        });
         rpmout = m_targetRPM * 4096 / 600;
         flywheelMotor1.set(ControlMode.Velocity, rpmout);
     }
