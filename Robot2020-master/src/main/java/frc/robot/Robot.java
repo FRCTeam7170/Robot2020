@@ -63,7 +63,7 @@ public class Robot extends TimedRobot {
                           new WPI_TalonSRX(0));
 
 
-    m_intakeLift = new IntakeLift(new DoubleSolenoid(1, 2));
+    m_intakeLift = new IntakeLift(new DoubleSolenoid(Constants.Pneumatics.SOLENOID_1_ON, Constants.Pneumatics.SOLENOID_1_OFF));
 
     m_intakeWheel = new IntakeWheel(new WPI_TalonSRX(Constants.Motors.INTAKEWHEEL));
 

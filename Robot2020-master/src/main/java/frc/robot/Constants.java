@@ -22,10 +22,14 @@ public final class Constants {
         public static final int MOTOR_LEFT_2 = 15;
         public static final int MOTOR_RIGHT_1 = 11;
         public static final int MOTOR_RIGHT_2 = 12;
-        public static final int FLYWHEEL_1 = 12;
+        public static final int FLYWHEEL_1 = 16;
         public static final int FLYWHEEL_2 = 13;
         public static final int INTAKEWHEEL = 16;
-        public static final int SOLNAOID_1 = 16;
+    }
+
+    public final static class Pneumatics{
+        public static final int SOLENOID_1_ON = 0;
+        public static final int SOLENOID_1_OFF = 0;
     }
 
     public final static class Controller {
