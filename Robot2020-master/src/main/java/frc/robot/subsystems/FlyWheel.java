@@ -32,6 +32,7 @@ public class FlyWheel extends SubsystemBase{
 
         flywheelMotor1 = motor1;
         flywheelMotor2 = motor2;
+        flywheelMotor2.setInverted(true);
         flywheelMotor2.follow(flywheelMotor1);
 
         flywheelMotor1.configFactoryDefault();
