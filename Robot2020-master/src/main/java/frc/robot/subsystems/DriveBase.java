@@ -35,16 +35,17 @@ public class DriveBase extends SubsystemBase {
 	private double targetPos;
 	private double turningValue;
 	private double lockedDistance;
+	private double speed = Constants.Motors.SPEED;
 
 	public DriveBase(boolean arsch) {
-		m_motorLeft1.configPeakOutputForward(+1.0, 30);
-		m_motorLeft1.configPeakOutputReverse(-1.0, 30);
-		m_motorRight1.configPeakOutputForward(+1.0, 30);
-		m_motorRight1.configPeakOutputReverse(-1.0, 30);
-		m_motorLeft2.configPeakOutputForward(+1.0, 30);
-		m_motorLeft2.configPeakOutputReverse(-1.0, 30);
-		m_motorRight2.configPeakOutputForward(+1.0, 30);
-		m_motorRight2.configPeakOutputReverse(-1.0, 30);
+		m_motorLeft1.configPeakOutputForward(+speed, 30);
+		m_motorLeft1.configPeakOutputReverse(-speed, 30);
+		m_motorRight1.configPeakOutputForward(+speed, 30);
+		m_motorRight1.configPeakOutputReverse(-speed, 30);
+		m_motorLeft2.configPeakOutputForward(+speed, 30);
+		m_motorLeft2.configPeakOutputReverse(-speed, 30);
+		m_motorRight2.configPeakOutputForward(+speed, 30);
+		m_motorRight2.configPeakOutputReverse(-speed, 30);
 	}
 
 	public DriveBase() {
@@ -107,8 +108,8 @@ public class DriveBase extends SubsystemBase {
 		m_motorLeft1.setInverted(true);
 		m_motorLeft2.setInverted(true);
 		m_motorLeft1.setSensorPhase(true);
-		m_motorRight1.setInverted(true);
-		m_motorRight2.setInverted(true);
+		m_motorRight1.setInverted(false);
+		m_motorRight2.setInverted(false);
 		m_motorRight1.setSensorPhase(true);
 
 		/* Set status frame periods to ensure we don't have stale data */
@@ -130,14 +131,14 @@ public class DriveBase extends SubsystemBase {
 		 * Max out the peak output (for all modes). However you can limit the output of
 		 * a given PID object with configClosedLoopPeakOutput().
 		 */
-		m_motorLeft1.configPeakOutputForward(+1.0, 30);
-		m_motorLeft1.configPeakOutputReverse(-1.0, 30);
-		m_motorRight1.configPeakOutputForward(+1.0, 30);
-		m_motorRight1.configPeakOutputReverse(-1.0, 30);
-		m_motorLeft2.configPeakOutputForward(+1.0, 30);
-		m_motorLeft2.configPeakOutputReverse(-1.0, 30);
-		m_motorRight2.configPeakOutputForward(+1.0, 30);
-		m_motorRight2.configPeakOutputReverse(-1.0, 30);
+		m_motorLeft1.configPeakOutputForward(+speed, 30);
+		m_motorLeft1.configPeakOutputReverse(-speed, 30);
+		m_motorRight1.configPeakOutputForward(+speed, 30);
+		m_motorRight1.configPeakOutputReverse(-speed, 30);
+		m_motorLeft2.configPeakOutputForward(+speed, 30);
+		m_motorLeft2.configPeakOutputReverse(-speed, 30);
+		m_motorRight2.configPeakOutputForward(+speed, 30);
+		m_motorRight2.configPeakOutputReverse(-speed, 30);
 
 		/* FPID Gains for distance servo */
 		m_motorRight1.config_kP(0, kP1, 30);
@@ -251,7 +252,7 @@ public class DriveBase extends SubsystemBase {
 	public void tankDrive(final double speedLeft, final double speedRight) {
 		m_motorLeft1.set(ControlMode.PercentOutput, speedLeft);
 		m_motorLeft2.follow(m_motorLeft1);
-		m_motorRight1.set(ControlMode.PercentOutput, -speedRight);
+		m_motorRight1.set(ControlMode.PercentOutput, speedRight);
 		m_motorRight2.follow(m_motorRight1);
 	}
 }
