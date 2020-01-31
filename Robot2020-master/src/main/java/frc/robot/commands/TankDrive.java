@@ -21,6 +21,7 @@ public class TankDrive extends CommandBase{
 
   @Override
   public void initialize() {
+    //Stops drive base
     m_driveBase.stop();
   }
 

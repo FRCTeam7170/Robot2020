@@ -52,20 +52,18 @@ public final class Constants {
         public static final double AUTO_DRIVE_DISTANCE = 24; //inch
     }
     public final static class Autonomous {
+        public final static int TIMEOUT = 30;
         public final static int REMOTE_0 = 0;
         public final static int REMOTE_1 = 1;
-        /* We allow either a 0 or 1 when selecting a PID Index, where 0 is primary and 1 is auxiliary */
         public final static int PID_PRIMARY = 0;
         public final static int PID_TURN = 1;
-        /* Firmware currently supports slots [0, 3] and can be used for either PID Set */
         public final static int SLOT_0 = 0;
         public final static int SLOT_1 = 1;
         public final static int SLOT_2 = 2;
         public final static int SLOT_3 = 3;
-        /* ---- Named slots, used to clarify code ---- */
-        public final static int kSlot_Distanc = SLOT_0;
-        public final static int kSlot_Turning = SLOT_1;
-        public final static int kSlot_Velocit = SLOT_2;
-        public final static int kSlot_MotProf = SLOT_3;
+        public final static int kSlot_Distanc = 0;
+        public final static int kSlot_Turning = 1;
+        public final static int kSlot_Velocit = 2;
+        public final static int kSlot_MotProf = 3;
     }
 }
