@@ -25,6 +25,7 @@ public final class Constants {
         public static final int FLYWHEEL_1 = 16;
         public static final int FLYWHEEL_2 = 13;
         public static final int INTAKEWHEEL = 16;
+        public static final int INDEXER = 20;
     }
 
     public final static class Pneumatics{
