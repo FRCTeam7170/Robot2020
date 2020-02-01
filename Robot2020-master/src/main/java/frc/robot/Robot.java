@@ -17,13 +17,13 @@ import frc.robot.subsystems.IntakeWheel;
 import frc.robot.commands.FlyWheelSpin;
 import frc.robot.commands.Intake;
 import frc.robot.commands.LoadBall;
-import frc.robot.commands.OneShot;
 import frc.robot.commands.groups.Teleop;
 import frc.robot.commands.groups.Autonomous;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -39,14 +39,14 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
  */
 public class Robot extends TimedRobot {
   private XboxController m_xboxController;
-  private Autonomous autonomous;
   private Teleop teleOP;
-  private DriveBase m_driveBase;
-  private FlyWheel m_flyWheel;
   private Hang m_Climbing;
+  private Indexer m_indexer;
+  private FlyWheel m_flyWheel;
+  private Autonomous autonomous;
+  private DriveBase m_driveBase;
   private IntakeLift m_intakeLift;
   private IntakeWheel m_intakeWheel;
-  private Indexer m_indexer;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -79,7 +79,11 @@ public class Robot extends TimedRobot {
                                                      m_intakeLift,
                                                      m_intakeWheel,
                                                      m_indexer);
-
+/*
+    new RunCommand(m_driveBase.tankDrive(
+      m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)*Constants.Motors.SPEED, 
+      m_xboxController.getRawAxis(Constants.Controller.RIGHT_STICK_Y)*Constants.Motors.SPEED), m_driveBase);
+      */
     getButton("A").whenPressed(new Intake(m_intakeLift, m_intakeWheel));
     getButton("X").whenPressed(new FlyWheelSpin(m_flyWheel).alongWith(new LoadBall(m_indexer).andThen(new WaitCommand(1).deadlineWith())));
   }
