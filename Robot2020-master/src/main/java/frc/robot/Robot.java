@@ -9,17 +9,22 @@ package frc.robot;
 
 import frc.robot.Constants;
 import frc.robot.subsystems.Hang;
+import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.FlyWheel;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.IntakeLift;
 import frc.robot.subsystems.IntakeWheel;
+import frc.robot.commands.FlyWheelSpin;
 import frc.robot.commands.Intake;
+import frc.robot.commands.LoadBall;
+import frc.robot.commands.OneShot;
 import frc.robot.commands.groups.Teleop;
 import frc.robot.commands.groups.Autonomous;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -41,6 +46,7 @@ public class Robot extends TimedRobot {
   private Hang m_Climbing;
   private IntakeLift m_intakeLift;
   private IntakeWheel m_intakeWheel;
+  private Indexer m_indexer;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -62,19 +68,20 @@ public class Robot extends TimedRobot {
     m_Climbing = new Hang(new WPI_TalonSRX(0),
                           new WPI_TalonSRX(0));
 
-
     m_intakeLift = new IntakeLift(new DoubleSolenoid(Constants.Pneumatics.SOLENOID_1_ON, Constants.Pneumatics.SOLENOID_1_OFF));
 
     m_intakeWheel = new IntakeWheel(new WPI_TalonSRX(Constants.Motors.INTAKEWHEEL));
 
-
+    m_indexer = new Indexer();
 
     CommandScheduler.getInstance().registerSubsystem(m_flyWheel,
                                                      m_Climbing,
                                                      m_intakeLift,
-                                                     m_intakeWheel);
+                                                     m_intakeWheel,
+                                                     m_indexer);
 
     getButton("A").whenPressed(new Intake(m_intakeLift, m_intakeWheel));
+    getButton("X").whenPressed(new FlyWheelSpin(m_flyWheel).alongWith(new LoadBall(m_indexer).andThen(new WaitCommand(1).deadlineWith())));
   }
   @Override
   public void robotPeriodic() {
