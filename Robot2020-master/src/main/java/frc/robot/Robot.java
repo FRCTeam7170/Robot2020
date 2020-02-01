@@ -67,12 +67,13 @@ public class Robot extends TimedRobot {
 
     m_intakeWheel = new IntakeWheel(new WPI_TalonSRX(Constants.Motors.INTAKEWHEEL));
 
-
+    m_driveBase = new DriveBase();
 
     CommandScheduler.getInstance().registerSubsystem(m_flyWheel,
                                                      m_Climbing,
                                                      m_intakeLift,
-                                                     m_intakeWheel);
+                                                     m_intakeWheel,
+                                                     m_driveBase);
 
     getButton("A").whenPressed(new Intake(m_intakeLift, m_intakeWheel));
   }
@@ -102,14 +103,9 @@ public class Robot extends TimedRobot {
    */
 
   public void autonomousInit() {
-    m_driveBase = null;
     if (teleOP != null){
       teleOP.cancel();
     }
-    m_driveBase = new DriveBase(true);
-
-    CommandScheduler.getInstance().registerSubsystem(m_driveBase);
-    // schedule the autonomous command (example)
     autonomous = new Autonomous(m_driveBase);
     autonomous.schedule();
   }
@@ -127,13 +123,9 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    m_driveBase = null;
     if (autonomous != null) {
       autonomous.cancel();
     }
-    m_driveBase = new DriveBase();
-
-    CommandScheduler.getInstance().registerSubsystem(m_driveBase);
     teleOP = new Teleop(m_xboxController, m_driveBase, m_flyWheel);
     teleOP.schedule();
   }

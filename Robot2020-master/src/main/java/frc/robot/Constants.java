@@ -55,4 +55,19 @@ public final class Constants {
         public static final double WHEEL_MOVE_TICK = WHEEL_CIRCUMFERENCE / 4096; //inch, ~0.0046
         public static final double AUTO_DRIVE_DISTANCE = 24; //inch
     }
+    public final static class Autonomous {
+        public final static int TIMEOUT = 30;
+        public final static int REMOTE_0 = 0;
+        public final static int REMOTE_1 = 1;
+        public final static int PID_PRIMARY = 0;
+        public final static int PID_TURN = 1;
+        public final static int SLOT_0 = 0;
+        public final static int SLOT_1 = 1;
+        public final static int SLOT_2 = 2;
+        public final static int SLOT_3 = 3;
+        public final static int kSlot_Distanc = 0;
+        public final static int kSlot_Turning = 1;
+        public final static int kSlot_Velocit = 2;
+        public final static int kSlot_MotProf = 3;
+    }
 }
