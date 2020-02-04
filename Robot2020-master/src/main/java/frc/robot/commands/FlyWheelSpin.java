@@ -18,4 +18,7 @@ public class FlyWheelSpin extends CommandBase{
     public boolean isFinished() {
         return false;
     }
+    public void stop(){
+        m_flyWheel.stop();
+    }
 }

@@ -86,6 +86,7 @@ public class Robot extends TimedRobot {
       */
     getButton("A").whenPressed(new Intake(m_intakeLift, m_intakeWheel));
     getButton("X").whenPressed(new FlyWheelSpin(m_flyWheel).alongWith(new LoadBall(m_indexer).andThen(new WaitCommand(1).deadlineWith())));
+    //getButton("X").whenPressed(new FlyWheelSpin(m_flyWheel).alongWith(new LoadBall(m_indexer).andThen(new WaitCommand(1), FlyWheel::stop)));
   }
   @Override
   public void robotPeriodic() {
