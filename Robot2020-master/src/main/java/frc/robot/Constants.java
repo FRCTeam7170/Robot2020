@@ -19,7 +19,7 @@ public final class Constants {
     public final static class Motors {
         public static final double SPEED = 1;
         public static final int MOTOR_LEFT_1 = 14;
-        public static final int MOTOR_LEFT_2 = 15;
+        public static final int MOTOR_LEFT_2 = 15;  
         public static final int MOTOR_RIGHT_1 = 11;
         public static final int MOTOR_RIGHT_2 = 12;
         public static final int FLYWHEEL_1 = 16;
