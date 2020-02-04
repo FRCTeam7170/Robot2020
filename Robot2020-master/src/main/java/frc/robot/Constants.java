@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -19,9 +21,9 @@ public final class Constants {
     public final static class Motors {
         public static final double SPEED = 1;
         public static final int MOTOR_LEFT_1 = 14;
-        public static final int MOTOR_LEFT_2 = 15;
-        public static final int MOTOR_RIGHT_1 = 11;
-        public static final int MOTOR_RIGHT_2 = 12;
+        public static final int MOTOR_LEFT_2 = 15;  
+        public static final int MOTOR_RIGHT_1 = 10;
+        public static final int MOTOR_RIGHT_2 = 11;
         public static final int FLYWHEEL_1 = 16;
         public static final int FLYWHEEL_2 = 13;
         public static final int INTAKEWHEEL = 16;
@@ -29,7 +31,7 @@ public final class Constants {
 
     public final static class Pneumatics{
         public static final int SOLENOID_1_ON = 0;
-        public static final int SOLENOID_1_OFF = 0;
+        public static final int SOLENOID_1_OFF = 1;
     }
 
     public final static class Controller {
@@ -50,10 +52,22 @@ public final class Constants {
         public static final int BUTTON_START = 7; 
     }
     public final static class Measurements {
-
         public static final double WHEEL_CIRCUMFERENCE = 6 * Math.PI; //inch
         public static final double WHEEL_MOVE_TICK = WHEEL_CIRCUMFERENCE / 4096; //inch, ~0.0046
         public static final double AUTO_DRIVE_DISTANCE = 24; //inch
+        public static final double SVOLTS = 0.00;
+        public static final double SVOLTSECONDSPERMETER = 0.00;
+        public static final double SVOLTSECONDPERMETERSQUARED = 0.00;
+        public static final double PDRIVEVEL = 0.00;
+        public static final double TRACKWIDTHMETERS = 0.44;
+        public static final DifferentialDriveKinematics KDRIVEKINEMATICS = new DifferentialDriveKinematics(TRACKWIDTHMETERS);
+        public static final double MAXSPEED = 3; // m/s
+        public static final double MAXACCELERATION = 3; // m/s²
+        public static final double RAMSETEB = 2;
+        public static final double RAMSETEZETA = 0.7;
+        public static final int ENCODERPULSE = 1024;
+        public static final double WHEELDIAMETER = 0.152;
+        public static final double DISTANCEPERPULSE = (WHEELDIAMETER * Math.PI) / (double) ENCODERPULSE; 
     }
     public final static class Autonomous {
         public final static int TIMEOUT = 30;
