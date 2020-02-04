@@ -85,8 +85,8 @@ public class Robot extends TimedRobot {
       m_xboxController.getRawAxis(Constants.Controller.RIGHT_STICK_Y)*Constants.Motors.SPEED), m_driveBase);
       */
     getButton("A").whenPressed(new Intake(m_intakeLift, m_intakeWheel));
-    getButton("X").whenPressed(new FlyWheelSpin(m_flyWheel).alongWith(new LoadBall(m_indexer).andThen(new WaitCommand(1).deadlineWith())));
-    //getButton("X").whenPressed(new FlyWheelSpin(m_flyWheel).alongWith(new LoadBall(m_indexer).andThen(new WaitCommand(1), FlyWheel::stop)));
+    //getButton("X").whenPressed(new FlyWheelSpin(m_flyWheel).alongWith(new LoadBall(m_indexer).andThen(new WaitCommand(1).deadlineWith())));
+    getButton("X").whenPressed(new FlyWheelSpin(m_flyWheel).alongWith(new LoadBall(m_indexer).andThen(new WaitCommand(1).andThen(m_flyWheel::stop, m_flyWheel))));
   }
   @Override
   public void robotPeriodic() {
