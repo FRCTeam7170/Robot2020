@@ -4,6 +4,7 @@ import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -36,6 +37,9 @@ public class FlyWheel extends SubsystemBase{
         flywheelMotor2.follow(flywheelMotor1);
 
         flywheelMotor1.configFactoryDefault();
+
+        flywheelMotor1.setNeutralMode(NeutralMode.Coast);
+        flywheelMotor2.setNeutralMode(NeutralMode.Coast);
 
         /* Config sensor used for Primary PID [Velocity] */
         flywheelMotor1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
