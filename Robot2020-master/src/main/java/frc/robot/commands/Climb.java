@@ -1,31 +1,37 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Hang;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Climb extends CommandBase{
 
     public final Hang m_climbing;
-    private XboxController m_xboxController;
+    private final XboxController m_xboxController;
+    private double teleUp;
+    private double teleDown;
 
-    public Climb(Hang climbing) {
+    public Climb(final Hang climbing) {
         m_climbing = climbing;
         m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
     }
 
     public void execute(){
-        if (m_xboxController.getBButtonPressed()){
-            m_climbing.RaiseLiftArm();
+        teleUp = m_xboxController.getTriggerAxis(Hand.kRight);
+        teleDown = m_xboxController.getTriggerAxis(Hand.kLeft);
+        if (teleUp != 0.0){
+            m_climbing.TeleUp(teleUp);
         }
-
-        if (m_xboxController.getYButtonPressed()){
-            m_climbing.LowerLiftArm();
+        if (teleDown != 0.0){
+            m_climbing.TeleDown(teleDown);
         }
-
-        if (m_xboxController.getXButtonPressed()){
-            m_climbing.Climb();
+        if (m_xboxController.getBumperPressed(Hand.kRight)){
+            m_climbing.ClimbUp();
+        }
+        if (m_xboxController.getBumperPressed(Hand.kLeft)){
+            m_climbing.ClimbDown();
         }
     }
 }
