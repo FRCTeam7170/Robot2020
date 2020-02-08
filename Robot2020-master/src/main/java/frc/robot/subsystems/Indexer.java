@@ -42,7 +42,7 @@ public class Indexer extends SubsystemBase{
         m_motor.set(ControlMode.PercentOutput, 0);
     }
     public void setIndexer(){
-        double rpmout = m_rpm * 4096 / 600;
+        final double rpmout = m_rpm * 4096 / 600;
         m_motor.set(ControlMode.Velocity, rpmout);
     }
 }
