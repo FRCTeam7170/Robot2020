@@ -25,6 +25,7 @@ public final class Constants {
         public static final int FLYWHEEL_1      = 16; //Talon
         public static final int FLYWHEEL_2      = 17; //Talon
         public static final int INTAKEWHEEL     = 12; //Talon
+        public static final int INDEXER         = 18; //Talon
         public static final int CLIMBWINCH      = 20; //SparkMax
         public static final int TELEWINCH       = 21; //SparkMax
     }

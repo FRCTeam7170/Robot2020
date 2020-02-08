@@ -77,8 +77,13 @@ public class FlyWheel extends SubsystemBase{
         m_targetRPM = rpm;
     }
 
-    public void set_FlyWheel() {
+    public void setFlyWheel() {
         rpmout = m_targetRPM * 4096 / 600;
         flywheelMotor1.set(ControlMode.Velocity, rpmout);
+        flywheelMotor2.follow(flywheelMotor1);
+    }
+    public void stop(){
+        flywheelMotor2.set(ControlMode.PercentOutput, 0);
+        flywheelMotor1.set(ControlMode.PercentOutput, 0);
     }
 }
