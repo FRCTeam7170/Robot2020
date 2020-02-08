@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import frc.robot.Constants;
 import frc.robot.subsystems.DriveBase;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -12,12 +11,15 @@ public class AutoDrive extends CommandBase{
         addRequirements(m_driveBase);
     }
     public void initialize(){
-        m_driveBase.setDistance(144);
+        m_driveBase.setDistance(60);
     }
     public void execute(){
         m_driveBase.drive();
     }
     public boolean isFinished(){
-        return false;
+        return true;
+    }
+    public void end(){
+        m_driveBase.stop();
     }
 }

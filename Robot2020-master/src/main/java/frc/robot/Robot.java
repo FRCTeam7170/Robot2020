@@ -8,6 +8,8 @@
 package frc.robot;
 
 import frc.robot.Constants;
+import frc.robot.commands.Intake;
+import frc.robot.commands.groups.Autonomous;
 import frc.robot.subsystems.Hang;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.FlyWheel;
@@ -17,19 +19,13 @@ import frc.robot.subsystems.IntakeWheel;
 import frc.robot.commands.FlyWheelSpin;
 import frc.robot.commands.Intake;
 import frc.robot.commands.LoadBall;
-import frc.robot.commands.groups.Teleop;
 import frc.robot.commands.groups.Autonomous;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
-
-
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -38,15 +34,15 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
  * project.
  */
 public class Robot extends TimedRobot {
-  private XboxController m_xboxController;
-  private Teleop teleOP;
-  private Hang m_Climbing;
-  private Indexer m_indexer;
-  private FlyWheel m_flyWheel;
   private Autonomous autonomous;
-  private DriveBase m_driveBase;
-  private IntakeLift m_intakeLift;
-  private IntakeWheel m_intakeWheel;
+  private Hang m_Climbing = new Hang();
+  private Indexer m_indexer = new Indexer();
+  private FlyWheel m_flyWheel = new FlyWheel();
+  private DriveBase m_driveBase = new DriveBase();
+  private IntakeLift m_intakeLift = new IntakeLift();
+  private IntakeWheel m_intakeWheel = new IntakeWheel();
+  private XboxController m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -57,23 +53,6 @@ public class Robot extends TimedRobot {
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-
-    m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
-
-
-    m_flyWheel = new FlyWheel(new WPI_TalonSRX(Constants.Motors.FLYWHEEL_1),
-                              new WPI_TalonSRX(Constants.Motors.FLYWHEEL_2));
-
-
-    m_Climbing = new Hang(new WPI_TalonSRX(0),
-                          new WPI_TalonSRX(0));
-
-    m_intakeLift = new IntakeLift(new DoubleSolenoid(Constants.Pneumatics.SOLENOID_1_ON, Constants.Pneumatics.SOLENOID_1_OFF));
-
-    m_intakeWheel = new IntakeWheel(new WPI_TalonSRX(Constants.Motors.INTAKEWHEEL));
-
-    m_indexer = new Indexer();
-
     CommandScheduler.getInstance().registerSubsystem(m_flyWheel,
                                                      m_Climbing,
                                                      m_intakeLift,
@@ -87,6 +66,12 @@ public class Robot extends TimedRobot {
     getButton("A").whenPressed(new Intake(m_intakeLift, m_intakeWheel));
     //getButton("X").whenPressed(new FlyWheelSpin(m_flyWheel).alongWith(new LoadBall(m_indexer).andThen(new WaitCommand(1).deadlineWith())));
     getButton("X").whenPressed(new FlyWheelSpin(m_flyWheel).alongWith(new LoadBall(m_indexer).andThen(new WaitCommand(1).andThen(m_flyWheel::stop, m_flyWheel))));
+    m_driveBase.setDefaultCommand(new RunCommand(()-> m_driveBase.tankDrive(
+                                                      m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)*12, 
+                                                      m_xboxController.getRawAxis(Constants.Controller.RIGHT_STICK_Y)*12), 
+                                                      m_driveBase));
+
+    getButton("A").whenPressed(new Intake(m_intakeLift, m_intakeWheel));
   }
   @Override
   public void robotPeriodic() {
@@ -114,14 +99,6 @@ public class Robot extends TimedRobot {
    */
 
   public void autonomousInit() {
-    m_driveBase = null;
-    if (teleOP != null){
-      teleOP.cancel();
-    }
-    m_driveBase = new DriveBase(true);
-
-    CommandScheduler.getInstance().registerSubsystem(m_driveBase);
-    // schedule the autonomous command (example)
     autonomous = new Autonomous(m_driveBase);
     autonomous.schedule();
   }
@@ -139,15 +116,9 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    m_driveBase = null;
     if (autonomous != null) {
       autonomous.cancel();
     }
-    m_driveBase = new DriveBase();
-
-    CommandScheduler.getInstance().registerSubsystem(m_driveBase);
-    teleOP = new Teleop(m_xboxController, m_driveBase, m_flyWheel);
-    teleOP.schedule();
   }
 
   /**
