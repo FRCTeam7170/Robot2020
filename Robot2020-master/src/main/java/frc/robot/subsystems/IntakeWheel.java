@@ -17,7 +17,4 @@ public class IntakeWheel extends SubsystemBase{
     public void on(){
         m_motor.set(ControlMode.PercentOutput, 0.75);
     }
-    @Override
-    public void periodic(){
-    }
 }

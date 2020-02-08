@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.networktables.EntryListenerFlags;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -16,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -43,7 +42,7 @@ public class DriveBase extends SubsystemBase {
       new Encoder(4, 5, false);
 
   // The gyro sensor
-  private final Gyro m_gyro = new ADXRS450_Gyro();
+  private final Gyro m_gyro = new ADIS16448_IMU();
 
   // Odometry class for tracking robot pose
   private final DifferentialDriveOdometry m_odometry;

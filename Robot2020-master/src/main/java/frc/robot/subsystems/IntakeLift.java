@@ -19,7 +19,4 @@ public class IntakeLift extends SubsystemBase{
     public void down(){
         m_solenoid.set(Value.kReverse);
     }
-    @Override
-    public void periodic(){
-    }
 }
