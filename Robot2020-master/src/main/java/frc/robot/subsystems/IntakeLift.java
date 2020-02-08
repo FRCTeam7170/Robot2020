@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class IntakeLift extends SubsystemBase{
     private final DoubleSolenoid m_solenoid = new DoubleSolenoid(Constants.Pneumatics.SOLENOID_1_ON, Constants.Pneumatics.SOLENOID_1_OFF);
 
-    public IntakeLift() {
-    }
     public void off(){
         m_solenoid.set(Value.kOff);
     }

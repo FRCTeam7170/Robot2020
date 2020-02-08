@@ -7,9 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeWheel extends SubsystemBase{
     private final WPI_TalonSRX m_motor = new WPI_TalonSRX(Constants.Motors.INTAKEWHEEL);
-
-    public IntakeWheel() {
-    }
+    
     public void off(){
         m_motor.set(ControlMode.PercentOutput, 0);
     }

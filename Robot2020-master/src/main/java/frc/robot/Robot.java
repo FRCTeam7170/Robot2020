@@ -9,7 +9,6 @@ package frc.robot;
 
 import frc.robot.Constants;
 import frc.robot.commands.Intake;
-import frc.robot.commands.groups.Teleop;
 import frc.robot.commands.groups.Autonomous;
 import frc.robot.subsystems.Hang;
 import frc.robot.subsystems.FlyWheel;
@@ -19,10 +18,8 @@ import frc.robot.subsystems.IntakeWheel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
-
-
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -31,7 +28,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Teleop teleOP;
   private Autonomous autonomous;
   private Hang m_Climbing = new Hang();
   private FlyWheel m_flyWheel = new FlyWheel();
@@ -55,7 +51,13 @@ public class Robot extends TimedRobot {
                                                      m_intakeWheel,
                                                      m_driveBase);
 
+    m_driveBase.setDefaultCommand(new RunCommand(()-> m_driveBase.tankDrive(
+                                                      m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)*12, 
+                                                      m_xboxController.getRawAxis(Constants.Controller.RIGHT_STICK_Y)*12), 
+                                                      m_driveBase));
+
     getButton("A").whenPressed(new Intake(m_intakeLift, m_intakeWheel));
+
   }
   @Override
   public void robotPeriodic() {
@@ -83,9 +85,6 @@ public class Robot extends TimedRobot {
    */
 
   public void autonomousInit() {
-    if (teleOP != null){
-      teleOP.cancel();
-    }
     autonomous = new Autonomous(m_driveBase);
     autonomous.schedule();
   }
@@ -106,8 +105,6 @@ public class Robot extends TimedRobot {
     if (autonomous != null) {
       autonomous.cancel();
     }
-    teleOP = new Teleop(m_xboxController, m_driveBase, m_flyWheel);
-    teleOP.schedule();
   }
 
   /**
