@@ -11,7 +11,7 @@ public class LoadBall extends CommandBase{
     private double initDist;
     private double distance;
 
-    public LoadBall(Indexer indexer){
+    public LoadBall(final Indexer indexer) {
         m_indexer = indexer;
         addRequirements(m_indexer);
     }

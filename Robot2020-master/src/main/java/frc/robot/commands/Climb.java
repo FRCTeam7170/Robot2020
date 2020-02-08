@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class Climb extends CommandBase{
 
     public final Hang m_climbing;
-    private XboxController m_xboxController;
+    private final XboxController m_xboxController;
     private double teleUp;
     private double teleDown;
 
-    public Climb(Hang climbing) {
+    public Climb(final Hang climbing) {
         m_climbing = climbing;
         m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
     }
