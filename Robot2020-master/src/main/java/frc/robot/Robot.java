@@ -10,13 +10,12 @@ package frc.robot;
 import frc.robot.Constants;
 import frc.robot.commands.Intake;
 import frc.robot.commands.LoadBall;
+import frc.robot.commands.RamseteDrive;
 import frc.robot.commands.FlyWheelSpin;
-import frc.robot.commands.groups.Autonomous;
 import frc.robot.subsystems.Hang;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.FlyWheel;
 import frc.robot.subsystems.DriveBase;
-import frc.robot.subsystems.FlyWheel;
 import frc.robot.subsystems.IntakeLift;
 import frc.robot.subsystems.IntakeWheel;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -34,12 +33,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  * project.
  */
 public class Robot extends TimedRobot {
+  private Command autoCommand;
   private final Hang m_Climbing = new Hang();
   private final Indexer m_indexer = new Indexer();
   private final FlyWheel m_flyWheel = new FlyWheel();
   private final DriveBase m_driveBase = new DriveBase();
   private final IntakeLift m_intakeLift = new IntakeLift();
   private final IntakeWheel m_intakeWheel = new IntakeWheel();
+  private final RamseteDrive ramseteDrive = new RamseteDrive();
   private final XboxController m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
 
 

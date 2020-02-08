@@ -71,10 +71,6 @@ public final class Constants {
         public static final int ENCODERPULSE = 1024;
         public static final double WHEELDIAMETER = 0.152;
         public static final double DISTANCEPERPULSE = (WHEELDIAMETER * Math.PI) / (double) ENCODERPULSE; 
-
-        public static final double WHEEL_CIRCUMFERENCE  = 6 * Math.PI; //inch
-        public static final double WHEEL_MOVE_TICK      = WHEEL_CIRCUMFERENCE / 4096; //inch, ~0.0046
-        public static final double AUTO_DRIVE_DISTANCE  = 24; //inch
     }
     public final static class Autonomous {
         public final static int TIMEOUT     = 30;
