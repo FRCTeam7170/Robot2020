@@ -8,20 +8,18 @@
 package frc.robot;
 
 import frc.robot.Constants;
+import frc.robot.commands.Intake;
+import frc.robot.commands.groups.Teleop;
+import frc.robot.commands.groups.Autonomous;
 import frc.robot.subsystems.Hang;
 import frc.robot.subsystems.FlyWheel;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.IntakeLift;
 import frc.robot.subsystems.IntakeWheel;
-import frc.robot.commands.Intake;
-import frc.robot.commands.groups.Teleop;
-import frc.robot.commands.groups.Autonomous;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
 
@@ -33,14 +31,14 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
  * project.
  */
 public class Robot extends TimedRobot {
-  private XboxController m_xboxController;
-  private Autonomous autonomous;
   private Teleop teleOP;
-  private DriveBase m_driveBase;
-  private FlyWheel m_flyWheel;
-  private Hang m_Climbing;
-  private IntakeLift m_intakeLift;
-  private IntakeWheel m_intakeWheel;
+  private Autonomous autonomous;
+  private Hang m_Climbing = new Hang();
+  private FlyWheel m_flyWheel = new FlyWheel();
+  private DriveBase m_driveBase = new DriveBase();
+  private IntakeLift m_intakeLift = new IntakeLift();
+  private IntakeWheel m_intakeWheel = new IntakeWheel();
+  private XboxController m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -51,24 +49,6 @@ public class Robot extends TimedRobot {
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-
-    m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
-
-
-    m_flyWheel = new FlyWheel(new WPI_TalonSRX(Constants.Motors.FLYWHEEL_1),
-                              new WPI_TalonSRX(Constants.Motors.FLYWHEEL_2));
-
-
-    m_Climbing = new Hang(new WPI_TalonSRX(0),
-                          new WPI_TalonSRX(0));
-
-
-    m_intakeLift = new IntakeLift(new DoubleSolenoid(Constants.Pneumatics.SOLENOID_1_ON, Constants.Pneumatics.SOLENOID_1_OFF));
-
-    m_intakeWheel = new IntakeWheel(new WPI_TalonSRX(Constants.Motors.INTAKEWHEEL));
-
-    m_driveBase = new DriveBase();
-
     CommandScheduler.getInstance().registerSubsystem(m_flyWheel,
                                                      m_Climbing,
                                                      m_intakeLift,

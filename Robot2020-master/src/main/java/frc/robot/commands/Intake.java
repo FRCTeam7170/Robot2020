@@ -1,7 +1,8 @@
 package frc.robot.commands;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+
 import frc.robot.subsystems.IntakeLift;
 import frc.robot.subsystems.IntakeWheel;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class Intake extends CommandBase{
     private final IntakeLift m_intakeLift;
