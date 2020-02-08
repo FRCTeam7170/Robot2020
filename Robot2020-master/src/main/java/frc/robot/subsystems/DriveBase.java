@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class DriveBase extends SubsystemBase {
@@ -55,12 +56,17 @@ public class DriveBase extends SubsystemBase {
 	m_motorRight1.configFactoryDefault();
 	m_motorRight2.configFactoryDefault();
 	m_motorLeft1.configFactoryDefault();
-	m_motorLeft2.configFactoryDefault();
+  m_motorLeft2.configFactoryDefault();
+  
+  m_motorLeft1.setNeutralMode(NeutralMode.Brake);
+  m_motorLeft2.setNeutralMode(NeutralMode.Brake);
+  m_motorRight1.setNeutralMode(NeutralMode.Brake);
+  m_motorRight2.setNeutralMode(NeutralMode.Brake);
 
 	m_motorLeft1.setInverted(true);
 	m_motorLeft2.setInverted(true);
-	m_motorRight1.setInverted(false);
-	m_motorRight2.setInverted(false);
+	m_motorRight1.setInverted(true);
+	m_motorRight2.setInverted(true);
 
 	m_motorLeft1.configPeakOutputForward(+speed, Constants.Autonomous.TIMEOUT);
 	m_motorLeft1.configPeakOutputReverse(-speed, Constants.Autonomous.TIMEOUT);
@@ -69,7 +75,7 @@ public class DriveBase extends SubsystemBase {
 	m_motorLeft2.configPeakOutputForward(+speed, Constants.Autonomous.TIMEOUT);
 	m_motorLeft2.configPeakOutputReverse(-speed, Constants.Autonomous.TIMEOUT);
 	m_motorRight2.configPeakOutputForward(+speed, Constants.Autonomous.TIMEOUT);
-	m_motorRight2.configPeakOutputReverse(-speed, Constants.Autonomous.TIMEOUT);
+  m_motorRight2.configPeakOutputReverse(-speed, Constants.Autonomous.TIMEOUT);
 
 	m_leftMotors = new SpeedControllerGroup(m_motorLeft1, m_motorLeft2);
 	m_rightMotors = new SpeedControllerGroup(m_motorRight1, m_motorRight2);
@@ -137,6 +143,11 @@ public class DriveBase extends SubsystemBase {
     m_leftMotors.setVoltage(leftVolts);
     m_rightMotors.setVoltage(-rightVolts);
     m_drive.feed();
+
+  }
+
+  public void tankDrive(double leftSpeed, double rightSpeed){
+    m_drive.tankDrive(leftSpeed, rightSpeed);
   }
 
   /**
