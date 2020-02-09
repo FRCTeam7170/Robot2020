@@ -8,6 +8,7 @@
 package frc.robot;
 
 import frc.robot.Constants;
+import frc.robot.commands.Hang;
 import frc.robot.commands.Intake;
 import frc.robot.commands.LoadBall;
 import frc.robot.commands.RamseteDrive;
@@ -34,7 +35,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class Robot extends TimedRobot {
   private Command autoCommand;
-  private final Climb s_Climbing = new Climb();
+  private final Climb s_climbing = new Climb();
   private final Indexer s_indexer = new Indexer();
   private final FlyWheel s_flyWheel = new FlyWheel();
   private final DriveBase s_driveBase = new DriveBase();
@@ -55,20 +56,21 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     CommandScheduler.getInstance().registerSubsystem(s_indexer,
                                                      s_flyWheel,
-                                                     s_Climbing,
+                                                     s_climbing,
                                                      s_intakeLift,
                                                      s_intakeWheel
                                                      );
 
                                                      
-      s_driveBase.setDefaultCommand(new RunCommand(()-> s_driveBase.tankDriveVolts(
+    s_driveBase.setDefaultCommand(new RunCommand(()-> s_driveBase.tankDriveVolts(
                                                         m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)*12, 
                                                         m_xboxController.getRawAxis(Constants.Controller.RIGHT_STICK_Y)*12), 
                                                         s_driveBase));
+    s_climbing.setDefaultCommand(new Hang(s_climbing));
 
-      getButton("A").whenPressed(new Intake(s_intakeLift, s_intakeWheel));
-      getButton("X").whenPressed(new FlyWheelSpin(s_flyWheel).alongWith(new LoadBall(s_indexer).andThen(new WaitCommand(1).andThen(s_flyWheel::stop, s_flyWheel))));
-                                                    }
+    getButton("A").whenPressed(new Intake(s_intakeLift, s_intakeWheel));
+    getButton("X").whenPressed(new FlyWheelSpin(s_flyWheel).alongWith(new LoadBall(s_indexer).andThen(new WaitCommand(1).andThen(s_flyWheel::stop, s_flyWheel))));
+  }
   @Override
   public void robotPeriodic() {
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled

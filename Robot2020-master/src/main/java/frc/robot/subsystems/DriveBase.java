@@ -8,9 +8,6 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -80,8 +77,8 @@ public class DriveBase extends SubsystemBase {
 	m_rightMotors = new SpeedControllerGroup(m_motorRight1, m_motorRight2);
 	m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
-    m_leftEncoder.setDistancePerPulse(Constants.Measurements.ENCODERPULSE);
-    m_rightEncoder.setDistancePerPulse(Constants.Measurements.ENCODERPULSE);
+    m_leftEncoder.setDistancePerPulse(Constants.Measurements.ENCODER_PULSE);
+    m_rightEncoder.setDistancePerPulse(Constants.Measurements.ENCODER_PULSE);
 
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
@@ -206,7 +203,7 @@ public class DriveBase extends SubsystemBase {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
-    return Math.IEEEremainder(m_gyro.getAngle(), 360) * (false ? -1.0 : 1.0);
+    return Math.IEEEremainder(m_gyro.getAngle(), 360) * (Constants.Autonomous.INVERTED_GYRO ? -1.0 : 1.0);
   }
 
   /**
@@ -215,6 +212,6 @@ public class DriveBase extends SubsystemBase {
    * @return The turn rate of the robot, in degrees per second
    */
   public double getTurnRate() {
-    return m_gyro.getRate() * (false ? -1.0 : 1.0);
+    return m_gyro.getRate() * (Constants.Autonomous.INVERTED_GYRO ? -1.0 : 1.0);
   }
 }
