@@ -12,7 +12,7 @@ import frc.robot.commands.Intake;
 import frc.robot.commands.LoadBall;
 import frc.robot.commands.RamseteDrive;
 import frc.robot.commands.FlyWheelSpin;
-import frc.robot.subsystems.Hang;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.FlyWheel;
 import frc.robot.subsystems.DriveBase;
@@ -34,13 +34,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class Robot extends TimedRobot {
   private Command autoCommand;
-  private final Hang m_Climbing = new Hang();
-  private final Indexer m_indexer = new Indexer();
-  private final FlyWheel m_flyWheel = new FlyWheel();
-  private final DriveBase m_driveBase = new DriveBase();
-  private final IntakeLift m_intakeLift = new IntakeLift();
-  private final IntakeWheel m_intakeWheel = new IntakeWheel();
-  private final RamseteDrive ramseteDrive = new RamseteDrive();
+  private final Climb s_Climbing = new Climb();
+  private final Indexer s_indexer = new Indexer();
+  private final FlyWheel s_flyWheel = new FlyWheel();
+  private final DriveBase s_driveBase = new DriveBase();
+  private final IntakeLift s_intakeLift = new IntakeLift();
+  private final IntakeWheel s_intakeWheel = new IntakeWheel();
+  private final RamseteDrive c_ramseteDrive = new RamseteDrive();
   private final XboxController m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
 
 
@@ -53,23 +53,22 @@ public class Robot extends TimedRobot {
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    CommandScheduler.getInstance().registerSubsystem(m_flyWheel,
-                                                     m_Climbing,
-                                                     m_intakeLift,
-                                                     m_intakeWheel,
-                                                     m_indexer);
+    CommandScheduler.getInstance().registerSubsystem(s_indexer,
+                                                     s_flyWheel,
+                                                     s_Climbing,
+                                                     s_intakeLift,
+                                                     s_intakeWheel
+                                                     );
 
-    m_driveBase.setDefaultCommand(new RunCommand(() -> m_driveBase.tankDrive(
-                                                        m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)*Constants.Motors.SPEED, 
-                                                        m_xboxController.getRawAxis(Constants.Controller.RIGHT_STICK_Y)*Constants.Motors.SPEED), m_driveBase));
+                                                     
+      s_driveBase.setDefaultCommand(new RunCommand(()-> s_driveBase.tankDriveVolts(
+                                                        m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)*12, 
+                                                        m_xboxController.getRawAxis(Constants.Controller.RIGHT_STICK_Y)*12), 
+                                                        s_driveBase));
 
-    getButton("X").whenPressed(new FlyWheelSpin(m_flyWheel).alongWith(new LoadBall(m_indexer).andThen(new WaitCommand(1).andThen(m_flyWheel::stop, m_flyWheel))));
-
-    m_driveBase.setDefaultCommand(new RunCommand(()-> m_driveBase.tankDriveVolts(m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)*12, 
-                                                                                m_xboxController.getRawAxis(Constants.Controller.RIGHT_STICK_Y)*12), 
-                                                                                m_driveBase));
-    getButton("A").whenPressed(new Intake(m_intakeLift, m_intakeWheel));
-  }
+      getButton("A").whenPressed(new Intake(s_intakeLift, s_intakeWheel));
+      getButton("X").whenPressed(new FlyWheelSpin(s_flyWheel).alongWith(new LoadBall(s_indexer).andThen(new WaitCommand(1).andThen(s_flyWheel::stop, s_flyWheel))));
+                                                    }
   @Override
   public void robotPeriodic() {
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
@@ -93,7 +92,7 @@ public class Robot extends TimedRobot {
    */
 
   public void autonomousInit() {
-    autoCommand = ramseteDrive.getAutoCommand();
+    autoCommand = c_ramseteDrive.getAutoCommand();
     autoCommand.schedule();
   }
   /**

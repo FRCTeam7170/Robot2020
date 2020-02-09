@@ -5,7 +5,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Hang extends SubsystemBase {
+public class Climb extends SubsystemBase {
 
     private CANSparkMax telescoping_Winch = new CANSparkMax(Constants.Motors.TELEWINCH, MotorType.kBrushed);
     private CANSparkMax climb_Winch = new CANSparkMax(Constants.Motors.CLIMBWINCH, MotorType.kBrushed);
