@@ -30,8 +30,10 @@ public class Hang extends CommandBase {
 		if (m_xboxController.getBumperPressed(Hand.kRight)) {
 			m_climb.ClimbUp();
 		}
+		/* We might not be able to move the bot down because of a ratchet
 		if (m_xboxController.getBumperPressed(Hand.kLeft)) {
 			m_climb.ClimbDown();
 		}
+		*/
 	}
 }

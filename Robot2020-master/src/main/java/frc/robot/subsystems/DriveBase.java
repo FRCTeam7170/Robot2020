@@ -77,11 +77,11 @@ public class DriveBase extends SubsystemBase {
 	m_rightMotors = new SpeedControllerGroup(m_motorRight1, m_motorRight2);
 	m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
-    m_leftEncoder.setDistancePerPulse(Constants.Measurements.ENCODER_PULSE);
-    m_rightEncoder.setDistancePerPulse(Constants.Measurements.ENCODER_PULSE);
+  m_leftEncoder.setDistancePerPulse(Constants.Measurements.ENCODER_PULSE);
+  m_rightEncoder.setDistancePerPulse(Constants.Measurements.ENCODER_PULSE);
 
-    resetEncoders();
-    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+  resetEncoders();
+  m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
   }
 
   @Override

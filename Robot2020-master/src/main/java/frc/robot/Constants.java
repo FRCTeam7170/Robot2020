@@ -61,7 +61,8 @@ public final class Constants {
 		public static final int ENCODER_PULSE = 1024;
 		public static final double WHEEL_CIRCUMFERENCE = 6 * Math.PI; // inch
 		public static final double AUTO_DRIVE_DISTANCE = 24; // inch
-		public static final double SVOLTS = 0.00;
+
+		public static final double SVOLTS = 0.25;
 		public static final double SVOLT_SECOND_PER_METER = 0.00;
 		public static final double SVOLT_SECOND_PER_METER_SQUARED = 0.00;
 		public static final double KP_DRIVE_VELOCITY = 0.00;
@@ -74,6 +75,10 @@ public final class Constants {
 		public static final double WHEEL_MOVE_TICK = WHEEL_CIRCUMFERENCE / 4096; // inch, ~0.0046
 		public static final double DISTANCE_PER_PULSE = (WHEELDIAMETER * Math.PI) / (double) ENCODER_PULSE;
 		public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(TRACKWIDTH);
+
+		public static final double AIR_DENSITY = 1.2; //kg/m³
+		public static final double BALL_AREA = Math.sqrt(0.89) * Math.PI; //m²
+		public static final double BALL_DRAG = 0.47;
 	}
 
 	public final static class Autonomous {
