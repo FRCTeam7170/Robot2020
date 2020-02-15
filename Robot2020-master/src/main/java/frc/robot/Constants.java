@@ -22,16 +22,16 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 public final class Constants {
 	public final static class Motors {
 		public static final double SPEED = 1;
-		public static final int INDEXER = 18; // Talon
-		public static final int FLYWHEEL_1 = 16; // Talon
-		public static final int FLYWHEEL_2 = 17; // Talon
-		public static final int INTAKEWHEEL = 12; // Talon
-		public static final int MOTOR_LEFT_1 = 14; // Talon
-		public static final int MOTOR_LEFT_2 = 15; // Talon
 		public static final int MOTOR_RIGHT_1 = 10; // Talon
 		public static final int MOTOR_RIGHT_2 = 11; // Talon
-		public static final int TELEWINCH = 21; // SparkMax
+		public static final int INTAKEWHEEL = 12; // Talon
+		public static final int INDEXER = 16; // Talon
+		public static final int MOTOR_LEFT_1 = 14; // Talon
+		public static final int MOTOR_LEFT_2 = 15; // Talon
+		public static final int FLYWHEEL_1 = 13; // Talon
+		public static final int FLYWHEEL_2 = 17; // Talon
 		public static final int CLIMBWINCH = 20; // SparkMax
+		public static final int TELEWINCH = 21; // SparkMax
 	}
 
 	public final static class Pneumatics {
@@ -62,14 +62,14 @@ public final class Constants {
 		public static final double WHEEL_CIRCUMFERENCE = 6 * Math.PI; // inch
 		public static final double AUTO_DRIVE_DISTANCE = 24; // inch
 
-		public static final double SVOLTS = 0.25;
+		public static final double SVOLTS = 0.00;
 		public static final double SVOLT_SECOND_PER_METER = 0.00;
 		public static final double SVOLT_SECOND_PER_METER_SQUARED = 0.00;
 		public static final double KP_DRIVE_VELOCITY = 0.00;
 		public static final double TRACKWIDTH = 0.44; // meters
 		public static final double WHEELDIAMETER = 0.152; // meters
-		public static final double MAX_SPEED = 3; // m/s
-		public static final double MAX_ACCELERATION = 3; // m/s²
+		public static final double MAX_SPEED = 0; // m/s
+		public static final double MAX_ACCELERATION = 0; // m/s²
 		public static final double RAMSETE_B = 2;
 		public static final double RAMSETE_ZETA = 0.7;
 		public static final double WHEEL_MOVE_TICK = WHEEL_CIRCUMFERENCE / 4096; // inch, ~0.0046
