@@ -22,14 +22,15 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 public final class Constants {
 	public final static class Motors {
 		public static final double SPEED = 1;
+		public static final int PNEUMATIC_CONTROL_PANEL = 6; //PCM
 		public static final int MOTOR_RIGHT_1 = 10; // Talon
 		public static final int MOTOR_RIGHT_2 = 11; // Talon
 		public static final int INTAKEWHEEL = 12; // Talon
 		public static final int INDEXER = 16; // Talon
 		public static final int MOTOR_LEFT_1 = 14; // Talon
 		public static final int MOTOR_LEFT_2 = 15; // Talon
-		public static final int FLYWHEEL_1 = 13; // Talon
-		public static final int FLYWHEEL_2 = 17; // Talon
+		public static final int FLYWHEEL_1 = 17; // Talon
+		public static final int FLYWHEEL_2 = 13; // Talon
 		public static final int CLIMBWINCH = 20; // SparkMax
 		public static final int TELEWINCH = 21; // SparkMax
 	}
@@ -58,23 +59,23 @@ public final class Constants {
 	}
 
 	public final static class Measurements {
-		public static final int ENCODER_PULSE = 1024;
-		public static final double WHEEL_CIRCUMFERENCE = 6 * Math.PI; // inch
-		public static final double AUTO_DRIVE_DISTANCE = 24; // inch
-
-		public static final double SVOLTS = 0.00;
-		public static final double SVOLT_SECOND_PER_METER = 0.00;
-		public static final double SVOLT_SECOND_PER_METER_SQUARED = 0.00;
-		public static final double KP_DRIVE_VELOCITY = 0.00;
+		public static final int ENCODER_PULSE = 4096;
+		public static final double SVOLTS = 1.28;
+		public static final double SVOLT_SECOND_PER_METER = 0.0717;
+		public static final double SVOLT_SECOND_PER_METER_SQUARED = 0.0000104;
+		public static final double KP_DRIVE_VELOCITY = 0.000527;
 		public static final double TRACKWIDTH = 0.44; // meters
 		public static final double WHEELDIAMETER = 0.152; // meters
 		public static final double MAX_SPEED = 0; // m/s
 		public static final double MAX_ACCELERATION = 0; // m/s²
 		public static final double RAMSETE_B = 2;
 		public static final double RAMSETE_ZETA = 0.7;
-		public static final double WHEEL_MOVE_TICK = WHEEL_CIRCUMFERENCE / 4096; // inch, ~0.0046
 		public static final double DISTANCE_PER_PULSE = (WHEELDIAMETER * Math.PI) / (double) ENCODER_PULSE;
 		public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(TRACKWIDTH);
+
+		public static final double LIMELIGHT_HEIGHT = 0.56; //m
+		public static final double LIMELIGHT_ANGLE = 45.; //degrees
+		public static final double TARGET_HEIGHT = 2.; //m
 
 		public static final double AIR_DENSITY = 1.2; //kg/m³
 		public static final double BALL_AREA = Math.sqrt(0.89) * Math.PI; //m²

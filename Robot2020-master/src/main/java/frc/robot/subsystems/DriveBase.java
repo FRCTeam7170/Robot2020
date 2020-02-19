@@ -31,12 +31,10 @@ public class DriveBase extends SubsystemBase {
   private final DifferentialDrive m_drive;
 
   // The left-side drive encoder
-  private final Encoder m_leftEncoder =
-      new Encoder(2, 3, true);
+  private final Encoder m_leftEncoder = new Encoder(4, 5);
 
   // The right-side drive encoder
-  private final Encoder m_rightEncoder =
-      new Encoder(4, 5, false);
+  private final Encoder m_rightEncoder = new Encoder(2, 3);
 
   // The gyro sensor
   private final Gyro m_gyro = new ADIS16448_IMU();
@@ -48,7 +46,9 @@ public class DriveBase extends SubsystemBase {
    * Creates a new DriveSubsystem.
    */
   public DriveBase() {
-	// Sets the distance per pulse for the encoders
+  // Sets the distance per pulse for the encoders
+  m_leftEncoder.setReverseDirection(true);
+
 	m_motorRight1.configFactoryDefault();
 	m_motorRight2.configFactoryDefault();
 	m_motorLeft1.configFactoryDefault();
@@ -75,7 +75,9 @@ public class DriveBase extends SubsystemBase {
 
 	m_leftMotors = new SpeedControllerGroup(m_motorLeft1, m_motorLeft2);
 	m_rightMotors = new SpeedControllerGroup(m_motorRight1, m_motorRight2);
-	m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+  m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+  
+  m_drive.setSafetyEnabled(false);
 
   m_leftEncoder.setDistancePerPulse(Constants.Measurements.ENCODER_PULSE);
   m_rightEncoder.setDistancePerPulse(Constants.Measurements.ENCODER_PULSE);

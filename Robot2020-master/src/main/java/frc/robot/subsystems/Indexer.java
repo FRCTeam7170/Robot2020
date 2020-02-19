@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,23 +18,25 @@ public class Indexer extends SubsystemBase {
 
 	public Indexer() {
 		m_motor.configFactoryDefault();
-		m_motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 30);
-		/**
-		 * Phase sensor accordingly. Positive Sensor Reading should match Green
-		 * (blinking) Leds on Talon
-		 */
-		m_motor.setSensorPhase(true);
+		
+		m_motor.setInverted(true);
 
-		/* Config the peak and nominal outputs */
-		m_motor.configNominalOutputForward(0, 30);
-		m_motor.configNominalOutputReverse(0, 30);
-		m_motor.configPeakOutputForward(1, 30);
-		m_motor.configPeakOutputReverse(-1, 30);
+		m_motor.setNeutralMode(NeutralMode.Coast);
 
-		m_motor.config_kP(0, kP);
-		m_motor.config_kI(0, kI);
-		m_motor.config_kD(0, kD);
-		m_motor.config_kF(0, kF);
+		/* Config sensor used for Primary PID [Velocity]*/
+		m_motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
+		 0,
+		  Constants.Autonomous.TIMEOUT);
+
+		m_motor.setSensorPhase(false);
+
+		m_motor.configPeakOutputForward(1, Constants.Autonomous.TIMEOUT);
+		m_motor.configPeakOutputReverse(-1, Constants.Autonomous.TIMEOUT);
+
+		m_motor.config_kF(0, kF, Constants.Autonomous.TIMEOUT);
+		m_motor.config_kP(0, kP, Constants.Autonomous.TIMEOUT);
+		m_motor.config_kI(0, kI, Constants.Autonomous.TIMEOUT);
+		m_motor.config_kD(0, kD, Constants.Autonomous.TIMEOUT);
 	}
 
 	public void setRPM(final int rpm) {
@@ -47,5 +50,8 @@ public class Indexer extends SubsystemBase {
 	public void setIndexer() {
 		final double rpmout = m_rpm * 4096 / 600;
 		m_motor.set(ControlMode.Velocity, rpmout);
+	}
+	public void spinTest(double speed){
+		m_motor.set(ControlMode.PercentOutput, speed);
 	}
 }
