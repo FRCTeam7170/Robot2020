@@ -13,6 +13,7 @@ public class IntakeWheel extends SubsystemBase {
 	private final double kI = 0.00005;
 	private final double kD = 2;
 	private final double kF = 1023 / 7200;
+	private double m_speed;
 
 	public IntakeWheel(){
 		m_motor.configFactoryDefault();
@@ -41,7 +42,8 @@ public class IntakeWheel extends SubsystemBase {
 		m_motor.set(ControlMode.PercentOutput, 0);
 	}
 
-	public void on() {
-		m_motor.set(ControlMode.PercentOutput, 0.75);
+	public void on(double speed) {
+		m_speed = speed / 600;
+		m_motor.set(ControlMode.Velocity, m_speed);
 	}
 }

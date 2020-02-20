@@ -26,11 +26,11 @@ public final class Constants {
 		public static final int MOTOR_RIGHT_1 = 10; // Talon
 		public static final int MOTOR_RIGHT_2 = 11; // Talon
 		public static final int INTAKEWHEEL = 12; // Talon
-		public static final int INDEXER = 16; // Talon
+		public static final int FLYWHEEL_2 = 13; // Talon
 		public static final int MOTOR_LEFT_1 = 14; // Talon
 		public static final int MOTOR_LEFT_2 = 15; // Talon
+		public static final int INDEXER = 16; // Talon
 		public static final int FLYWHEEL_1 = 17; // Talon
-		public static final int FLYWHEEL_2 = 13; // Talon
 		public static final int CLIMBWINCH = 20; // SparkMax
 		public static final int TELEWINCH = 21; // SparkMax
 	}
@@ -80,6 +80,8 @@ public final class Constants {
 		public static final double AIR_DENSITY = 1.2; //kg/m³
 		public static final double BALL_AREA = Math.sqrt(0.89) * Math.PI; //m²
 		public static final double BALL_DRAG = 0.47;
+
+		public static final double MIN_DRIVEBASE_SPEED = 500;
 	}
 
 	public final static class Autonomous {

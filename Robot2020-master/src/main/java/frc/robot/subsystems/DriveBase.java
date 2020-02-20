@@ -216,4 +216,8 @@ public class DriveBase extends SubsystemBase {
   public double getTurnRate() {
     return m_gyro.getRate() * (Constants.Autonomous.INVERTED_GYRO ? -1.0 : 1.0);
   }
+
+  public double getAvgSpeed(){
+    return (m_leftEncoder.getRate() + m_rightEncoder.getRate()) / 2;
+  }
 }

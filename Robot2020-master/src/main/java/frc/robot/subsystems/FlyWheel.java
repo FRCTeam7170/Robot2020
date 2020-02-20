@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import java.util.function.DoubleSupplier;
-
 import frc.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;

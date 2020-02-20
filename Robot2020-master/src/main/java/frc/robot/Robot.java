@@ -18,8 +18,12 @@ import frc.robot.subsystems.FlyWheel;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.IntakeLift;
 import frc.robot.subsystems.IntakeWheel;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -41,6 +45,8 @@ public class Robot extends TimedRobot {
   //private final DriveBase s_driveBase = new DriveBase();
   //private final IntakeLift s_intakeLift = new IntakeLift();
   //private final IntakeWheel s_intakeWheel = new IntakeWheel();
+  //private final UsbCamera ballCamera = new UsbCamera("Ball Camera", 1);
+  //private final UsbCamera driverCamera = CameraServer.getInstance().startAutomaticCapture("Driver Camera", 0);
   //private final RamseteDrive c_ramseteDrive = new RamseteDrive(s_driveBase);
   //private final RamseteShoot c_ramseteShoot = new RamseteShoot(s_driveBase, s_flyWheel, s_indexer);
   private final XboxController m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
@@ -53,8 +59,11 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
 
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
+    //ballCamera.setVideoMode(PixelFormat.kMJPEG, 144, 81, 2);
+    //CameraServer.getInstance().startAutomaticCapture(ballCamera);
+    //driverCamera.setVideoMode(PixelFormat.kMJPEG, 320, 180, 24);
+    //Shuffleboard.getTab("Camera").add("Camera Driver", driverCamera);
+
     CommandScheduler.getInstance().registerSubsystem(s_indexer,
                                                      s_flyWheel
                                                      //s_climbing,

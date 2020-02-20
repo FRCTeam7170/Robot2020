@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Indexer;
 
 public class LoadBall extends CommandBase {
-	private final Ultrasonic m_sensor = new Ultrasonic(new DigitalOutput(0), new DigitalInput(1));
+	private double distance = 0;
 	private final Indexer m_indexer;
 	private final double treshold = 5;
-	private double distance = 0;
+	private final Ultrasonic m_sensor = new Ultrasonic(new DigitalOutput(0), new DigitalInput(1));
 
 	public LoadBall(final Indexer indexer) {
 		m_indexer = indexer;
