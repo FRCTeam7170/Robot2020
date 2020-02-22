@@ -35,9 +35,9 @@ public class RamseteDrive {
 		TrajectoryConfig config = new TrajectoryConfig(Constants.Measurements.MAX_SPEED,
 				Constants.Measurements.MAX_ACCELERATION)
 						// Add kinematics to ensure max speed is actually obeyed
-						.setKinematics(Constants.Measurements.DRIVE_KINEMATICS);
+						.setKinematics(Constants.Measurements.DRIVE_KINEMATICS)
 						// Apply the voltage constraint
-						//.addConstraint(autoVoltageConstraint);
+						.addConstraint(autoVoltageConstraint);
 
 		Trajectory Trajectory = TrajectoryGenerator.generateTrajectory(
 				// Start at the origin facing the +X direction
