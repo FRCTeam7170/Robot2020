@@ -7,7 +7,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class IntakeWheel extends SubsystemBase {
+public class IntakeWheelSUB extends SubsystemBase {
 	private final WPI_TalonSRX m_motor = new WPI_TalonSRX(Constants.Motors.INTAKEWHEEL);
 	private final double kP = 0.25;
 	private final double kI = 0.00005;
@@ -15,7 +15,7 @@ public class IntakeWheel extends SubsystemBase {
 	private final double kF = 1023 / 7200;
 	private double m_speed;
 
-	public IntakeWheel(){
+	public IntakeWheelSUB(){
 		m_motor.configFactoryDefault();
 		
 		m_motor.setInverted(true);

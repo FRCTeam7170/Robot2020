@@ -8,7 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Indexer extends SubsystemBase {
+public class IndexerSUB extends SubsystemBase {
 	private final TalonSRX m_motor = new TalonSRX(Constants.Motors.INDEXER);
 	private final double kP = 0.0025;
 	private final double kI = 0.001;
@@ -16,7 +16,7 @@ public class Indexer extends SubsystemBase {
 	private final double kF = 1023 / 7200;
 	private int m_rpm;
 
-	public Indexer() {
+	public IndexerSUB() {
 		m_motor.configFactoryDefault();
 		
 		m_motor.setInverted(true);

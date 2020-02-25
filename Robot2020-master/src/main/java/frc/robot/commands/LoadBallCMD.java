@@ -4,15 +4,15 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.IndexerSUB;
 
-public class LoadBall extends CommandBase {
+public class LoadBallCMD extends CommandBase {
 	private double distance = 0;
-	private final Indexer m_indexer;
+	private final IndexerSUB m_indexer;
 	private final double treshold = 5;
 	private final Ultrasonic m_sensor = new Ultrasonic(new DigitalOutput(0), new DigitalInput(1));
 
-	public LoadBall(final Indexer indexer) {
+	public LoadBallCMD(final IndexerSUB indexer) {
 		m_indexer = indexer;
 		addRequirements(m_indexer);
 	}

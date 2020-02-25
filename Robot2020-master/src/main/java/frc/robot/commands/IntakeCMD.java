@@ -1,20 +1,20 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
-import frc.robot.subsystems.DriveBase;
-import frc.robot.subsystems.IntakeLift;
-import frc.robot.subsystems.IntakeWheel;
+import frc.robot.subsystems.DriveBaseSUB;
+import frc.robot.subsystems.IntakeLiftSUB;
+import frc.robot.subsystems.IntakeWheelSUB;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class Intake extends CommandBase {
-	private final IntakeLift m_intakeLift;
-	private final IntakeWheel m_intakeWheel;
-	private final DriveBase m_driveBase;
+public class IntakeCMD extends CommandBase {
+	private final IntakeLiftSUB m_intakeLift;
+	private final IntakeWheelSUB m_intakeWheel;
+	private final DriveBaseSUB m_driveBase;
 	private boolean up = true;
 	private double speed;
 	private double driveBaseSpeed;
 
-	public Intake(final IntakeLift intakeLift, final IntakeWheel intakeWheel, final DriveBase driveBase) {
+	public IntakeCMD(final IntakeLiftSUB intakeLift, final IntakeWheelSUB intakeWheel, final DriveBaseSUB driveBase) {
 		m_intakeLift = intakeLift;
 		m_intakeWheel = intakeWheel;
 		m_driveBase = driveBase;

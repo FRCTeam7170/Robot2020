@@ -1,12 +1,12 @@
 package frc.robot.commands;
 
-import frc.robot.subsystems.FlyWheel;
+import frc.robot.subsystems.FlyWheelSUB;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class FlyWheelSpin extends CommandBase {
-	private final FlyWheel m_flyWheel;
+public class FlyWheelCMD extends CommandBase {
+	private final FlyWheelSUB m_flyWheel;
 
-	public FlyWheelSpin(final FlyWheel flyWheel) {
+	public FlyWheelCMD(final FlyWheelSUB flyWheel) {
 		m_flyWheel = flyWheel;
 		addRequirements(m_flyWheel);
 	}

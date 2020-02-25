@@ -18,18 +18,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
-import frc.robot.subsystems.DriveBase;
-import frc.robot.subsystems.FlyWheel;
-import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.DriveBaseSUB;
+import frc.robot.subsystems.FlyWheelSUB;
+import frc.robot.subsystems.IndexerSUB;
 
-public class RamseteShoot {
+public class RamseteShootCMD {
     private final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-spooky");
-	private final DriveBase m_driveBase;
-	private final FlyWheel m_flyWheel;
-	private final Indexer m_indexer;
+	private final DriveBaseSUB m_driveBase;
+	private final FlyWheelSUB m_flyWheel;
+	private final IndexerSUB m_indexer;
 	private double tx, ty, r, angle;
 
-	public RamseteShoot(DriveBase driveBase, FlyWheel flyWheel, Indexer indexer) {
+	public RamseteShootCMD(DriveBaseSUB driveBase, FlyWheelSUB flyWheel, IndexerSUB indexer) {
 		m_driveBase = driveBase;
 		m_flyWheel = flyWheel;
 		m_indexer = indexer;
@@ -80,10 +80,10 @@ public class RamseteShoot {
 					m_driveBase::tankDriveVolts, m_driveBase);
 
 			return ramseteCommand.andThen(() -> m_driveBase.tankDriveVolts(0, 0))
-			.andThen(() -> new FlyWheelSpin(m_flyWheel).alongWith(new LoadBall(m_indexer)
+			.andThen(() -> new FlyWheelCMD(m_flyWheel).alongWith(new LoadBallCMD(m_indexer)
 			.andThen(new WaitCommand(1).andThen(() -> m_flyWheel.stop(), m_flyWheel))));
 		} else {
-			return new FlyWheelSpin(m_flyWheel).alongWith(new LoadBall(m_indexer)
+			return new FlyWheelCMD(m_flyWheel).alongWith(new LoadBallCMD(m_indexer)
 					.andThen(new WaitCommand(1).andThen(() -> m_flyWheel.stop(), m_flyWheel)));
 		}
 	}

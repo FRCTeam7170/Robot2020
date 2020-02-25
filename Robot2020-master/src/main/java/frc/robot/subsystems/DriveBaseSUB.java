@@ -15,7 +15,7 @@ import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-public class DriveBase extends SubsystemBase {
+public class DriveBaseSUB extends SubsystemBase {
 	private final WPI_TalonSRX m_motorLeft1 = new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1);
 	private final WPI_TalonSRX m_motorLeft2 = new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2);
 	private final WPI_TalonSRX m_motorRight1 = new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1);
@@ -45,7 +45,7 @@ public class DriveBase extends SubsystemBase {
   /**
    * Creates a new DriveSubsystem.
    */
-  public DriveBase() {
+  public DriveBaseSUB() {
   // Sets the distance per pulse for the encoders
   m_leftEncoder.setReverseDirection(true);
 

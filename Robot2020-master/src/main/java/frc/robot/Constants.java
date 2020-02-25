@@ -32,7 +32,7 @@ public final class Constants {
 		public static final int INDEXER = 16; // Talon
 		public static final int FLYWHEEL_1 = 17; // Talon
 		public static final int CLIMBWINCH = 20; // SparkMax
-		public static final int TELEWINCH = 21; // SparkMax
+		public static final int TELEWINCH = 12; // Talon
 	}
 
 	public final static class Pneumatics {

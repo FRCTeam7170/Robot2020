@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 //import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
-public class FlyWheel extends SubsystemBase {
+public class FlyWheelSUB extends SubsystemBase {
 
 	private final ShuffleboardTab FlyWheelTab = Shuffleboard.getTab("FlyWheelTab");
 	private final WPI_TalonSRX flywheelMotor1 = new WPI_TalonSRX(Constants.Motors.FLYWHEEL_1);
@@ -27,7 +27,7 @@ public class FlyWheel extends SubsystemBase {
 	private final double kD = 2;
 	private final double kF = 1023 / 7200;
 
-	public FlyWheel() {
+	public FlyWheelSUB() {
 		flywheelMotor2.configFactoryDefault();
 		flywheelMotor1.configFactoryDefault();
 		

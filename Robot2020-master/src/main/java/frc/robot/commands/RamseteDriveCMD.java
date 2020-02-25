@@ -15,12 +15,12 @@ import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConst
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Constants;
-import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.DriveBaseSUB;
 
-public class RamseteDrive {
-	private DriveBase m_driveBase;
+public class RamseteDriveCMD {
+	private DriveBaseSUB m_driveBase;
 
-	public RamseteDrive(DriveBase driveBase) {
+	public RamseteDriveCMD(DriveBaseSUB driveBase) {
 		m_driveBase = driveBase;
 	}
 
