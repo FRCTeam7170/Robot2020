@@ -1,0 +1,42 @@
+package frc.robot.commands;
+
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.DriveBaseSUB;
+
+public class TurnOnSpotCMD extends CommandBase{
+    private final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-spooky");
+    private final DriveBaseSUB m_driveBase;
+    private double kP = 0.0254;
+    private double kI = 0.03;
+    private double kD = 0;
+    private final double deadband = 2;
+    private final PIDController pid;
+    private double tx, speed;
+
+    public TurnOnSpotCMD(DriveBaseSUB drivebase){
+        table.getEntry("led").setNumber(3);
+        table.getEntry("camMode").setNumber(0);
+        m_driveBase = drivebase;
+        pid = new PIDController(kP, kI, kD);
+        addRequirements(m_driveBase);
+    }
+
+    public void initialize(){
+    }
+    public void execute(){
+        tx = table.getEntry("tx").getDouble(0.0);
+        speed = pid.calculate(tx);
+        System.out.println(speed);
+        m_driveBase.tankDrive(speed, -speed);
+    }
+    public boolean isFinished(){
+        return Math.abs(tx) <= deadband;
+    }
+    public void end(){
+        table.getEntry("led").setNumber(1);
+    }
+}

@@ -10,6 +10,7 @@ package frc.robot;
 import frc.robot.Constants;
 import frc.robot.commands.ClimbCMD;
 import frc.robot.commands.IntakeCMD;
+import frc.robot.commands.TurnOnSpotCMD;
 import frc.robot.commands.RamseteDriveCMD;
 import frc.robot.commands.RamseteShootCMD;
 import frc.robot.subsystems.ClimbSUB;
@@ -47,7 +48,7 @@ public class Robot extends TimedRobot {
   private final DriveBaseSUB s_driveBase = new DriveBaseSUB();
   //private final IntakeLiftSUB s_intakeLift = new IntakeLiftSUB();
   //private final IntakeWheelSUB s_intakeWheel = new IntakeWheelSUB();
-  private final RamseteDriveCMD c_ramseteDrive = new RamseteDriveCMD(s_driveBase);
+  //private final RamseteDriveCMD c_ramseteDrive = new RamseteDriveCMD(s_driveBase);
   //private final RamseteShootCMD c_ramseteShoot = new RamseteShootCMD(s_driveBase, s_flyWheel, s_indexer);
   //private final UsbCamera ballCamera = CameraServer.getInstance().startAutomaticCapture("Ball Camera", 1);
   //private final UsbCamera driverCamera = CameraServer.getInstance().startAutomaticCapture("Driver Camera", 0);
@@ -95,6 +96,9 @@ public class Robot extends TimedRobot {
     //s_flyWheel.setDefaultCommand(new RunCommand(() -> s_flyWheel.spinManual(
       //m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)),
         //s_flyWheel));
+    getButton("X").whenPressed(new TurnOnSpotCMD(s_driveBase));
+    //getButton("A").whenPressed(new InstantCommand(s_intakeLift::up));
+    //getButton("Y").whenPressed(new InstantCommand(s_intakeLift::down));
   }
   @Override
   public void robotPeriodic() {
@@ -122,7 +126,7 @@ public class Robot extends TimedRobot {
    */
 
   public void autonomousInit() {
-    autoCommand = c_ramseteDrive.getAutoCommand();
+    //autoCommand = c_ramseteDrive.getAutoCommand();
     autoCommand.schedule();
   }
   /**

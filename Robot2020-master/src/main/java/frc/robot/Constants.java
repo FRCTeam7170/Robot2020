@@ -37,7 +37,7 @@ public final class Constants {
 
 	public final static class Pneumatics {
 		public static final int SOLENOID_1_ON = 0;
-		public static final int SOLENOID_1_OFF = 0;
+		public static final int SOLENOID_1_OFF = 1;
 	}
 
 	public final static class Controller {
@@ -73,8 +73,8 @@ public final class Constants {
 		public static final double DISTANCE_PER_PULSE = (WHEELDIAMETER * Math.PI) / (double) ENCODER_PULSE;
 		public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(TRACKWIDTH);
 
-		public static final double LIMELIGHT_HEIGHT = 0.56; //m
-		public static final double LIMELIGHT_ANGLE = 45.; //degrees
+		public static final double LIMELIGHT_HEIGHT = 0.2; //m
+		public static final double LIMELIGHT_ANGLE = 35; //degrees
 		public static final double TARGET_HEIGHT = 2.; //m
 
 		public static final double AIR_DENSITY = 1.2; //kg/m³
@@ -82,6 +82,8 @@ public final class Constants {
 		public static final double BALL_DRAG = 0.47;
 
 		public static final double MIN_DRIVEBASE_SPEED = 500;
+
+		public static final double SHOOTING_RANGE = 6.7; //m
 	}
 
 	public final static class Autonomous {
