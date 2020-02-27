@@ -25,14 +25,14 @@ public final class Constants {
 		public static final int PNEUMATIC_CONTROL_PANEL = 6; //PCM
 		public static final int MOTOR_RIGHT_1 = 10; // Talon
 		public static final int MOTOR_RIGHT_2 = 11; // Talon
-		public static final int INTAKEWHEEL = 12; // Talon
-		public static final int FLYWHEEL_2 = 13; // Talon
-		public static final int MOTOR_LEFT_1 = 14; // Talon
-		public static final int MOTOR_LEFT_2 = 15; // Talon
+		public static final int MOTOR_LEFT_1 = 12; // Talon
+		public static final int MOTOR_LEFT_2 = 13; // Talon
+		public static final int INTAKEWHEEL = 13; // Talon
+		public static final int FLYWHEEL_2 = 14; // Talon
+		public static final int TELEWINCH = 15; // Talon
 		public static final int INDEXER = 16; // Talon
 		public static final int FLYWHEEL_1 = 17; // Talon
 		public static final int CLIMBWINCH = 20; // SparkMax
-		public static final int TELEWINCH = 12; // Talon
 	}
 
 	public final static class Pneumatics {
@@ -60,14 +60,14 @@ public final class Constants {
 
 	public final static class Measurements {
 		public static final int ENCODER_PULSE = 4096;
-		public static final double SVOLTS = 1.28;
-		public static final double SVOLT_SECOND_PER_METER = 0.0717;
-		public static final double SVOLT_SECOND_PER_METER_SQUARED = 0.0000104;
-		public static final double KP_DRIVE_VELOCITY = 0.000527;
+		public static final double SVOLTS = 1.07;
+		public static final double SVOLT_SECOND_PER_METER = 2.95;
+		public static final double SVOLT_SECOND_PER_METER_SQUARED = 0.0124;
+		public static final double KP_DRIVE_VELOCITY = 0.0254;
 		public static final double TRACKWIDTH = 0.44; // meters
 		public static final double WHEELDIAMETER = 0.152; // meters
-		public static final double MAX_SPEED = 0; // m/s
-		public static final double MAX_ACCELERATION = 0; // m/s²
+		public static final double MAX_SPEED = 1.5; // m/s
+		public static final double MAX_ACCELERATION = 1.5; // m/s²
 		public static final double RAMSETE_B = 2;
 		public static final double RAMSETE_ZETA = 0.7;
 		public static final double DISTANCE_PER_PULSE = (WHEELDIAMETER * Math.PI) / (double) ENCODER_PULSE;
@@ -98,6 +98,6 @@ public final class Constants {
 		public final static int kSlot_Turning = 1;
 		public final static int kSlot_Velocit = 2;
 		public final static int kSlot_MotProf = 3;
-		public final static boolean INVERTED_GYRO = false;
+		public final static boolean INVERTED_GYRO = true;
 	}
 }

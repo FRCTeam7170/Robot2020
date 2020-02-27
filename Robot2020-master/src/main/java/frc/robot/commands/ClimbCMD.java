@@ -10,9 +10,6 @@ public class ClimbCMD extends CommandBase {
 
 	public final ClimbSUB m_climb;
 	private final XboxController m_xboxController;
-	private final double maxCount = 5000; 
-	private double teleUp;
-	private double teleDown;
 
 	public ClimbCMD(final ClimbSUB climbing) {
 		m_climb = climbing;

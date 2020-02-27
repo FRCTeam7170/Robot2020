@@ -83,6 +83,7 @@ public class DriveBaseSUB extends SubsystemBase {
   m_rightEncoder.setDistancePerPulse(Constants.Measurements.ENCODER_PULSE);
 
   resetEncoders();
+  zeroHeading();
   m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
   }
 

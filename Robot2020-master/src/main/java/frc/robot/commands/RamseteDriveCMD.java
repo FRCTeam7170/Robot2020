@@ -45,7 +45,7 @@ public class RamseteDriveCMD {
 				// Pass through these waypoints
 				List.of(),
 				// End position and angle
-				new Pose2d(3, 2, new Rotation2d(0)),
+				new Pose2d(3, 0, new Rotation2d(0)),
 				// Pass config
 				config);
 
