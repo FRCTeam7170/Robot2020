@@ -76,8 +76,8 @@ public class DriveBaseSUB extends SubsystemBase {
   
   m_drive.setSafetyEnabled(false);
 
-  m_leftEncoder.setDistancePerPulse(Constants.Measurements.ENCODER_PULSE);
-  m_rightEncoder.setDistancePerPulse(Constants.Measurements.ENCODER_PULSE);
+  m_leftEncoder.setDistancePerPulse(Constants.Measurements.DISTANCE_PER_PULSE);
+  m_rightEncoder.setDistancePerPulse(Constants.Measurements.DISTANCE_PER_PULSE);
 
   resetEncoders();
   zeroHeading();

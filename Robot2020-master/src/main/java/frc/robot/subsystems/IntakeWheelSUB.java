@@ -47,4 +47,8 @@ public class IntakeWheelSUB extends SubsystemBase {
 		m_speed = speed / 600;
 		m_motor.set(ControlMode.Velocity, m_speed);
 	}
+	public void test(double speed){
+		m_motor.set(ControlMode.PercentOutput, speed);
+		System.out.println(m_motor.getSelectedSensorVelocity());
+	}
 }

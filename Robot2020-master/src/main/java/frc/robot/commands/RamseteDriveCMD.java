@@ -29,7 +29,7 @@ public class RamseteDriveCMD {
 				new SimpleMotorFeedforward(Constants.Measurements.SVOLTS,
 										Constants.Measurements.SVOLT_SECOND_PER_METER,
 										Constants.Measurements.SVOLT_SECOND_PER_METER_SQUARED),
-									Constants.Measurements.DRIVE_KINEMATICS, 12);
+										Constants.Measurements.DRIVE_KINEMATICS, 12);
 
 		// Create config for trajectory
 		TrajectoryConfig config = new TrajectoryConfig(Constants.Measurements.MAX_SPEED,
