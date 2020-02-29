@@ -1,11 +1,10 @@
 package frc.robot.commands;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveBaseSUB;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class TurnOnSpotCMD extends CommandBase{
     private final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-spooky");

@@ -1,10 +1,10 @@
 package frc.robot.commands;
 
+import frc.robot.subsystems.IndexerSUB;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IndexerSUB;
 
 public class LoadBallCMD extends CommandBase {
 	private double distance = 0;

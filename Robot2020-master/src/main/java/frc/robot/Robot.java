@@ -10,7 +10,8 @@ package frc.robot;
 import frc.robot.Constants;
 import frc.robot.commands.ClimbCMD;
 import frc.robot.commands.FlyWheelCMD;
-import frc.robot.commands.IntakeCMD;
+import frc.robot.commands.IntakeLiftCMD;
+import frc.robot.commands.IntakeWheelCMD;
 import frc.robot.commands.TurnOnSpotCMD;
 import frc.robot.commands.RamseteDriveCMD;
 import frc.robot.commands.RamseteShootCMD;
@@ -43,17 +44,17 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class Robot extends TimedRobot {
   private Command autoCommand;
-  //private final ClimbSUB s_climbing = new ClimbSUB();
-  //private final IndexerSUB s_indexer = new IndexerSUB();
+  private final ClimbSUB s_climbing = new ClimbSUB();
+  private final IndexerSUB s_indexer = new IndexerSUB();
   private final FlyWheelSUB s_flyWheel = new FlyWheelSUB();
-  //private final DriveBaseSUB s_driveBase = new DriveBaseSUB();
-  //private final TelescopeSUB s_telescope = new TelescopeSUB();
-  //private final IntakeLiftSUB s_intakeLift = new IntakeLiftSUB();
-  //private final IntakeWheelSUB s_intakeWheel = new IntakeWheelSUB();
-  //private final RamseteDriveCMD c_ramseteDrive = new RamseteDriveCMD(s_driveBase);
-  //private final RamseteShootCMD c_ramseteShoot = new RamseteShootCMD(s_driveBase, s_flyWheel, s_indexer);
-  //private final UsbCamera ballCamera = CameraServer.getInstance().startAutomaticCapture("Ball Camera", 1);
-  //private final UsbCamera driverCamera = CameraServer.getInstance().startAutomaticCapture("Driver Camera", 0);
+  private final DriveBaseSUB s_driveBase = new DriveBaseSUB();
+  private final TelescopeSUB s_telescope = new TelescopeSUB();
+  private final IntakeLiftSUB s_intakeLift = new IntakeLiftSUB();
+  private final IntakeWheelSUB s_intakeWheel = new IntakeWheelSUB();
+  private final RamseteDriveCMD c_ramseteDrive = new RamseteDriveCMD(s_driveBase);
+  private final RamseteShootCMD c_ramseteShoot = new RamseteShootCMD(s_driveBase, s_flyWheel, s_indexer);
+  private final UsbCamera ballCamera = CameraServer.getInstance().startAutomaticCapture("Ball Camera", 1);
+  private final UsbCamera driverCamera = CameraServer.getInstance().startAutomaticCapture("Driver Camera", 0);
   private final XboxController m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
 
 
@@ -69,41 +70,31 @@ public class Robot extends TimedRobot {
     //driverCamera.setVideoMode(PixelFormat.kMJPEG, 320, 180, 24);
     //Shuffleboard.getTab("Camera").add("Camera Driver", driverCamera);
 
-    CommandScheduler.getInstance().registerSubsystem(//s_indexer,
-                                                     //s_telescope,
-                                                     s_flyWheel
-                                                     //s_climbing
-                                                     //s_intakeLift,
-                                                     //s_intakeWheel,
-                                                     //s_driveBase
+    CommandScheduler.getInstance().registerSubsystem(s_indexer,
+                                                     s_telescope,
+                                                     s_flyWheel,
+                                                     s_climbing,
+                                                     s_intakeLift,
+                                                     s_intakeWheel,
+                                                     s_driveBase
                                                      );
 
                                                      
-    //s_driveBase.setDefaultCommand(new RunCommand(()-> s_driveBase.tankDriveVolts(
-      //                                                  m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)*12, 
-        //                                                m_xboxController.getRawAxis(Constants.Controller.RIGHT_STICK_Y)*12), 
-          //                                              s_driveBase));
+    s_driveBase.setDefaultCommand(new RunCommand(()-> s_driveBase.tankDriveVolts(
+                                                        m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)*12, 
+                                                        m_xboxController.getRawAxis(Constants.Controller.RIGHT_STICK_Y)*12), 
+                                                        s_driveBase));
 
+    s_intakeWheel.setDefaultCommand(new IntakeWheelCMD(s_intakeWheel, s_intakeLift));
     //getButton("X").whenPressed(new TurnOnSpotCMD(s_driveBase));
-    getButton("Y").whenPressed(new FlyWheelCMD(s_flyWheel).withTimeout(3));
-    //getButton("A").whenPressed(new IntakeCMD(s_intakeLift, s_intakeWheel, s_driveBase));
+    getButton("Y").whenHeld(new FlyWheelCMD(s_flyWheel));
 
-    //s_climbing.setDefaultCommand(new Hang(s_climbing));
-    //s_climbing.setDefaultCommand(new RunCommand(() -> s_telescope.TeleUp(
-      //m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)),
-        //s_climbing));
-
-    //getButton("X").whenPressed(c_ramseteShoot.getAutoCommand());
-    //getButton("X").whenPressed(new FlyWheelSpin(s_flyWheel).alongWith(new LoadBall(s_indexer).andThen(new WaitCommand(1).andThen(() -> s_flyWheel::stop, s_flyWheel))));
-    //getButton("X").whenPressed(new RunCommand(() -> s_flyWheel.setFlyWheel(), s_flyWheel).alongWith(new RunCommand(s_flyWheel::returnRPM)));
     //s_indexer.setDefaultCommand(new RunCommand(() -> s_indexer.spinTest(
       //m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)),
         //s_indexer));
     //s_flyWheel.setDefaultCommand(new RunCommand(() -> s_flyWheel.spinManual(
       //m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)),
         //s_flyWheel));
-    //getButton("A").whenPressed(new InstantCommand(s_intakeLift::up));
-    //getButton("Y").whenPressed(new InstantCommand(s_intakeLift::down));
   }
   @Override
   public void robotPeriodic() {
@@ -119,8 +110,14 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     CommandScheduler.getInstance().cancelAll();
-    //s_telescope.zeroSensor();
-    //s_flyWheel.stop();
+    s_indexer.stop();
+    s_flyWheel.stop();
+    s_climbing.stop();
+    s_driveBase.stop();
+    s_telescope.stop();
+    s_intakeWheel.stop();
+    s_intakeLift.up();
+    s_telescope.zeroSensor();
   }
 
   @Override

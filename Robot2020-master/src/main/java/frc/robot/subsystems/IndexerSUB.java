@@ -1,12 +1,11 @@
 package frc.robot.subsystems;
 
+import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
 public class IndexerSUB extends SubsystemBase {
 	private final TalonSRX m_motor = new TalonSRX(Constants.Motors.INDEXER);
@@ -14,7 +13,7 @@ public class IndexerSUB extends SubsystemBase {
 	private final double kI = 0.001;
 	private final double kD = 2;
 	private final double kF = 1023 / 7200;
-	private int m_rpm;
+	private int m_targetRPM;
 
 	public IndexerSUB() {
 		m_motor.configFactoryDefault();
@@ -40,15 +39,16 @@ public class IndexerSUB extends SubsystemBase {
 	}
 
 	public void setRPM(final int rpm) {
-		m_rpm = rpm;
+		m_targetRPM = rpm;
 	}
 
 	public void stop() {
 		m_motor.set(ControlMode.PercentOutput, 0);
+		m_targetRPM = 0;
 	}
 
 	public void setIndexer() {
-		final double rpmout = m_rpm * 4096 / 600;
+		final double rpmout = m_targetRPM * 4096 / 600;
 		m_motor.set(ControlMode.Velocity, rpmout);
 	}
 	public void spinTest(double speed){

@@ -2,8 +2,8 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -38,11 +38,12 @@ public class IntakeWheelSUB extends SubsystemBase {
 		m_motor.config_kD(0, kD, Constants.Autonomous.TIMEOUT);
 	}
 
-	public void off() {
+	public void stop() {
 		m_motor.set(ControlMode.PercentOutput, 0);
+		m_speed = 0;
 	}
 
-	public void on(double speed) {
+	public void spin(double speed) {
 		m_speed = speed / 600;
 		m_motor.set(ControlMode.Velocity, m_speed);
 	}

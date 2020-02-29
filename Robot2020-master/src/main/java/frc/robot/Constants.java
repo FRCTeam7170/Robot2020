@@ -81,7 +81,7 @@ public final class Constants {
 		public static final double BALL_AREA = Math.sqrt(0.89) * Math.PI; //m²
 		public static final double BALL_DRAG = 0.47;
 
-		public static final double MIN_DRIVEBASE_SPEED = 500;
+		public static final int MIN_DRIVEBASE_SPEED = 500;
 
 		public static final double SHOOTING_RANGE = 6.7; //m
 	}

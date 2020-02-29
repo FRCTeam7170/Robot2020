@@ -7,9 +7,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.networktables.EntryListenerFlags;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
@@ -73,6 +70,7 @@ public class FlyWheelSUB extends SubsystemBase {
 	public void stop() {
 		flywheelMotor2.set(ControlMode.PercentOutput, 0);
 		flywheelMotor1.set(ControlMode.PercentOutput, 0);
+		m_targetRPM = 0;
 	}
 	public void spinManual(double speed){
 		flywheelMotor1.set(ControlMode.PercentOutput, speed);
@@ -84,7 +82,5 @@ public class FlyWheelSUB extends SubsystemBase {
 		flywheelMotor1.set(ControlMode.PercentOutput, 0.1);
 		System.out.println(flywheelMotor1.getSelectedSensorVelocity());
 		flywheelMotor2.follow(flywheelMotor1);
-	}
-	public void returnRPM(){
 	}
 }

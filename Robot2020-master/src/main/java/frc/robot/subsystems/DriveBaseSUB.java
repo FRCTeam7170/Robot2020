@@ -1,19 +1,19 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-
 import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 
 public class DriveBaseSUB extends SubsystemBase {
 	private final WPI_TalonSRX m_motorLeft1 = new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1);
@@ -31,10 +31,10 @@ public class DriveBaseSUB extends SubsystemBase {
   private final DifferentialDrive m_drive;
 
   // The left-side drive encoder
-  private final Encoder m_leftEncoder = new Encoder(4, 5);
+  private static final Encoder m_leftEncoder = new Encoder(4, 5, true, EncodingType.k4X);
 
   // The right-side drive encoder
-  private final Encoder m_rightEncoder = new Encoder(2, 3);
+  private static final Encoder m_rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 
   // The gyro sensor
   private final Gyro m_gyro = new ADIS16448_IMU();
@@ -46,9 +46,6 @@ public class DriveBaseSUB extends SubsystemBase {
    * Creates a new DriveSubsystem.
    */
   public DriveBaseSUB() {
-  // Sets the distance per pulse for the encoders
-  m_leftEncoder.setReverseDirection(true);
-
 	m_motorRight1.configFactoryDefault();
 	m_motorRight2.configFactoryDefault();
 	m_motorLeft1.configFactoryDefault();
@@ -218,7 +215,11 @@ public class DriveBaseSUB extends SubsystemBase {
     return m_gyro.getRate() * (Constants.Autonomous.INVERTED_GYRO ? -1.0 : 1.0);
   }
 
-  public double getAvgSpeed(){
+  public static double getAvgSpeed(){
     return (m_leftEncoder.getRate() + m_rightEncoder.getRate()) / 2;
+  }
+
+  public void stop(){
+    m_drive.stopMotor();
   }
 }
