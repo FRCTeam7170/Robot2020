@@ -27,12 +27,12 @@ public final class Constants {
 		public static final int MOTOR_RIGHT_2 = 11; // Talon
 		public static final int MOTOR_LEFT_1 = 12; // Talon
 		public static final int MOTOR_LEFT_2 = 13; // Talon
-		public static final int INTAKEWHEEL = 13; // Talon
-		public static final int FLYWHEEL_2 = 14; // Talon
-		public static final int TELEWINCH = 15; // Talon
-		public static final int INDEXER = 16; // Talon
-		public static final int FLYWHEEL_1 = 17; // Talon
-		public static final int CLIMBWINCH = 20; // SparkMax
+		public static final int INTAKEWHEEL = 14; // Talon
+		public static final int FLYWHEEL_1 = 15; // Talon
+		public static final int FLYWHEEL_2 = 16; // Talon
+		public static final int INDEXER = 17; // Talon
+		public static final int TELEWINCH = 18; // Talon
+		public static final int CLIMBWINCH = 19; // Vicotr
 	}
 
 	public final static class Pneumatics {

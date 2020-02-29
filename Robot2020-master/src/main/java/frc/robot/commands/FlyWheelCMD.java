@@ -22,8 +22,4 @@ public class FlyWheelCMD extends CommandBase {
 	public boolean isFinished() {
 		return false;
 	}
-
-	public void stop() {
-		m_flyWheel.stop();
-	}
 }

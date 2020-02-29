@@ -31,8 +31,8 @@ public class FlyWheelSUB extends SubsystemBase {
 		flywheelMotor2.configFactoryDefault();
 		flywheelMotor1.configFactoryDefault();
 		
-		flywheelMotor1.setInverted(false);
-		flywheelMotor2.setInverted(true);
+		flywheelMotor1.setInverted(true);
+		flywheelMotor2.setInverted(false);
 		
 		flywheelMotor1.setNeutralMode(NeutralMode.Coast);
 		flywheelMotor2.setNeutralMode(NeutralMode.Coast);
@@ -53,6 +53,7 @@ public class FlyWheelSUB extends SubsystemBase {
 		flywheelMotor1.config_kP(0, kP, Constants.Autonomous.TIMEOUT);
 		flywheelMotor1.config_kI(0, kI, Constants.Autonomous.TIMEOUT);
 		flywheelMotor1.config_kD(0, kD, Constants.Autonomous.TIMEOUT);
+		flywheelMotor1.configClosedloopRamp(1, Constants.Autonomous.TIMEOUT);
 
 		FlyWheelTab.addNumber("SPEED", () -> flywheelMotor1.getSelectedSensorVelocity());
 	}
@@ -62,9 +63,10 @@ public class FlyWheelSUB extends SubsystemBase {
 	}
 	
 	public void setFlyWheel() {
-		rpmout = 6000 * 4096 / 600;
+		rpmout = m_targetRPM * 4096 / 600;
 		flywheelMotor1.set(ControlMode.Velocity, rpmout);
 		flywheelMotor2.follow(flywheelMotor1);
+		System.out.println(flywheelMotor1.getStatorCurrent() + " " + flywheelMotor2.getStatorCurrent());
 		System.out.println(flywheelMotor1.getSelectedSensorVelocity());
 	}
 
@@ -74,6 +76,7 @@ public class FlyWheelSUB extends SubsystemBase {
 	}
 	public void spinManual(double speed){
 		flywheelMotor1.set(ControlMode.PercentOutput, speed);
+		System.out.println(flywheelMotor1.getStatorCurrent() + " " + flywheelMotor2.getStatorCurrent());
 		System.out.println(flywheelMotor1.getSelectedSensorVelocity());
 		flywheelMotor2.follow(flywheelMotor1);
 	}

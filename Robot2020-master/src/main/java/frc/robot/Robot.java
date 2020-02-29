@@ -9,6 +9,7 @@ package frc.robot;
 
 import frc.robot.Constants;
 import frc.robot.commands.ClimbCMD;
+import frc.robot.commands.FlyWheelCMD;
 import frc.robot.commands.IntakeCMD;
 import frc.robot.commands.TurnOnSpotCMD;
 import frc.robot.commands.RamseteDriveCMD;
@@ -23,6 +24,7 @@ import frc.robot.subsystems.TelescopeSUB;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -43,9 +45,9 @@ public class Robot extends TimedRobot {
   private Command autoCommand;
   //private final ClimbSUB s_climbing = new ClimbSUB();
   //private final IndexerSUB s_indexer = new IndexerSUB();
-  //private final FlyWheelSUB s_flyWheel = new FlyWheelSUB();
+  private final FlyWheelSUB s_flyWheel = new FlyWheelSUB();
+  //private final DriveBaseSUB s_driveBase = new DriveBaseSUB();
   //private final TelescopeSUB s_telescope = new TelescopeSUB();
-  private final DriveBaseSUB s_driveBase = new DriveBaseSUB();
   //private final IntakeLiftSUB s_intakeLift = new IntakeLiftSUB();
   //private final IntakeWheelSUB s_intakeWheel = new IntakeWheelSUB();
   //private final RamseteDriveCMD c_ramseteDrive = new RamseteDriveCMD(s_driveBase);
@@ -69,24 +71,28 @@ public class Robot extends TimedRobot {
 
     CommandScheduler.getInstance().registerSubsystem(//s_indexer,
                                                      //s_telescope,
-                                                     //s_flyWheel,
+                                                     s_flyWheel
                                                      //s_climbing
                                                      //s_intakeLift,
                                                      //s_intakeWheel,
-                                                     s_driveBase
+                                                     //s_driveBase
                                                      );
 
                                                      
-    s_driveBase.setDefaultCommand(new RunCommand(()-> s_driveBase.tankDriveVolts(
-                                                        m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)*12, 
-                                                        m_xboxController.getRawAxis(Constants.Controller.RIGHT_STICK_Y)*12), 
-                                                        s_driveBase));
+    //s_driveBase.setDefaultCommand(new RunCommand(()-> s_driveBase.tankDriveVolts(
+      //                                                  m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)*12, 
+        //                                                m_xboxController.getRawAxis(Constants.Controller.RIGHT_STICK_Y)*12), 
+          //                                              s_driveBase));
+
+    //getButton("X").whenPressed(new TurnOnSpotCMD(s_driveBase));
+    getButton("Y").whenPressed(new FlyWheelCMD(s_flyWheel).withTimeout(3));
+    //getButton("A").whenPressed(new IntakeCMD(s_intakeLift, s_intakeWheel, s_driveBase));
+
     //s_climbing.setDefaultCommand(new Hang(s_climbing));
     //s_climbing.setDefaultCommand(new RunCommand(() -> s_telescope.TeleUp(
       //m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)),
         //s_climbing));
 
-    //getButton("A").whenPressed(new Intake(s_intakeLift, s_intakeWheel));
     //getButton("X").whenPressed(c_ramseteShoot.getAutoCommand());
     //getButton("X").whenPressed(new FlyWheelSpin(s_flyWheel).alongWith(new LoadBall(s_indexer).andThen(new WaitCommand(1).andThen(() -> s_flyWheel::stop, s_flyWheel))));
     //getButton("X").whenPressed(new RunCommand(() -> s_flyWheel.setFlyWheel(), s_flyWheel).alongWith(new RunCommand(s_flyWheel::returnRPM)));
@@ -96,7 +102,6 @@ public class Robot extends TimedRobot {
     //s_flyWheel.setDefaultCommand(new RunCommand(() -> s_flyWheel.spinManual(
       //m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)),
         //s_flyWheel));
-    getButton("X").whenPressed(new TurnOnSpotCMD(s_driveBase));
     //getButton("A").whenPressed(new InstantCommand(s_intakeLift::up));
     //getButton("Y").whenPressed(new InstantCommand(s_intakeLift::down));
   }

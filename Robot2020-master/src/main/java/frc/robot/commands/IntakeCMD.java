@@ -11,6 +11,7 @@ public class IntakeCMD extends CommandBase {
 	private final IntakeWheelSUB m_intakeWheel;
 	private final DriveBaseSUB m_driveBase;
 	private boolean up = true;
+	private boolean done;
 	private double speed;
 	private double driveBaseSpeed;
 
@@ -22,6 +23,7 @@ public class IntakeCMD extends CommandBase {
 	}
 
 	public void initialize() {
+		done = false;
 		driveBaseSpeed = m_driveBase.getAvgSpeed(); 
 		if (driveBaseSpeed <= Constants.Measurements.MIN_DRIVEBASE_SPEED){
 			speed = Constants.Measurements.MIN_DRIVEBASE_SPEED * 12;
@@ -29,16 +31,23 @@ public class IntakeCMD extends CommandBase {
 			speed = driveBaseSpeed * 12;
 		}
 		up = !up;
+	}
+
+	public void execute(){
 		if (up) {
 			m_intakeLift.up();
-			m_intakeWheel.off();
+			System.out.println("ja");
+			//m_intakeWheel.off();
+			done = true;
 		} else {
 			m_intakeLift.down();
-			m_intakeWheel.on(speed);
+			System.out.println("nein");
+			//m_intakeWheel.on(speed);
+			done = true;
 		}
 	}
 
 	public boolean isFinished() {
-		return false;
+		return done;
 	}
 }
