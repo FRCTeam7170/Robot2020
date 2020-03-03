@@ -14,13 +14,15 @@ public class ClimbCMD extends CommandBase {
 	public ClimbCMD(final ClimbSUB climbing) {
 		m_climb = climbing;
 		m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
+		addRequirements(m_climb);
 	}
 	public void execute() {
-		if (m_xboxController.getBumperPressed(Hand.kRight)) {
+		if (m_xboxController.getBumper(Hand.kRight)) {
 			m_climb.ClimbUp();
-		}
-		if (m_xboxController.getBumperPressed(Hand.kLeft)) {
+		} else if (m_xboxController.getBumper(Hand.kLeft)) {
 			m_climb.ClimbDown();
+		} else {
+			m_climb.stop();
 		}
 	}
 }

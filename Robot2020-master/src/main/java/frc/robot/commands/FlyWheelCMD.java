@@ -12,7 +12,7 @@ public class FlyWheelCMD extends CommandBase {
 	}
 
 	public void initialize() {
-		m_flyWheel.setRPM(6000);
+		m_flyWheel.setRPM(6650);
 	}
 
 	public void execute() {

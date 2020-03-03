@@ -5,13 +5,17 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeWheelSUB extends SubsystemBase {
+	private final ShuffleboardTab IntakeTab = Shuffleboard.getTab("IntakeTab");
 	private final WPI_TalonSRX m_motor = new WPI_TalonSRX(Constants.Motors.INTAKEWHEEL);
-	private final double kP = 0.25;
-	private final double kI = 0.00005;
-	private final double kD = 2;
+	private final double kP = 0.1;
+	private final double kI = 0;
+	private final double kD = 0;
 	private final double kF = 1023 / 7200;
 	private double m_speed;
 
@@ -36,6 +40,8 @@ public class IntakeWheelSUB extends SubsystemBase {
 		m_motor.config_kP(0, kP, Constants.Autonomous.TIMEOUT);
 		m_motor.config_kI(0, kI, Constants.Autonomous.TIMEOUT);
 		m_motor.config_kD(0, kD, Constants.Autonomous.TIMEOUT);
+
+		IntakeTab.addNumber("Speed",() -> m_motor.getSelectedSensorVelocity());
 	}
 
 	public void stop() {
@@ -49,6 +55,8 @@ public class IntakeWheelSUB extends SubsystemBase {
 	}
 	public void test(double speed){
 		m_motor.set(ControlMode.PercentOutput, speed);
-		System.out.println(m_motor.getSelectedSensorVelocity());
+	}
+	public void bangbang(){
+		m_motor.set(ControlMode.PercentOutput, 0.75);
 	}
 }

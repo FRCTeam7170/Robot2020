@@ -8,20 +8,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class IntakeWheelCMD extends CommandBase{
     private final IntakeWheelSUB m_intakeWheel;
-    private final IntakeLiftSUB m_intakeLift;
     private int driveBaseSpeed = Constants.Measurements.MIN_DRIVEBASE_SPEED;
     private int speed;
 
-    public IntakeWheelCMD(final IntakeWheelSUB intakeWheel, final IntakeLiftSUB intakeLift){
+    public IntakeWheelCMD(final IntakeWheelSUB intakeWheel){
         m_intakeWheel = intakeWheel;
-        m_intakeLift = intakeLift;
-        addRequirements(m_intakeWheel, intakeLift);
+        addRequirements(m_intakeWheel);
     }
     public void initialize() {
     }
         
     public void execute(){
-        if (m_intakeLift.getState()){
+        /*
+        if (IntakeLiftSUB.getState()){
             driveBaseSpeed = (int)DriveBaseSUB.getAvgSpeed();
             if (driveBaseSpeed <= Constants.Measurements.MIN_DRIVEBASE_SPEED){
                 speed = Constants.Measurements.MIN_DRIVEBASE_SPEED * 12;
@@ -29,6 +28,12 @@ public class IntakeWheelCMD extends CommandBase{
                 speed = driveBaseSpeed * 12;
             }
             m_intakeWheel.spin(speed);
+        } else {
+            m_intakeWheel.stop();
+        } */
+        //m_intakeWheel.spin(500 * 4096);
+        if (IntakeLiftSUB.getState()){
+            m_intakeWheel.bangbang();
         } else {
             m_intakeWheel.stop();
         }

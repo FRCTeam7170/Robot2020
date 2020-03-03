@@ -5,20 +5,24 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IndexerSUB extends SubsystemBase {
+	private final ShuffleboardTab IndexerTab = Shuffleboard.getTab("IndexerTab");
 	private final TalonSRX m_motor = new TalonSRX(Constants.Motors.INDEXER);
-	private final double kP = 0.0025;
-	private final double kI = 0.001;
-	private final double kD = 2;
+	private final double kP = 1;
+	private final double kI = 0;
+	private final double kD = 0;
 	private final double kF = 1023 / 7200;
 	private int m_targetRPM;
 
 	public IndexerSUB() {
 		m_motor.configFactoryDefault();
 		
-		m_motor.setInverted(true);
+		m_motor.setInverted(false);
 
 		m_motor.setNeutralMode(NeutralMode.Coast);
 
@@ -36,6 +40,8 @@ public class IndexerSUB extends SubsystemBase {
 		m_motor.config_kP(0, kP, Constants.Autonomous.TIMEOUT);
 		m_motor.config_kI(0, kI, Constants.Autonomous.TIMEOUT);
 		m_motor.config_kD(0, kD, Constants.Autonomous.TIMEOUT);
+
+		IndexerTab.addNumber("Speed",() -> m_motor.getSelectedSensorVelocity());
 	}
 
 	public void setRPM(final int rpm) {
@@ -51,7 +57,10 @@ public class IndexerSUB extends SubsystemBase {
 		final double rpmout = m_targetRPM * 4096 / 600;
 		m_motor.set(ControlMode.Velocity, rpmout);
 	}
-	public void spinTest(double speed){
+	public void test(double speed){
 		m_motor.set(ControlMode.PercentOutput, speed);
+	}
+	public void bangbang(){
+		m_motor.set(ControlMode.PercentOutput, 0.3);
 	}
 }

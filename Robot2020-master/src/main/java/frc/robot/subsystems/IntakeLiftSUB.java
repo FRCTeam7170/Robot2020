@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeLiftSUB extends SubsystemBase {
-	private boolean down = true;
+	private static boolean down = false;
 	private final DoubleSolenoid m_solenoid = new DoubleSolenoid(Constants.Motors.PNEUMATIC_CONTROL_PANEL,
 																Constants.Pneumatics.SOLENOID_1_ON,
 																Constants.Pneumatics.SOLENOID_1_OFF);
@@ -25,7 +25,7 @@ public class IntakeLiftSUB extends SubsystemBase {
 		down = true;
 	}
 
-	public boolean getState() {
+	public static boolean getState() {
 		return down;
 	}
 }

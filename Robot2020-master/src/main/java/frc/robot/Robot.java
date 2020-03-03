@@ -10,11 +10,16 @@ package frc.robot;
 import frc.robot.Constants;
 import frc.robot.commands.ClimbCMD;
 import frc.robot.commands.FlyWheelCMD;
+import frc.robot.commands.IndexerCMD;
 import frc.robot.commands.IntakeLiftCMD;
 import frc.robot.commands.IntakeWheelCMD;
+import frc.robot.commands.LoadBallCMD;
+import frc.robot.commands.MoveStraightLineCMD;
 import frc.robot.commands.TurnOnSpotCMD;
 import frc.robot.commands.RamseteDriveCMD;
 import frc.robot.commands.RamseteShootCMD;
+import frc.robot.commands.ShootCMD;
+import frc.robot.commands.TelescopeCMD;
 import frc.robot.subsystems.ClimbSUB;
 import frc.robot.subsystems.IndexerSUB;
 import frc.robot.subsystems.FlyWheelSUB;
@@ -28,6 +33,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -37,68 +43,86 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to each mode, as described in the TimedRobot
+ * documentation. If you change the name of this class or the package after
+ * creating this project, you must also update the build.gradle file in the
  * project.
  */
 public class Robot extends TimedRobot {
   private Command autoCommand;
-  //private final ClimbSUB s_climbing = new ClimbSUB();
-  //private final IndexerSUB s_indexer = new IndexerSUB();
-  private final FlyWheelSUB s_flyWheel = new FlyWheelSUB();
-  //private final DriveBaseSUB s_driveBase = new DriveBaseSUB();
-  //private final TelescopeSUB s_telescope = new TelescopeSUB();
-  //private final IntakeLiftSUB s_intakeLift = new IntakeLiftSUB();
+  private final ClimbSUB s_climbing = new ClimbSUB();
+  private final IndexerSUB s_indexer = new IndexerSUB();
+  //private final FlyWheelSUB s_flyWheel = new FlyWheelSUB();
+  private final DriveBaseSUB s_driveBase = new DriveBaseSUB();
+  private final TelescopeSUB s_telescope = new TelescopeSUB();
+  private final IntakeLiftSUB s_intakeLift = new IntakeLiftSUB();
   private final IntakeWheelSUB s_intakeWheel = new IntakeWheelSUB();
-  //private final RamseteDriveCMD c_ramseteDrive = new RamseteDriveCMD(s_driveBase);
+  private final RamseteDriveCMD c_ramseteDrive = new RamseteDriveCMD(s_driveBase);
   //private final RamseteShootCMD c_ramseteShoot = new RamseteShootCMD(s_driveBase, s_flyWheel, s_indexer);
-  //private final UsbCamera ballCamera = CameraServer.getInstance().startAutomaticCapture("Ball Camera", 1);
-  //private final UsbCamera driverCamera = CameraServer.getInstance().startAutomaticCapture("Driver Camera", 0);
+  private final UsbCamera ballCamera =
+  CameraServer.getInstance().startAutomaticCapture("Ball Camera", 1);
+  private final UsbCamera driverCamera =
+  CameraServer.getInstance().startAutomaticCapture("Driver Camera", 0);
   private final XboxController m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
 
-
   /**
-   * This function is run when the robot is first started up and should be used for any
-   * initialization code.
+   * This function is run when the robot is first started up and should be used
+   * for any initialization code.
    */
   @Override
   public void robotInit() {
 
-    //ballCamera.setVideoMode(PixelFormat.kMJPEG, 144, 81, 2);
-    //Shuffleboard.getTab("Camera").add("Camera Ball", ballCamera);
-    //driverCamera.setVideoMode(PixelFormat.kMJPEG, 320, 180, 24);
-    //Shuffleboard.getTab("Camera").add("Camera Driver", driverCamera);
+    Shuffleboard.getTab("Camera").add("Camera Ball", ballCamera);
+    Shuffleboard.getTab("Camera").add("Camera Driver", driverCamera);
 
-    CommandScheduler.getInstance().registerSubsystem(//s_indexer,
-                                                     //s_telescope,
-                                                     s_flyWheel,
-                                                     //s_climbing,
-                                                     //s_intakeLift,
-                                                     s_intakeWheel
-                                                     //s_driveBase
-                                                     );
+    CommandScheduler.getInstance().registerSubsystem(s_indexer,
+                                                    s_telescope,
+                                                    //s_flyWheel,
+                                                    s_climbing,
+                                                    s_intakeLift, 
+                                                    s_intakeWheel, 
+                                                    s_driveBase);
 
-                                                     
-    //s_driveBase.setDefaultCommand(new RunCommand(()-> s_driveBase.tankDriveVolts(
-      //                                                  m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)*12, 
-        //                                                m_xboxController.getRawAxis(Constants.Controller.RIGHT_STICK_Y)*12), 
-          //                                              s_driveBase));
+    s_driveBase.setDefaultCommand(new RunCommand(() -> s_driveBase.tankDriveVolts(
+                                                        m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y) * 12,
+                                                        m_xboxController.getRawAxis(Constants.Controller.RIGHT_STICK_Y) * 12),
+                                                        s_driveBase));
 
-    //s_intakeWheel.setDefaultCommand(new IntakeWheelCMD(s_intakeWheel, s_intakeLift));
-    //getButton("X").whenPressed(new TurnOnSpotCMD(s_driveBase));
-    getButton("Y").whenPressed(new FlyWheelCMD(s_flyWheel).withTimeout(3).andThen(new InstantCommand(s_flyWheel::stop, s_flyWheel)));
+    s_intakeWheel.setDefaultCommand(new IntakeWheelCMD(s_intakeWheel));
+
+    s_climbing.setDefaultCommand(new ClimbCMD(s_climbing));
+
+    s_telescope.setDefaultCommand(new TelescopeCMD(s_telescope));
+
+    //getButton("B").whenPressed(new ShootCMD(s_flyWheel, s_indexer).andThen(s_indexer::stop, s_indexer).andThen(s_flyWheel::stop, s_flyWheel));
+
+    getButton("A").whenPressed(new IntakeLiftCMD(s_intakeLift));
+
+
+
+    /*
+    s_intakeWheel.setDefaultCommand(new IntakeWheelCMD(s_intakeWheel, s_intakeLift));
+    getButton("X").whenPressed(new TurnOnSpotCMD(s_driveBase));
 
     s_intakeWheel.setDefaultCommand(new RunCommand(() -> s_intakeWheel.test(
-                                                          m_xboxController.getRawAxis(Constants.Controller.RIGHT_STICK_Y)),
+                                                          m_xboxController.getTriggerAxis(Hand.kLeft)),
                                                           s_intakeWheel)); 
 
-    //s_indexer.setDefaultCommand(new RunCommand(() -> s_indexer.spinTest(
-      //m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)),
-        //s_indexer));
-    //s_flyWheel.setDefaultCommand(new RunCommand(() -> s_flyWheel.spinManual(
-      //m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)),
-        //s_flyWheel));
+    s_indexer.setDefaultCommand(new RunCommand(() -> s_indexer.test(
+                                                      m_xboxController.getTriggerAxis(Hand.kRight)),
+                                                      s_indexer));
+
+    s_climbing.setDefaultCommand(new ClimbCMD(s_climbing));
+
+    s_indexer.setDefaultCommand(new RunCommand(() -> s_indexer.spinTest(
+      m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)),
+        s_indexer));
+    s_flyWheel.setDefaultCommand(new RunCommand(() -> s_flyWheel.spinManual(
+      m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y)),
+        s_flyWhee
+        l)); 
+        */
   }
   @Override
   public void robotPeriodic() {
