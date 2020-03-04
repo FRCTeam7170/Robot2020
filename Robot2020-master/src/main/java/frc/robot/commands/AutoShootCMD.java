@@ -28,7 +28,8 @@ public class AutoShootCMD extends CommandBase{
             m_indexer.bangbang();
         }
     }
+    
     public boolean isFinished(){
-        return m_timer.hasElapsed(5);
+        return m_timer.hasElapsed(7);
     }
 }

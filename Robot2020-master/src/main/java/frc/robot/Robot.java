@@ -34,6 +34,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -80,9 +81,9 @@ public class Robot extends TimedRobot {
                                                     s_intakeWheel, 
                                                     s_driveBase);
 
-    s_driveBase.setDefaultCommand(new RunCommand(() -> s_driveBase.tankDriveVolts(
-                                                        m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y) * 12,
-                                                        m_xboxController.getRawAxis(Constants.Controller.RIGHT_STICK_Y) * 12),
+    s_driveBase.setDefaultCommand(new RunCommand(() -> s_driveBase.tankDrive(
+                                                        m_xboxController.getRawAxis(Constants.Controller.LEFT_STICK_Y),
+                                                        m_xboxController.getRawAxis(Constants.Controller.RIGHT_STICK_Y)),
                                                         s_driveBase));
 
     s_intakeWheel.setDefaultCommand(new IntakeWheelCMD(s_intakeWheel));
@@ -163,7 +164,10 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     autoCommand = new AutoShootCMD(s_flyWheel, s_indexer)
                   .andThen(s_indexer::stop, s_indexer).andThen(s_flyWheel::stop, s_flyWheel)
-                  .andThen(() -> s_driveBase.tankDriveVolts(-10, -10), s_driveBase).withTimeout(0.5).andThen(s_driveBase::stop, s_driveBase); //best auto command ever!!
+                  .andThen(() -> s_driveBase.tankDrive(0.5, 0.5), s_driveBase)
+                  .andThen(new WaitCommand(2))
+                  .andThen(s_driveBase::stop, s_driveBase); //best auto command ever!!
+
     autoCommand.schedule();
   }
   /**
@@ -171,6 +175,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    
   }
   @Override
   public void teleopInit() {
