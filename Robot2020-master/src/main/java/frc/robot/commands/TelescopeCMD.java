@@ -30,6 +30,7 @@ public class TelescopeCMD extends CommandBase {
         }
     }
         public boolean isFinished() {
-            return m_telescope.getCounterValue() >= maxCount || !m_telescope.getButtonPressed(); 
+            //return m_telescope.getCounterValue() >= maxCount || !m_telescope.getButtonPressed();
+            return false;
     }
 }

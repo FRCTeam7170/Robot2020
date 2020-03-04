@@ -17,23 +17,24 @@ public class TurnOnSpotCMD extends CommandBase{
     private double tx, speed;
 
     public TurnOnSpotCMD(DriveBaseSUB drivebase){
-        table.getEntry("led").setNumber(3);
-        table.getEntry("camMode").setNumber(0);
         m_driveBase = drivebase;
         pid = new PIDController(kP, kI, kD);
         addRequirements(m_driveBase);
     }
 
     public void initialize(){
+        table.getEntry("led").setNumber(3);
+        table.getEntry("camMode").setNumber(0);
     }
     public void execute(){
         tx = table.getEntry("tx").getDouble(0.0);
         speed = pid.calculate(tx);
-        System.out.println(speed);
+        System.out.println(tx);
         m_driveBase.tankDrive(speed, -speed);
     }
     public boolean isFinished(){
-        return Math.abs(tx) <= deadband;
+        //return Math.abs(tx) <= deadband;
+        return true;
     }
     public void end(){
         table.getEntry("led").setNumber(1);

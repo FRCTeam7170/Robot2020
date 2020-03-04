@@ -29,7 +29,6 @@ public class LoadBallCMD extends CommandBase {
 
 	public boolean isFinished() {
 		distance = m_sensor.getRangeMM();
-		System.out.println(distance);
 		return distance <= treshold;
 	}
 

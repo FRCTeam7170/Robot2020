@@ -35,6 +35,7 @@ public class IntakeWheelSUB extends SubsystemBase {
 
 		m_motor.configPeakOutputForward(1, Constants.Autonomous.TIMEOUT);
 		m_motor.configPeakOutputReverse(-1, Constants.Autonomous.TIMEOUT);
+		m_motor.configPeakCurrentLimit(30, Constants.Autonomous.TIMEOUT);
 
 		m_motor.config_kF(0, kF, Constants.Autonomous.TIMEOUT);
 		m_motor.config_kP(0, kP, Constants.Autonomous.TIMEOUT);
@@ -58,5 +59,8 @@ public class IntakeWheelSUB extends SubsystemBase {
 	}
 	public void bangbang(){
 		m_motor.set(ControlMode.PercentOutput, 0.75);
+	}
+	public void reverse(){
+		m_motor.set(ControlMode.PercentOutput, -0.75);
 	}
 }

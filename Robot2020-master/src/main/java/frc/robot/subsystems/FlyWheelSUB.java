@@ -56,7 +56,7 @@ public class FlyWheelSUB extends SubsystemBase {
 		flywheelMotor1.config_kD(0, kD, Constants.Autonomous.TIMEOUT);
 		flywheelMotor1.configClosedloopRamp(0.5, Constants.Autonomous.TIMEOUT);
 
-		FlyWheelTab.addNumber("SPEED", () -> flywheelMotor1.getSelectedSensorVelocity());
+		FlyWheelTab.addNumber("SPEED", () -> flywheelMotor1.getSelectedSensorVelocity() / 600);
 	}
 	
 	public void setRPM(final double rpm) {
@@ -76,8 +76,7 @@ public class FlyWheelSUB extends SubsystemBase {
 	}
 	public void spinManual(double speed){
 		flywheelMotor1.set(ControlMode.PercentOutput, speed);
-		System.out.println(flywheelMotor1.getStatorCurrent() + " " + flywheelMotor2.getStatorCurrent());
-		System.out.println(flywheelMotor1.getBusVoltage());
+		System.out.println(flywheelMotor1.getSelectedSensorVelocity());
 		flywheelMotor2.follow(flywheelMotor1);
 	}
 	public void spinTest(){
