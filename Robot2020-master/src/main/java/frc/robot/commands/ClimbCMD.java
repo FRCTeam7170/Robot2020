@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ClimbCMD extends CommandBase {
-
 	public final ClimbSUB m_climb;
 	private final XboxController m_xboxController;
 
@@ -16,11 +15,10 @@ public class ClimbCMD extends CommandBase {
 		m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
 		addRequirements(m_climb);
 	}
+
 	public void execute() {
 		if (m_xboxController.getBumper(Hand.kRight)) {
 			m_climb.ClimbUp();
-		} else if (m_xboxController.getBumper(Hand.kLeft)) {
-			m_climb.ClimbDown();
 		} else {
 			m_climb.stop();
 		}

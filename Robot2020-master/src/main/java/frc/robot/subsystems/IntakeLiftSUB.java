@@ -8,8 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class IntakeLiftSUB extends SubsystemBase {
 	private static boolean down = false;
 	private final DoubleSolenoid m_solenoid = new DoubleSolenoid(Constants.Motors.PNEUMATIC_CONTROL_PANEL,
-																Constants.Pneumatics.SOLENOID_1_ON,
-																Constants.Pneumatics.SOLENOID_1_OFF);
+																						Constants.Pneumatics.SOLENOID_1_ON, Constants.Pneumatics.SOLENOID_1_OFF);
 
 	public void off() {
 		m_solenoid.set(Value.kOff);

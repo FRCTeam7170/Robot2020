@@ -18,7 +18,7 @@ public class IntakeLiftCMD extends CommandBase {
 		up = !up;
 	}
 
-	public void execute(){
+	public void execute() {
 		if (up) {
 			m_intakeLift.up();
 			done = true;

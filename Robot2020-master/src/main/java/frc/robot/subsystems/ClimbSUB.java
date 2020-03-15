@@ -10,13 +10,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ClimbSUB extends SubsystemBase {
 	private final VictorSPX climb_Winch = new VictorSPX(Constants.Motors.CLIMBWINCH);
 
-	public ClimbSUB(){
+	public ClimbSUB() {
 		climb_Winch.setNeutralMode(NeutralMode.Brake);
+		climb_Winch.setInverted(true);
 	}
+
 	public void ClimbUp() {
 		climb_Winch.set(ControlMode.PercentOutput, 1);
 	}
-	
+
 	public void ClimbDown() {
 		climb_Winch.set(ControlMode.PercentOutput, -1);
 	}

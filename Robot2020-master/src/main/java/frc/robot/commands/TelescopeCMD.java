@@ -10,27 +10,22 @@ public class TelescopeCMD extends CommandBase {
 
 	public final TelescopeSUB m_telescope;
 	private final XboxController m_xboxController;
-	private final double maxCount = 5000; 
-	private double teleUp;
-	private double teleDown;
 
 	public TelescopeCMD(final TelescopeSUB telescopeSUB) {
 		m_telescope = telescopeSUB;
-        m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
-        addRequirements(m_telescope);
+		m_xboxController = new XboxController(Constants.Controller.CONTROLLER_PORT);
+		addRequirements(m_telescope);
 	}
-    public void execute(){
-        teleUp = m_xboxController.getTriggerAxis(Hand.kRight);
-        teleDown = m_xboxController.getTriggerAxis(Hand.kLeft);
-        if (teleUp != 0.0) {
-            m_telescope.TeleUp(teleUp);
-        }
-        if (teleDown != 0.0) {
-            m_telescope.TeleDown(teleDown);
-        }
-    }
-        public boolean isFinished() {
-            //return m_telescope.getCounterValue() >= maxCount || !m_telescope.getButtonPressed();
-            return false;
-    }
+
+	public void execute() {
+		if (m_xboxController.getTriggerAxis(Hand.kRight) != 0) {
+			m_telescope.move(m_xboxController.getTriggerAxis(Hand.kRight));
+
+		} else if (m_xboxController.getTriggerAxis(Hand.kLeft) != 0) {
+			m_telescope.move(-m_xboxController.getTriggerAxis(Hand.kLeft));
+			
+		} else {
+			m_telescope.move(0);
+		}
+	}
 }

@@ -16,16 +16,16 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 
 public class DriveBaseSUB extends SubsystemBase {
-	private final WPI_TalonSRX m_motorLeft1 = new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1);
-	private final WPI_TalonSRX m_motorLeft2 = new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2);
-	private final WPI_TalonSRX m_motorRight1 = new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1);
-	private final WPI_TalonSRX m_motorRight2 = new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2);
-	private double speed = Constants.Motors.SPEED;
+  private final WPI_TalonSRX m_motorLeft1 = new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_1);
+  private final WPI_TalonSRX m_motorLeft2 = new WPI_TalonSRX(Constants.Motors.MOTOR_LEFT_2);
+  private final WPI_TalonSRX m_motorRight1 = new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_1);
+  private final WPI_TalonSRX m_motorRight2 = new WPI_TalonSRX(Constants.Motors.MOTOR_RIGHT_2);
+  private double speed = Constants.Motors.SPEED;
 
-	private final SpeedControllerGroup m_leftMotors;
+  private final SpeedControllerGroup m_leftMotors;
 
   // The motors on the right side of the drive.
-	private final SpeedControllerGroup m_rightMotors;
+  private final SpeedControllerGroup m_rightMotors;
 
   // The robot's drive
   private final DifferentialDrive m_drive;
@@ -46,49 +46,48 @@ public class DriveBaseSUB extends SubsystemBase {
    * Creates a new DriveSubsystem.
    */
   public DriveBaseSUB() {
-	m_motorRight1.configFactoryDefault();
-	m_motorRight2.configFactoryDefault();
-	m_motorLeft1.configFactoryDefault();
-  m_motorLeft2.configFactoryDefault();
-  
-  m_motorLeft1.setNeutralMode(NeutralMode.Brake);
-  m_motorLeft2.setNeutralMode(NeutralMode.Brake);
-  m_motorRight1.setNeutralMode(NeutralMode.Brake);
-  m_motorRight2.setNeutralMode(NeutralMode.Brake);
+    m_motorRight1.configFactoryDefault();
+    m_motorRight2.configFactoryDefault();
+    m_motorLeft1.configFactoryDefault();
+    m_motorLeft2.configFactoryDefault();
 
-	m_motorLeft1.setInverted(true);
-	m_motorLeft2.setInverted(true);
-	m_motorRight1.setInverted(true);
-	m_motorRight2.setInverted(true);
+    m_motorLeft1.setNeutralMode(NeutralMode.Brake);
+    m_motorLeft2.setNeutralMode(NeutralMode.Brake);
+    m_motorRight1.setNeutralMode(NeutralMode.Brake);
+    m_motorRight2.setNeutralMode(NeutralMode.Brake);
 
-	m_motorLeft1.configPeakOutputForward(+speed, Constants.Autonomous.TIMEOUT);
-	m_motorLeft1.configPeakOutputReverse(-speed, Constants.Autonomous.TIMEOUT);
-	m_motorRight1.configPeakOutputForward(+speed, Constants.Autonomous.TIMEOUT);
-	m_motorRight1.configPeakOutputReverse(-speed, Constants.Autonomous.TIMEOUT);
-	m_motorLeft2.configPeakOutputForward(+speed, Constants.Autonomous.TIMEOUT);
-	m_motorLeft2.configPeakOutputReverse(-speed, Constants.Autonomous.TIMEOUT);
-	m_motorRight2.configPeakOutputForward(+speed, Constants.Autonomous.TIMEOUT);
-  m_motorRight2.configPeakOutputReverse(-speed, Constants.Autonomous.TIMEOUT);
+    m_motorLeft1.setInverted(true);
+    m_motorLeft2.setInverted(true);
+    m_motorRight1.setInverted(true);
+    m_motorRight2.setInverted(true);
 
-	m_leftMotors = new SpeedControllerGroup(m_motorLeft1, m_motorLeft2);
-	m_rightMotors = new SpeedControllerGroup(m_motorRight1, m_motorRight2);
-  m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
-  
-  m_drive.setSafetyEnabled(false);
+    m_motorLeft1.configPeakOutputForward(+speed, Constants.Autonomous.TIMEOUT);
+    m_motorLeft1.configPeakOutputReverse(-speed, Constants.Autonomous.TIMEOUT);
+    m_motorRight1.configPeakOutputForward(+speed, Constants.Autonomous.TIMEOUT);
+    m_motorRight1.configPeakOutputReverse(-speed, Constants.Autonomous.TIMEOUT);
+    m_motorLeft2.configPeakOutputForward(+speed, Constants.Autonomous.TIMEOUT);
+    m_motorLeft2.configPeakOutputReverse(-speed, Constants.Autonomous.TIMEOUT);
+    m_motorRight2.configPeakOutputForward(+speed, Constants.Autonomous.TIMEOUT);
+    m_motorRight2.configPeakOutputReverse(-speed, Constants.Autonomous.TIMEOUT);
 
-  m_leftEncoder.setDistancePerPulse(Constants.Measurements.DISTANCE_PER_PULSE);
-  m_rightEncoder.setDistancePerPulse(Constants.Measurements.DISTANCE_PER_PULSE);
+    m_leftMotors = new SpeedControllerGroup(m_motorLeft1, m_motorLeft2);
+    m_rightMotors = new SpeedControllerGroup(m_motorRight1, m_motorRight2);
+    m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
-  resetEncoders();
-  zeroHeading();
-  m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+    m_drive.setSafetyEnabled(false);
+
+    m_leftEncoder.setDistancePerPulse(Constants.Measurements.DISTANCE_PER_PULSE);
+    m_rightEncoder.setDistancePerPulse(Constants.Measurements.DISTANCE_PER_PULSE);
+
+    resetEncoders();
+    zeroHeading();
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
   }
 
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getDistance(),
-                      m_rightEncoder.getDistance());
+    m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getDistance(), m_rightEncoder.getDistance());
   }
 
   /**
@@ -142,7 +141,7 @@ public class DriveBaseSUB extends SubsystemBase {
 
   }
 
-  public void tankDrive(double leftSpeed, double rightSpeed){
+  public void tankDrive(double leftSpeed, double rightSpeed) {
     m_drive.tankDrive(leftSpeed, rightSpeed);
   }
 
@@ -182,7 +181,8 @@ public class DriveBaseSUB extends SubsystemBase {
   }
 
   /**
-   * Sets the max output of the drive.  Useful for scaling the drive to drive more slowly.
+   * Sets the max output of the drive. Useful for scaling the drive to drive more
+   * slowly.
    *
    * @param maxOutput the maximum output to which the drive will be constrained
    */
@@ -215,11 +215,11 @@ public class DriveBaseSUB extends SubsystemBase {
     return m_gyro.getRate() * (Constants.Autonomous.INVERTED_GYRO ? -1.0 : 1.0);
   }
 
-  public static double getAvgSpeed(){
+  public static double getAvgSpeed() {
     return (m_leftEncoder.getRate() + m_rightEncoder.getRate()) / 2;
   }
 
-  public void stop(){
+  public void stop() {
     m_drive.stopMotor();
   }
 }

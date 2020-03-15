@@ -9,20 +9,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide
- * numerical or boolean constants. This class should not be used for any other
- * purpose. All constants should be declared globally (i.e. public static). Do
- * not put anything functional in this class.
- *
- * <p>
- * It is advised to statically import this class (or one of its inner classes)
- * wherever the constants are needed, to reduce verbosity.
- */
 public final class Constants {
 	public final static class Motors {
 		public static final double SPEED = 1;
-		public static final int PNEUMATIC_CONTROL_PANEL = 6; //PCM
+		public static final int PNEUMATIC_CONTROL_PANEL = 6; // PCM
 		public static final int MOTOR_RIGHT_1 = 10; // Talon
 		public static final int MOTOR_RIGHT_2 = 11; // Talon
 		public static final int MOTOR_LEFT_1 = 12; // Talon
@@ -73,17 +63,17 @@ public final class Constants {
 		public static final double DISTANCE_PER_PULSE = (WHEELDIAMETER * Math.PI) / (double) ENCODER_PULSE;
 		public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(TRACKWIDTH);
 
-		public static final double LIMELIGHT_HEIGHT = 0.2; //m
-		public static final double LIMELIGHT_ANGLE = 35; //degrees
-		public static final double TARGET_HEIGHT = 2.; //m
+		public static final double LIMELIGHT_HEIGHT = 0.2; // m
+		public static final double LIMELIGHT_ANGLE = 35; // degrees
+		public static final double TARGET_HEIGHT = 2.; // m
 
-		public static final double AIR_DENSITY = 1.2; //kg/m³
-		public static final double BALL_AREA = Math.sqrt(0.89) * Math.PI; //m²
+		public static final double AIR_DENSITY = 1.2; // kg/m³
+		public static final double BALL_AREA = Math.sqrt(0.89) * Math.PI; // m²
 		public static final double BALL_DRAG = 0.47;
 
 		public static final int MIN_DRIVEBASE_SPEED = 500;
 
-		public static final double SHOOTING_RANGE = 6.7; //m
+		public static final double SHOOTING_RANGE = 6.7; // m
 	}
 
 	public final static class Autonomous {
